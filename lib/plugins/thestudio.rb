@@ -4,8 +4,8 @@ require 'open-uri'
 class Thestudio
   include Cinch::Plugin
 
-  match /(kstudio)$/, prefix: /^(\.)/
-  match /(help kstudio)$/, method: :help, prefix: /^(\.)/
+  match /(tstudio)$/, prefix: /^(\.)/
+  match /(help tstudio)$/, method: :help, prefix: /^(\.)/
 
   def execute(m)
     page = Nokogiri::HTML(open('http://thestudio.kr/'))
