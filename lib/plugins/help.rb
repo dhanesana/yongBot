@@ -39,7 +39,8 @@ class Help
       ".sc [keywords]",
       ".celeb [img_url]",
       ".wutdis [img_url]",
-      ".[this] or [that]"
+      ".[this] or [that]",
+      ".tstudio"
     ]
   end
 
