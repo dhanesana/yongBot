@@ -3,7 +3,7 @@ require_relative 'bin/plugins'
 
 yong_bot = Cinch::Bot.new do
   configure do |c|
-    c.server = ENV['SERVER']
+    c.server = "#{ENV['SERVER']}"
     c.channels = ["#{ENV['CHANNELS']}"]
     c.nicks = ["#{ENV['NICKS']}"]
     c.realname = "yongBot v1.0"
