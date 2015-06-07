@@ -28,7 +28,7 @@ class Rollu
   end
 
   def help(m)
-    m.reply "is like .dice but hangulized"
+    m.reply "is like .roll but hangulized"
   end
 
 end
