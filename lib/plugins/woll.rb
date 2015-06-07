@@ -28,7 +28,7 @@ class Woll
   end
 
   def help(m)
-    m.reply "is like .dice except more ni hao"
+    m.reply "is like .roll except more ni hao"
   end
 
 end
