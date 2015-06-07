@@ -47,13 +47,14 @@ yong_bot = Cinch::Bot.new do
       Sc,
       Celeb,
       Wutdis,
-      ThisOrThat
+      ThisOrThat,
+      Thestudio
     ]
   end
 
   on :message, ".thyme" do |m|
     t = Time.now
-    m.reply "#{t} UTC"
+    m.reply "#{t}"
   end
 
 end
