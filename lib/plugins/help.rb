@@ -46,7 +46,7 @@ class Help
 
   def execute(m)
     m.reply "=> #{@plugins.join(', ')}"
-    m.reply ".help [command] for more info"
+    m.reply ".help [command] for more info (ie '.help nba')"
   end
 
 end
