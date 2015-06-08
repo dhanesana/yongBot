@@ -8,7 +8,7 @@ class Kst
     utc = Time.now.utc
     kst = utc + (9 * 3600)
     time = kst.strftime("%F %H:%M KST")
-    m.reply "#{time}"
+    m.reply time
   end
 
   def help(m)
