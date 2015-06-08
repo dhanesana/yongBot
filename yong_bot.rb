@@ -48,7 +48,8 @@ yong_bot = Cinch::Bot.new do
       Celeb,
       Wutdis,
       ThisOrThat,
-      Thestudio
+      Thestudio,
+      Kst
     ]
   end
 
