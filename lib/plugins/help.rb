@@ -40,7 +40,7 @@ class Help
       ".celeb [img_url]",
       ".wutdis [img_url]",
       ".[this] or [that]",
-      ".tstudio"
+      ".studio"
     ]
   end
 
