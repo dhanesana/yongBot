@@ -1,6 +1,3 @@
-require 'date'
-require 'time'
-
 class Kst
   include Cinch::Plugin
 
