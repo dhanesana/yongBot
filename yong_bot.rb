@@ -49,7 +49,8 @@ yong_bot = Cinch::Bot.new do
       Wutdis,
       ThisOrThat,
       Thestudio,
-      Kst
+      Kst,
+      Buzz
     ]
   end
 

@@ -41,7 +41,8 @@ class Help
       ".wutdis [img_url]",
       ".[this] or [that]",
       ".studio",
-      ".kst"
+      ".kst",
+      ".buzz"
     ]
   end
 
