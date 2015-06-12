@@ -18,16 +18,18 @@ class Meet
     meets = {}
 
     result['listMap'].each do |x|
-      p x[""]
-      meets["#{x['TITLE']}"] = (x['START_TM']).to_i unless DateTime.now.strftime('%Q').to_i > x['START_TM'].to_i
+      if x['START_TM_SHORT_FLG'] == 'N'
+        meets["#{x['TITLE']}"] = (x['START_TM']).to_i unless DateTime.now.strftime('%Q').to_i > x['START_TM'].to_i
+      end
     end
 
     result_2['listMap'].each do |x|
-      meets["#{x['TITLE']}"] = (x['START_TM']).to_i unless DateTime.now.strftime('%Q').to_i > x['START_TM'].to_i
+      if x['START_TM_SHORT_FLG'] == 'N'
+        meets["#{x['TITLE']}"] = (x['START_TM']).to_i unless DateTime.now.strftime('%Q').to_i > x['START_TM'].to_i
+      end
     end
-    return 'RIP MEET & GREET' if meets.size < 1
-    m.reply "Next on Meet & Greet - #{meets.first.first} #{((Time.strptime(meets[meets.first.first].to_s, '%Q').utc - (07 * 3600)) + (16 * 3600)).strftime("%m/%d %H:%MKST")}"
-
+    meets = meets.sort_by { |title, date| date }
+    m.reply "Next Meet & Greet - #{meets.first.first} #{(Time.strptime(meets.first[1].to_s, '%Q') + (16 * 3600)).strftime("%m/%d %H:%MKST")}"
   end
 
   def help(m)
