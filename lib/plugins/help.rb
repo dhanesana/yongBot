@@ -42,7 +42,8 @@ class Help
       ".[this] or [that]",
       ".studio",
       ".kst",
-      ".buzz"
+      ".buzz",
+      ".meet"
     ]
   end
 
