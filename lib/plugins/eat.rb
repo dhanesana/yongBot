@@ -14,7 +14,7 @@ class Eat
     return m.reply "sorry bru nutritionix don't got #{item} in their database" if result['total_hits'] == 0
     food_id = result['hits'].first['_id']
     # GET NAME AND CALORIES
-    link2 = open("https://api.nutritionix.com/v1_1/item?id=#{food_id}&appId=#{ENV['NUTRITION_ID']}&appKey=#{ENV['NUTRITION_KEY']}").read
+    link2 = open("https://api.nutritionix.com/v1_1/item?id=#{food_id}&appId=#{ENV['NUTRITIONX_ID']}&appKey=#{ENV['NUTRITION_KEY']}").read
     result2 = JSON.parse(link2)
     calories = result2['nf_calories']
     name = result2['item_name']
