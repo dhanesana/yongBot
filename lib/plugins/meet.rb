@@ -26,7 +26,7 @@ class Meet
       meets["#{x['TITLE']}"] = (x['START_TM']).to_i unless DateTime.now.strftime('%Q').to_i > x['START_TM'].to_i
     end
     return 'RIP MEET & GREET' if meets.size < 1
-    m.reply "Next on Meet & Greet - #{meets.first.first} #{(Time.strptime((meets[meets.first.first]).to_s, '%Q') + (16 * 3600)).strftime("%m/%d %H:%MKST")}"
+    m.reply "Next on Meet & Greet - #{meets.first.first} #{((Time.strptime(meets[meets.first.first].to_s, '%Q').utc - (07 * 3600)) + (16 * 3600)).strftime("%m/%d %H:%MKST")}"
 
   end
 
