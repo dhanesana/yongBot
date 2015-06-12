@@ -50,7 +50,8 @@ yong_bot = Cinch::Bot.new do
       ThisOrThat,
       Thestudio,
       Kst,
-      Buzz
+      Buzz,
+      Meet
     ]
   end
 
