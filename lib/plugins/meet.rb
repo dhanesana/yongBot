@@ -18,20 +18,15 @@ class Meet
     meets = {}
 
     result['listMap'].each do |x|
-      meets["#{x['TITLE']}"] = (Time.strptime(x['START_TM'], '%Q') + (16 * 3600)).to_i unless DateTime.now.strftime('%Q').to_i > x['START_TM'].to_i
+      p x[""]
+      meets["#{x['TITLE']}"] = (x['START_TM']).to_i unless DateTime.now.strftime('%Q').to_i > x['START_TM'].to_i
     end
 
     result_2['listMap'].each do |x|
-      meets["#{x['TITLE']}"] = (Time.strptime(x['START_TM'], '%Q') + (16 * 3600)).to_i unless DateTime.now.strftime('%Q').to_i > x['START_TM'].to_i
+      meets["#{x['TITLE']}"] = (x['START_TM']).to_i unless DateTime.now.strftime('%Q').to_i > x['START_TM'].to_i
     end
-
-    # result_2['listMap'].each do |x|
-    #   meets += x['TITLE'] if (Time.strptime("#{x['START_TM']}", '%Q').strftime("%Y%m%d")) == today
-    #   meets += " #{(Time.strptime("#{x['START_TM']}", '%Q') + (16 * 3600)).strftime("%H:%M")}KST | " if (Time.strptime("#{x['START_TM']}", '%Q').strftime("%Y%m%d")) == today
-    # end
-    return m.reply "no scheduled meet & greets today bru" if meets.size < 1
-    meets = meets.sort_by { |title, date| date }
-    m.reply "Next - #{meets.first.first} #{Time.strptime(meets[meets.first.first].to_s, '%Q').strftime("%m/%d %H:%MKST")}"
+    return 'RIP MEET & GREET' if meets.size < 1
+    m.reply "Next on Meet & Greet - #{meets.first.first} #{(Time.strptime((meets[meets.first.first]).to_s, '%Q') + (16 * 3600)).strftime("%m/%d %H:%MKST")}"
 
   end
 
