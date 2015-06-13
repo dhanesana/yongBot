@@ -43,7 +43,8 @@ class Help
       ".studio",
       ".kst",
       ".buzz",
-      ".meet"
+      ".meet",
+      ".meet list"
     ]
   end
 
