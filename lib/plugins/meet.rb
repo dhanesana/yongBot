@@ -8,7 +8,7 @@ class Meet
   match /(meet)$/, prefix: /^(\.)/
   match /(meet list)$/, method: :list, prefix: /^(\.)/
   match /(help meet)$/, method: :help, prefix: /^(\.)/
-  match /(help meet list)$/, method: :help_list, prefix: /^(\.)/
+  match /(help meet list)$/, method: :help_meet, prefix: /^(\.)/
 
   def initialize(*args)
     super
@@ -36,7 +36,7 @@ class Meet
     end
 
     meets = meets.sort_by { |title, date| date }
-    m.reply "Next Meet & Greet - #{meets.first.first} #{((Time.strptime(meets.first[1].to_s, '%Q').utc - (07 * 3600)) + (16 * 3600)).strftime("%m/%d %H:%MKST")}"
+    m.reply "Next Confirmed M&G - #{meets.first.first} #{((Time.strptime(meets.first[1].to_s, '%Q').utc - (07 * 3600)) + (16 * 3600)).strftime("%m/%d %H:%MKST")}"
   end
 
   def list(m)
@@ -56,11 +56,11 @@ class Meet
     end
 
     meets = meets.sort_by { |title, date| date }
-    list = "| "
+    list = "Confirmed: "
     num = meets.size
     i = 0
     while i < meets.size
-      list += "#{meets[i].first} #{((Time.strptime(meets[i][1].to_s, '%Q').utc - (07 * 3600)) + (16 * 3600)).strftime("%m/%d %H:%MKST")}"
+      list += "#{meets[i].first} [#{((Time.strptime(meets[i][1].to_s, '%Q').utc - (07 * 3600)) + (16 * 3600)).strftime("%m/%d %H:%MKST")}]"
       list += " | "
       i += 1
     end
