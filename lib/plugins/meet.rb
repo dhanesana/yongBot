@@ -83,7 +83,7 @@ class Meet
       list += ", "
     end
     while u < unconfirmed.size
-      un_list += "[#{unconfirmed[i].first}, #{((Time.strptime(unconfirmed[i][1].to_s, '%Q').utc - (07 * 3600)) + (16 * 3600)).strftime("%m/%d %H:%MKST")}]"
+      un_list += "[#{unconfirmed[u].first}, #{((Time.strptime(unconfirmed[u][1].to_s, '%Q').utc - (07 * 3600)) + (16 * 3600)).strftime("%m/%d %H:%MKST")}]"
       u += 1
       un_list += ", "
     end
