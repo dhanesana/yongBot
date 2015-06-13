@@ -27,16 +27,24 @@ class Meet
       if x['START_TM_SHORT_FLG'] == 'N'
         meets["#{x['TITLE']}"] = (x['START_TM']).to_i unless DateTime.now.strftime('%Q').to_i > x['START_TM'].to_i
       end
+      if x['START_TM_SHORT_FLG'] == 'Y'
+        unconfirmed["#{x['TITLE']}"] = (x['START_TM']).to_i unless DateTime.now.strftime('%Q').to_i > x['START_TM'].to_i
+      end
     end
 
     @result_2['listMap'].each do |x|
       if x['START_TM_SHORT_FLG'] == 'N'
         meets["#{x['TITLE']}"] = (x['START_TM']).to_i unless DateTime.now.strftime('%Q').to_i > x['START_TM'].to_i
       end
+      if x['START_TM_SHORT_FLG'] == 'Y'
+        unconfirmed["#{x['TITLE']}"] = (x['START_TM']).to_i unless DateTime.now.strftime('%Q').to_i > x['START_TM'].to_i
+      end
     end
 
     meets = meets.sort_by { |title, date| date }
+    unconfirmed = unconfirmed.sort_by { |title, date| date }
     m.reply "Next Confirmed M&G - #{meets.first.first} #{((Time.strptime(meets.first[1].to_s, '%Q').utc - (07 * 3600)) + (16 * 3600)).strftime("%m/%d %H:%MKST")}"
+    m.reply "Next Unconfirmed M&G - #{unconfirmed.first.first} #{((Time.strptime(unconfirmed.first[1].to_s, '%Q').utc - (07 * 3600)) + (16 * 3600)).strftime("%m/%d %H:%MKST")}"
   end
 
   def list(m)
@@ -47,25 +55,40 @@ class Meet
       if x['START_TM_SHORT_FLG'] == 'N'
         meets["#{x['TITLE']}"] = (x['START_TM']).to_i unless DateTime.now.strftime('%Q').to_i > x['START_TM'].to_i
       end
+      if x['START_TM_SHORT_FLG'] == 'Y'
+        unconfirmed["#{x['TITLE']}"] = (x['START_TM']).to_i unless DateTime.now.strftime('%Q').to_i > x['START_TM'].to_i
+      end
     end
 
     @result_2['listMap'].each do |x|
       if x['START_TM_SHORT_FLG'] == 'N'
         meets["#{x['TITLE']}"] = (x['START_TM']).to_i unless DateTime.now.strftime('%Q').to_i > x['START_TM'].to_i
       end
+      if x['START_TM_SHORT_FLG'] == 'Y'
+        unconfirmed["#{x['TITLE']}"] = (x['START_TM']).to_i unless DateTime.now.strftime('%Q').to_i > x['START_TM'].to_i
+      end
     end
 
     meets = meets.sort_by { |title, date| date }
+    unconfirmed = unconfirmed.sort_by { |title, date| date }
     list = "Confirmed: "
+    un_list = "Unconfirmed: "
     num = meets.size
+    num_2 = unconfirmed.size
     i = 0
+    u = 0
     while i < meets.size
-      list += "#{meets[i].first} [#{((Time.strptime(meets[i][1].to_s, '%Q').utc - (07 * 3600)) + (16 * 3600)).strftime("%m/%d %H:%MKST")}]"
-      list += " | "
+      list += "[#{meets[i].first}, #{((Time.strptime(meets[i][1].to_s, '%Q').utc - (07 * 3600)) + (16 * 3600)).strftime("%m/%d %H:%MKST")}]"
       i += 1
+      list += ", "
     end
-
+    while u < unconfirmed.size
+      un_list += "[#{unconfirmed[i].first}, #{((Time.strptime(unconfirmed[i][1].to_s, '%Q').utc - (07 * 3600)) + (16 * 3600)).strftime("%m/%d %H:%MKST")}]"
+      i += 1
+      un_list += ", "
+    end
     m.reply list
+    m.reply un_list
   end
 
   def help(m)
