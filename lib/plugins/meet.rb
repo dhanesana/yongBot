@@ -43,8 +43,7 @@ class Meet
 
     meets = meets.sort_by { |title, date| date }
     unconfirmed = unconfirmed.sort_by { |title, date| date }
-    m.reply "Next Confirmed M&G - #{meets.first.first} #{((Time.strptime(meets.first[1].to_s, '%Q').utc - (07 * 3600)) + (16 * 3600)).strftime("%m/%d %H:%MKST")}"
-    m.reply "Next Unconfirmed M&G - #{unconfirmed.first.first} #{((Time.strptime(unconfirmed.first[1].to_s, '%Q').utc - (07 * 3600)) + (16 * 3600)).strftime("%m/%d %H:%MKST")}"
+    m.reply "Confirmed M&G => #{meets.first.first} #{((Time.strptime(meets.first[1].to_s, '%Q').utc - (07 * 3600)) + (16 * 3600)).strftime("%m/%d %H:%MKST")}, Unconfirmed => #{unconfirmed.first.first} #{((Time.strptime(unconfirmed.first[1].to_s, '%Q').utc - (07 * 3600)) + (16 * 3600)).strftime("%m/%d %H:%MKST")}"
   end
 
   def list(m)
@@ -73,16 +72,14 @@ class Meet
     unconfirmed = unconfirmed.sort_by { |title, date| date }
     list = "Confirmed: "
     un_list = "Unconfirmed: "
-    num = meets.size
-    num_2 = unconfirmed.size
     i = 0
     u = 0
-    while i < meets.size
+    while i < 5
       list += "[#{meets[i].first}, #{((Time.strptime(meets[i][1].to_s, '%Q').utc - (07 * 3600)) + (16 * 3600)).strftime("%m/%d %H:%MKST")}]"
       i += 1
       list += ", "
     end
-    while u < unconfirmed.size
+    while u < 5
       un_list += "[#{unconfirmed[u].first}, #{((Time.strptime(unconfirmed[u][1].to_s, '%Q').utc - (07 * 3600)) + (16 * 3600)).strftime("%m/%d %H:%MKST")}]"
       u += 1
       un_list += ", "
