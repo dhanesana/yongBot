@@ -51,7 +51,8 @@ yong_bot = Cinch::Bot.new do
       # Thestudio,
       Kst,
       Buzz,
-      Meet
+      Meet,
+      Wshh
     ]
   end
 
