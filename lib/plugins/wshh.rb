@@ -12,7 +12,7 @@ class Wshh
     num = rand(0..9)
     title = page.css('strong.title')[num].text
     link = page.css('strong.title a')[num]['href']
-    m.reply "#{title}: #{link}"
+    m.reply "#{title}: http://www.worldstarhiphop.com#{link}"
   end
 
   def help(m)
