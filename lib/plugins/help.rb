@@ -44,7 +44,8 @@ class Help
       ".kst",
       ".buzz",
       ".meet",
-      ".meet list"
+      ".meet list",
+      ".wshh"
     ]
   end
 
