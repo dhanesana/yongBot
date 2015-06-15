@@ -25,25 +25,25 @@ class Meet
 
     @result['listMap'].each do |x|
       if x['START_TM_SHORT_FLG'] == 'N'
-        meets["#{x['TITLE']}"] = (x['START_TM']).to_i unless DateTime.now.strftime('%Q').to_i > x['START_TM'].to_i
+        meets["#{x['TITLE']}"] = [(x['START_TM']).to_i, x['MG_SEQ']] unless DateTime.now.strftime('%Q').to_i > x['START_TM'].to_i
       end
       if x['START_TM_SHORT_FLG'] == 'Y'
-        unconfirmed["#{x['TITLE']}"] = (x['START_TM']).to_i unless DateTime.now.strftime('%Q').to_i > x['START_TM'].to_i
+        unconfirmed["#{x['TITLE']}"] = [(x['START_TM']).to_i, x['MG_SEQ']] unless DateTime.now.strftime('%Q').to_i > x['START_TM'].to_i
       end
     end
 
     @result_2['listMap'].each do |x|
       if x['START_TM_SHORT_FLG'] == 'N'
-        meets["#{x['TITLE']}"] = (x['START_TM']).to_i unless DateTime.now.strftime('%Q').to_i > x['START_TM'].to_i
+        meets["#{x['TITLE']}"] = [(x['START_TM']).to_i, x['MG_SEQ']] unless DateTime.now.strftime('%Q').to_i > x['START_TM'].to_i
       end
       if x['START_TM_SHORT_FLG'] == 'Y'
-        unconfirmed["#{x['TITLE']}"] = (x['START_TM']).to_i unless DateTime.now.strftime('%Q').to_i > x['START_TM'].to_i
+        unconfirmed["#{x['TITLE']}"] = [(x['START_TM']).to_i, x['MG_SEQ']] unless DateTime.now.strftime('%Q').to_i > x['START_TM'].to_i
       end
     end
 
-    meets = meets.sort_by { |title, date| date }
-    unconfirmed = unconfirmed.sort_by { |title, date| date }
-    m.reply "Confirmed M&G => #{meets.first.first} #{((Time.strptime(meets.first[1].to_s, '%Q').utc - (07 * 3600)) + (16 * 3600)).strftime("%m/%d %H:%MKST")}, Unconfirmed => #{unconfirmed.first.first} #{((Time.strptime(unconfirmed.first[1].to_s, '%Q').utc - (07 * 3600)) + (16 * 3600)).strftime("%m/%d %H:%MKST")}"
+    meets = meets.sort_by { |title, date| date.first }
+    unconfirmed = unconfirmed.sort_by { |title, date| date.first }
+    m.reply "Confirmed => #{meets.first.first} #{((Time.strptime(meets.first[1].first.to_s, '%Q').utc - (07 * 3600)) + (16 * 3600)).strftime("%m/%d %H:%MKST")} http://mwave.interest.me/meetgreet/view/#{meets.first[1][1]}, Unconfirmed => #{unconfirmed.first.first} #{((Time.strptime(unconfirmed.first[1].first.to_s, '%Q').utc - (07 * 3600)) + (16 * 3600)).strftime("%m/%d %H:%MKST")} http://mwave.interest.me/meetgreet/view/#{unconfirmed.first[1][1]}"
   end
 
   def list(m)
