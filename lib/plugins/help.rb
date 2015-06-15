@@ -45,7 +45,8 @@ class Help
       ".buzz",
       ".meet",
       ".meet list",
-      ".wshh"
+      ".wshh",
+      ".instiz [num]"
     ]
   end
 
