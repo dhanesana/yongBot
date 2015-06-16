@@ -47,7 +47,8 @@ class Help
       ".meet list",
       ".wshh",
       ".instiz [num]",
-      ".gaon [num]"
+      ".gaon [num]",
+      ".mto"
     ]
   end
 
