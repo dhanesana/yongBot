@@ -14,8 +14,9 @@ class Fresh
     response['data']['children'].each do |post|
       fresh[post['data']['title']] = post['data']['url'] if post['data']['title'].include? '[FRESH'
     end
-    num = rand(0..fresh.size - 1)
-    m.reply "#{fresh[num][0]}: #{fresh[num][1]}"
+    fresh_array = fresh.to_a
+    num = rand(0..fresh_array.size - 1)
+    m.reply "#{fresh_array[num][0]}: #{fresh_array[num][1]}"
   end
 
   def help(m)
