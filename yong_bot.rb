@@ -55,7 +55,8 @@ yong_bot = Cinch::Bot.new do
       Wshh,
       Instiz,
       Gaon,
-      Mto
+      Mto,
+      Fresh
     ]
   end
 

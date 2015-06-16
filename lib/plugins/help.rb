@@ -48,7 +48,8 @@ class Help
       ".wshh",
       ".instiz [num]",
       ".gaon [num]",
-      ".mto"
+      ".mto",
+      ".fresh"
     ]
   end
 
