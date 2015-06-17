@@ -51,7 +51,8 @@ class Help
       ".mto",
       ".fresh",
       ".agb [num]",
-      ".tnms [num]"
+      ".tnms [num]",
+      ".lyric [lyrics]"
     ]
   end
 
