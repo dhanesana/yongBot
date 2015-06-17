@@ -50,7 +50,8 @@ class Help
       ".gaon [num]",
       ".mto",
       ".fresh",
-      ".agb [num]"
+      ".agb [num]",
+      ".tnms [num]"
     ]
   end
 
