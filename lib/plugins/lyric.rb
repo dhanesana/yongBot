@@ -8,7 +8,7 @@ class Lyric
 
   def execute(m, command, lyric, keywords)
     RapGenius::Client.access_token = "#{ENV['RAPGENIUS']}"
-    m.reply 'no song found :(' if RapGenius.search_by_lyrics(lyric) == []
+    return m.reply 'no song found :(' if RapGenius.search_by_lyrics(lyric) == []
     song_id = RapGenius.search_by_lyrics(keywords).first.id
     song = RapGenius::Song.find(song_id)
     title = song.title
