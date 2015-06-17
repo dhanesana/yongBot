@@ -58,7 +58,8 @@ yong_bot = Cinch::Bot.new do
       Mto,
       Fresh,
       Agb,
-      Tnms
+      Tnms,
+      Lyric
     ]
   end
 
