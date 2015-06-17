@@ -8,8 +8,7 @@ class Fresh
   match /(help fresh)$/, method: :help, prefix: /^(\.)/
 
   def execute(m)
-    encoded = URI.encode("http://www.reddit.com/r/hiphopheads/new/.json")
-    response = HTTParty.get(URI.parse(encoded))
+    response = HTTParty.get("http://www.reddit.com/r/hiphopheads/new/.json")
     fresh = {}
     response['data']['children'].each do |post|
       fresh[post['data']['title']] = post['data']['url'] if post['data']['title'].include? '[FRESH'

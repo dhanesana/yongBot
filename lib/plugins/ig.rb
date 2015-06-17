@@ -9,8 +9,7 @@ class Ig
 
 
   def execute(m, command, ig, tag)
-    encoded = URI.encode("https://api.instagram.com/v1/tags/#{tag}/media/recent?client_id=#{ENV['IG_ID']}")
-    response = HTTParty.get(URI.parse(encoded))
+    response = HTTParty.get("https://api.instagram.com/v1/tags/#{tag}/media/recent?client_id=#{ENV['IG_ID']}")
     m.reply response["data"].first['link']
   end
 

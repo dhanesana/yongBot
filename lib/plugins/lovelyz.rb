@@ -8,8 +8,7 @@ class Lovelyz
   match /(help lovelyz)$/, method: :help, prefix: /^(\.)/
 
   def execute(m)
-    encoded = URI.encode("https://api.instagram.com/v1/tags/러블리즈/media/recent?client_id=#{ENV['IG_ID']}")
-    response = HTTParty.get(URI.parse(encoded))
+    response = HTTParty.get("https://api.instagram.com/v1/tags/러블리즈/media/recent?client_id=#{ENV['IG_ID']}")
     m.reply response["data"][rand(0..19)]['link']
   end
 
