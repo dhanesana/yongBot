@@ -40,7 +40,6 @@ class Help
       ".celeb [img_url]",
       ".wutdis [img_url]",
       ".[this] or [that]",
-      # ".studio",
       ".kst",
       ".buzz",
       ".meet",
@@ -57,7 +56,10 @@ class Help
   end
 
   def execute(m)
-    m.reply "=> #{@plugins.join(', ')}"
+    num = @plugins.size.even? ? @plugins.size / 2 : (@plugins.size / 2) + 1
+    split_array = @plugins.each_slice(num).to_a
+    m.reply "=> #{split_array[0].join(', ')}"
+    m.reply "#{split_array[1].join(', ')}"
     m.reply ".help [command] for more info (ie '.help nba')"
   end
 
