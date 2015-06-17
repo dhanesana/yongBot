@@ -14,10 +14,14 @@ class Agb
     date = page.css('span.t_year').text
     station = page.css('div#boardlist td')[3].text if num.to_i == 1
     title = page.css('div#boardlist td')[5] if num.to_i == 1
+    title.slice! '<td>'
+    title.slice! '</td>'
     return m.reply "AGB Nielson Rank #{num}: #{station} - #{title}" if num.to_i == 1
     x = (num.to_i - 1) * 12
     station = page.css('div#boardlist td')[3 + x].text
-    title = page.css('div#boardlist td')[5 + x]
+    title = page.css('div#boardlist td')[5 + x].text
+    title.slice! '<td>'
+    title.slice! '</td>'
     m.reply "AGB Nielson Rank #{num}: #{station} - #{title} | #{date}"
   end
 
