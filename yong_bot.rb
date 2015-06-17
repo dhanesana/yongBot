@@ -1,4 +1,5 @@
 require 'cinch'
+require 'cinch/plugins/identify'
 require_relative 'bin/plugins'
 
 $master = "#{ENV['MASTER']}"
@@ -11,10 +12,11 @@ yong_bot = Cinch::Bot.new do
       "#{ENV['CHANNEL_2']}",
       "#{ENV['CHANNEL_3']}"
     ]
-    c.nicks = ["#{ENV['NICKS']}"]
+    # c.nicks = ["#{ENV['NICKS']}"]
     c.realname = "yongBot v1.0"
 
     c.plugins.plugins = [
+      Cinch::Plugins::Identify,
       Help,
       Lineup,
       Iono,
@@ -63,6 +65,11 @@ yong_bot = Cinch::Bot.new do
       Tnms,
       Lyric
     ]
+    c.plugins.options[Cinch::Plugins::Identify] = {
+      :username => "#{ENV['NICKS']}",
+      :password => "#{ENV['PW']}",
+      :type     => :nickserv,
+    }
   end
 
   on :message, ".thyme" do |m|
