@@ -5,8 +5,9 @@ class Iono
   match /(help iono)$/, method: :help, prefix: /^(\.)/
 
   def execute(m)
-    return m.reply "yes" if rand(0..1) == 0
-    m.reply "no"
+    yes = ['yes', 'yeah', 'yeee', 'ya', 'ye'].sample
+    no = ['no', 'nah', 'nope', 'nooo', 'nein bro'].sample
+    m.reply rand(0..1) == 0 ? yes : no
   end
 
   def help(m)
