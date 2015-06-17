@@ -7,7 +7,6 @@ class Sub
   match /(sub) (.+)/, prefix: /^(\.)/
   match /(help sub)$/, method: :help, prefix: /^(\.)/
 
-
   def execute(m, command, sub, tag)
     encoded = URI.encode("http://www.reddit.com/r/#{tag.downcase}/new.json")
     response = HTTParty.get(URI.parse(encoded))
