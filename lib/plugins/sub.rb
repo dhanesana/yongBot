@@ -1,3 +1,4 @@
+gem 'httparty', '=0.13.5'
 require 'httparty'
 require 'open-uri'
 
