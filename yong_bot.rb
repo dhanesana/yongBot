@@ -57,7 +57,8 @@ yong_bot = Cinch::Bot.new do
       Gaon,
       Mto,
       Fresh,
-      Agb
+      Agb,
+      Tnms
     ]
   end
 
