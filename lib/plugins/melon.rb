@@ -8,6 +8,7 @@ class Melon
   match /(help melon)$/, method: :help, prefix: /^(\.)/
 
   def execute(m, command, melon, num)
+    return m.reply 'invalid num bru' if num.to_i < 1
     link = open("http://www.melon.com/chart/index.htm.json").read
     result = JSON.parse(link)
     rank = result['songList'][num.to_i - 1]['curRank']

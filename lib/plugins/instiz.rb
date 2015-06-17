@@ -7,6 +7,7 @@ class Instiz
   match /(help instiz)$/, method: :help, prefix: /^(\.)/
 
   def execute(m, command, instiz, num)
+    return m.reply 'invalid num bru' if num.to_i < 1
     agent = Mechanize.new
     referer_url = 'http://ichart.instiz.net/'
     page = agent.get(

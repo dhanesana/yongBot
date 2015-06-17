@@ -8,7 +8,7 @@ class Agb
   match /(help agb)$/, method: :help, prefix: /^(\.)/
 
   def execute(m, command, agb, num)
-    return m.reply 'greater than 0 bru' if num.to_i < 1
+    return m.reply 'invalid num bru' if num.to_i < 1
     return m.reply 'less than 21 bru' if num.to_i > 20
     page = Nokogiri::HTML(open('http://www.agbnielsen.co.kr/_hannet/agb/f_rating/rating_01a.asp'))
     date = page.css('span.t_year').text
