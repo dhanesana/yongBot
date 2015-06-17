@@ -12,7 +12,7 @@ yong_bot = Cinch::Bot.new do
       "#{ENV['CHANNEL_2']}",
       "#{ENV['CHANNEL_3']}"
     ]
-    # c.nicks = ["#{ENV['NICKS']}"]
+    c.nicks = ["#{ENV['NICKS']}"]
     c.realname = "yongBot v1.0"
 
     c.plugins.plugins = [
@@ -52,7 +52,6 @@ yong_bot = Cinch::Bot.new do
       Celeb,
       Wutdis,
       ThisOrThat,
-      # Thestudio,
       Kst,
       Buzz,
       Meet,
