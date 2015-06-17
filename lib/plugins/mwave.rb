@@ -8,6 +8,7 @@ class Mwave
   match /(help mwave)$/, method: :help, prefix: /^(\.)/
 
   def execute(m, command, mwave, num)
+    return m.reply 'invalid num bru' if num.to_i < 1
     link = open("http://mwave.interest.me/mcountdown/vote/mcdChart.json").read
     result = JSON.parse(link)
     if num.to_i <= 3

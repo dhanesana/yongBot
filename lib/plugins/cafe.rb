@@ -8,6 +8,7 @@ class Cafe
   match /(help cafe)$/, method: :help, prefix: /^(\.)/
 
   def execute(m, command, cafe, num)
+    return m.reply 'invalid num bru' if num.to_i < 1
     page = Nokogiri::HTML(open('http://top.cafe.daum.net/_c21_/category_list?type=sub&subcateid=85&cateid=5'))
     total = page.css('td.cafename').size
     title = page.css('td.cafename')[num.to_i - 1].children[1].text

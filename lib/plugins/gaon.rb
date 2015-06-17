@@ -8,6 +8,7 @@ class Gaon
   match /(help gaon)$/, method: :help, prefix: /^(\.)/
 
   def execute(m, command, gaon, num)
+    return m.reply 'invalid num bru' if num.to_i < 1
     page = Nokogiri::HTML(open('http://gaonchart.co.kr/main/section/chart/online.gaon?serviceGbn=ALL&termGbn=week&hitYear=2015&targetTime=&nationGbn=K'))
     rank = num.to_i - 1
     title = page.css('td.subject')[rank].css('p').first.text
