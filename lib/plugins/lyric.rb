@@ -9,7 +9,7 @@ class Lyric
   def execute(m, command, lyric, keywords)
     RapGenius::Client.access_token = "#{ENV['RAPGENIUS']}"
     return m.reply 'no song found :(' if RapGenius.search_by_lyrics(lyric) == []
-    return m.reply "Corona - Rhythm of the Night https://youtu.be/u3ltZmI5LQw" if keywords.include? ('nike' && 'reebdok')
+    return m.reply "Corona - Rhythm of the Night https://youtu.be/u3ltZmI5LQw" if keywords.include? ('nike' && 'reebok')
     song_id = RapGenius.search_by_lyrics(keywords).first.id
     song = RapGenius::Song.find(song_id)
     title = song.title
