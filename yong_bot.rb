@@ -1,6 +1,8 @@
 require 'cinch'
 require_relative 'bin/plugins'
 
+$master = "#{ENV['MASTER']}"
+
 yong_bot = Cinch::Bot.new do
   configure do |c|
     c.server = "#{ENV['SERVER']}"
@@ -66,6 +68,25 @@ yong_bot = Cinch::Bot.new do
   on :message, ".thyme" do |m|
     t = Time.now
     m.reply "#{t}"
+  end
+
+  helpers do
+    def is_admin?(user)
+      true if user.nick == $master
+    end
+  end
+
+  on :message, /^.join (.+)/ do |m, channel|
+    bot.join(channel) if is_admin?(m.user)
+  end
+
+  on :message, /^.part(?: (.+))?/ do |m, channel|
+    # Part current channel if none is given
+    channel = channel || m.channel
+
+    if channel
+      bot.part(channel) if is_admin?(m.user)
+    end
   end
 
 end
