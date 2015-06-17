@@ -49,7 +49,8 @@ class Help
       ".instiz [num]",
       ".gaon [num]",
       ".mto",
-      ".fresh"
+      ".fresh",
+      ".agb [num]"
     ]
   end
 
