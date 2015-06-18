@@ -52,7 +52,8 @@ class Help
       ".agb [num]",
       ".tnms [num]",
       ".lyric [lyrics]",
-      ".simply"
+      ".simply",
+      ".asc"
     ]
   end
 
@@ -61,7 +62,7 @@ class Help
     split_array = @plugins.each_slice(num).to_a
     m.reply "=> #{split_array[0].join(', ')}"
     m.reply "#{split_array[1].join(', ')}"
-    m.reply ".help [command] for more info (ie '.help nba')"
+    m.reply ".help [command] for more info (ie '.help sub')"
   end
 
 end
