@@ -12,6 +12,7 @@ class Agb
     return m.reply 'less than 21 bru' if num.to_i > 20
     page = Nokogiri::HTML(open('http://www.agbnielsen.co.kr/_hannet/agb/f_rating/rating_01a.asp'))
     date = page.css('span.t_year').text
+    return m.reply "#{date}: No Data Available" if page.css('div#boardlist td').size < 4
     station = page.css('div#boardlist td')[3].text if num.to_i == 1
     title = page.css('div#boardlist td')[5].text if num.to_i == 1
     title.slice! '<td>' if num.to_i == 1
