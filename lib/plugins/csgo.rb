@@ -30,7 +30,7 @@ class Csgo
     total_matches = result['playerstats']['stats'][33]['value'].to_f
     win_ratio = ((wins / total_matches) * 100).round(0)
 
-    p "K/D: #{kd_ratio} | HS: #{hs_ratio}% | ACC: #{accuracy}% | WIN: #{win_ratio}%"
+    m.reply "K/D: #{kd_ratio} | HS: #{hs_ratio}% | ACC: #{accuracy}% | WIN: #{win_ratio}%"
   end
 
   def help(m)
