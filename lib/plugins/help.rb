@@ -53,7 +53,8 @@ class Help
       ".tnms [num]",
       ".lyric [lyrics]",
       ".simply",
-      ".asc"
+      ".asc",
+      ".csgo [user]"
     ]
   end
 

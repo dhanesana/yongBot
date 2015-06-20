@@ -64,7 +64,8 @@ yong_bot = Cinch::Bot.new do
       Tnms,
       Lyric,
       Simply,
-      Asc
+      Asc,
+      Csgo
     ]
     c.plugins.options[Cinch::Plugins::Identify] = {
       :username => "#{ENV['NICKS']}",
