@@ -15,20 +15,21 @@ class Csgo
     steamGet = open("http://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v0002/?appid=730&key=#{ENV['STEAM_KEY']}&steamid=#{steamID64}").read
     result = JSON.parse(steamGet)
 
-    total_k = result['playerstats']['stats'].first['value'].to_f
-    total_d = result['playerstats']['stats'][1]['value'].to_f
+    total_k, total_d, hs, hit, fired, wins, rounds = 0, 0, 0, 0, 0, 0, 0
+    result['playerstats']['stats'].each do |item|
+      total_k += item['value'] if item['name'] == 'total_kills'
+      total_d += item['value'] if item['name'] == 'total_deaths'
+      hs      += item['value'] if item['name'] == 'total_kills_headshot'
+      hit     += item['value'] if item['name'] == 'total_shots_hit'
+      fired   += item['value'] if item['name'] == 'total_shots_fired'
+      wins    += item['value'] if item['name'] == 'total_wins'
+      rounds  += item['value'] if item['name'] == 'total_rounds_played'
+    end
+
     kd_ratio = (total_k / total_d).round(2)
-
-    hs = result['playerstats']['stats'][20]['value'].to_f
     hs_ratio = ((hs / total_k) * 100).round(0)
-
-    hit = result['playerstats']['stats'][31]['value'].to_f
-    fired = result['playerstats']['stats'][32]['value'].to_f
     accuracy = ((hit / fired) * 100).round(0)
-
-    wins = result['playerstats']['stats'][5]['value'].to_f
-    total_matches = result['playerstats']['stats'][33]['value'].to_f
-    win_ratio = ((wins / total_matches) * 100).round(0)
+    win_rate = ((wins / rounds) * 100).round(0)
 
     m.reply "K/D: #{kd_ratio} | HS: #{hs_ratio}% | ACC: #{accuracy}% | WIN: #{win_ratio}%"
   end
