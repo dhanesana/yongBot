@@ -11,8 +11,8 @@ class Steam
 
   def execute(m, command, steam, user)
     page = Nokogiri::XML(open("http://steamcommunity.com/id/#{user}/?xml=1"))
+    return m.reply "invalid user bru" if page.text == "The specified profile could not be found."
     steamID64 = page.xpath("//steamID64").text
-    return m.reply "sry bru.. #{user} not found" if steamID64 == ''
     steamGet = open("http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=#{ENV['STEAM_KEY']}&steamids=#{steamID64}").read
     result = JSON.parse(steamGet)
     logoff = result['response']['players'].first['lastlogoff']
