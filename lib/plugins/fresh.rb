@@ -8,7 +8,7 @@ class Fresh
   match /(help fresh)$/, method: :help, prefix: /^(\.)/
 
   def execute(m)
-    response = HTTParty.get("http://www.reddit.com/r/hiphopheads/new/.json")
+    response = HTTParty.get("http://www.reddit.com/r/hiphopheads/.json")
     fresh = {}
     response['data']['children'].each do |post|
       fresh[post['data']['title']] = post['data']['url'] if post['data']['title'].include? '[FRESH'
@@ -19,7 +19,7 @@ class Fresh
   end
 
   def help(m)
-    m.reply 'returns random recent [FRESH] post from r/hiphopheads'
+    m.reply 'returns random [FRESH] post from r/hiphopheads'
   end
 
 end
