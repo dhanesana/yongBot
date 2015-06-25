@@ -8,7 +8,8 @@ class Yongpop
   match /(help yongpop)$/, method: :help, prefix: /^(\.)/
 
   def execute(m)
-    response = HTTParty.get("https://api.instagram.com/v1/tags/크레용팝/media/recent?client_id=#{ENV['IG_ID']}")
+    tag = URI.encode('크레용팝')
+    response = HTTParty.get("https://api.instagram.com/v1/tags/#{tag}/media/recent?client_id=#{ENV['IG_ID']}")
     m.reply response["data"][rand(0..19)]['link']
   end
 
