@@ -74,18 +74,20 @@ class Meet
     un_list = "Unconfirmed: "
     i = 0
     u = 0
-    while i < 5
+    while i < meets.size
       list += "[#{meets[i].first}, #{((Time.strptime(meets[i][1].to_s, '%Q').utc - (07 * 3600)) + (16 * 3600)).strftime("%m/%d %H:%MKST")}]"
       i += 1
+      break if i == 5
       list += ", "
     end
-    while u < 5
+    while u < unconfirmed.size
       un_list += "[#{unconfirmed[u].first}, #{((Time.strptime(unconfirmed[u][1].to_s, '%Q').utc - (07 * 3600)) + (16 * 3600)).strftime("%m/%d %H:%MKST")}]"
       u += 1
+      break if i == 5
       un_list += ", "
     end
-    m.reply list
-    m.reply un_list
+    m.reply list[0..-3]
+    m.reply un_list[0..-3]
   end
 
   def help(m)
