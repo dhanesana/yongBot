@@ -15,7 +15,7 @@ class Kpoppin
     page.css('tr.ntce td.subjt').each do |subject|
       lineup << subject.text if subject.text[0].to_i > 0
     end
-    m.reply "[#{lineup.join('], [')}] 12:00 ~ 14:00KST"
+    m.reply "[#{lineup.reverse.join('], [')}] 12:00 ~ 14:00KST"
   end
 
   def help(m)
