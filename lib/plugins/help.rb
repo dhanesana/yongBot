@@ -54,7 +54,8 @@ class Help
       ".lyric [lyrics]",
       ".simply",
       ".asc",
-      ".csgo [user]"
+      ".csgo [user]",
+      ".kpoppin"
     ]
   end
 
