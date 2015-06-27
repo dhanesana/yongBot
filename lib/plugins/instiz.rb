@@ -3,10 +3,22 @@ require 'mechanize'
 class Instiz
   include Cinch::Plugin
 
-  match /(instiz) (.+)/, prefix: /^(\.)/
+  match /(instiz)$/, prefix: /^(\.)/
+  match /(instiz) (.+)/, method: :with_num, prefix: /^(\.)/
   match /(help instiz)$/, method: :help, prefix: /^(\.)/
 
-  def execute(m, command, instiz, num)
+  def execute(m)
+    agent = Mechanize.new
+    referer_url = 'http://ichart.instiz.net/'
+    page = agent.get(
+        'http://www.instiz.net/iframe_ichart_score.htm',
+        nil, referer_url)
+    one_song = page.at('div.ichart_score_song1').text
+    one_artist = page.at('div.ichart_score_artist1').text
+    m.reply "iChart Rank 1: #{one_song} by #{one_artist}"
+  end
+
+  def with_num(m, command, instiz, num)
     return m.reply 'invalid num bru' if num.to_i < 1
     agent = Mechanize.new
     referer_url = 'http://ichart.instiz.net/'
