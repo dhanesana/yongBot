@@ -4,10 +4,18 @@ require 'open-uri'
 class Naver
   include Cinch::Plugin
 
-  match /(naver) (.+)/, prefix: /^(\.)/
+  match /(naver)$/, prefix: /^(\.)/
+  match /(naver) (.+)/, method: :with_num, prefix: /^(\.)/
   match /(help naver)$/, method: :help, prefix: /^(\.)/
 
-  def execute(m, command, naver, num)
+  def execute(m)
+    page = Nokogiri::HTML(open("http://www.naver.com/"))
+    text = page.css('ol#realrank li a')[0].children.first.text
+    url = page.css('ol#realrank a')[0].first.last
+    m.reply "Naver Trending [1]: #{text} #{url}"
+  end
+
+  def with_num(m, command, naver, num)
     return m.reply 'invalid num bru' if num.to_i < 1
     page = Nokogiri::HTML(open("http://www.naver.com/"))
     text = page.css('ol#realrank li a')[num.to_i - 1].children.first.text
