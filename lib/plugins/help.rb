@@ -55,7 +55,8 @@ class Help
       ".simply",
       ".asc",
       ".csgo [user]",
-      ".kpoppin"
+      ".kpoppin",
+      ".github [user]"
     ]
   end
 
