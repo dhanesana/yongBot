@@ -9,6 +9,7 @@ class Github
 
   def execute(m, command, github, user)
     resp = HTTParty.get("https://api.github.com/users/#{user}/events")
+    m.reply resp.first['payload']
     message = resp.first['payload']['commits'].first['message']
     url = resp.first['payload']['commits'].first['url']
     resp_2 = HTTParty.get(url)
