@@ -67,7 +67,8 @@ yong_bot = Cinch::Bot.new do
       Asc,
       Csgo,
       Kpoppin,
-      Github
+      Github,
+      Soundk
     ]
     c.plugins.options[Cinch::Plugins::Identify] = {
       :username => "#{ENV['NICKS']}",
