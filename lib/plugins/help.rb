@@ -57,7 +57,8 @@ class Help
       ".csgo [user]",
       ".kpoppin",
       # ".github [user]",
-      ".soundk"
+      ".soundk",
+      ".viki [title]"
     ]
   end
 
