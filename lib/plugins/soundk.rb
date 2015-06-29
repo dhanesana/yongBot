@@ -8,12 +8,12 @@ class Soundk
   match /(help soundk)$/, method: :help, prefix: /^(\.)/
 
   def execute(m)
-    page = Nokogiri::HTML(open('http://www.arirang.co.kr/Radio/Radio_Announce.asp?PROG_CODE=RADR0147&MENU_CODE=101562&code=Be4'))
+    page = Nokogiri::HTML(open('http://www.arirang.co.kr/Radio/Radio_MessageBoard.asp?PROG_CODE=RADR0147&MENU_CODE=101865&code=Be6'))
     lineup = []
-    i = 1
-    2.times do
-      lineup << page.css('td')[i].text unless page.css('td')[i].text[0].to_i == 0
-      i += 4
+    i = 0
+    while i < page.css('tr.ntce td.subjt').size
+      lineup << page.css('tr.ntce td.subjt')[i].text unless page.css('tr.ntce td.subjt')[i].text[0].to_i == 0
+      i += 1
     end
     m.reply "[#{lineup.join('], [')}] 20:00 ~ 22:00KST"
   end
