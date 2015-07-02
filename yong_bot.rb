@@ -10,7 +10,8 @@ yong_bot = Cinch::Bot.new do
     c.channels = [
       "#{ENV['CHANNEL_1']}",
       "#{ENV['CHANNEL_2']}",
-      "#{ENV['CHANNEL_3']}"
+      "#{ENV['CHANNEL_3']}",
+      "#{ENV['CHANNEL_4']}"
     ]
     c.nicks = ["#{ENV['NICKS']}"]
     c.realname = "yongBot v1.0"
