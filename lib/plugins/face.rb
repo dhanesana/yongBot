@@ -21,7 +21,7 @@ class Face
     response.body['face_detection'].first['race'].each_key { |key| race += key }
 
     age = response.body['face_detection'].first['age'].to_i
-    beauty = (response.body['face_detection'].first['beauty'] * 100).to_i
+    beauty = (response.body['face_detection'].first['beauty'] * 100).round(3)
     gender = response.body['face_detection'].first['sex']
     sex = 'Male' if gender >= 0.5
     sex = 'Female' if gender < 0.5
