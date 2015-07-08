@@ -11,7 +11,10 @@ class Gn
       "http://i.imgur.com/eT3TWtE.png",
       "http://i.imgur.com/sJuqLKy.gif",
       "http://i.imgur.com/2qXK47K.jpg",
-      "http://i.imgur.com/3Ct6vfM.jpg"
+      "http://i.imgur.com/3Ct6vfM.jpg",
+      "http://i.imgur.com/hQ4z6ug.png",
+      "http://i.imgur.com/CjnuVw8.png",
+      "http://i.imgur.com/T4upJdE.jpg"
     ]
   end
 
