@@ -6,8 +6,11 @@ class Face
   include Cinch::Plugin
 
   match /(face) (.+)/, prefix: /^(\.)/
-  match /(help face)$/, method: :help, prefix: /^(\.)/
   match /(face top)$/, method: :top, prefix: /^(\.)/
+  match /(face low)$/, method: :low, prefix: /^(\.)/
+  match /(help face)$/, method: :help, prefix: /^(\.)/
+  match /(help face top)$/, method: :help_top, prefix: /^(\.)/
+  match /(help face low)$/, method: :help_low, prefix: /^(\.)/
 
   def initialize(*args)
     super
@@ -19,11 +22,24 @@ class Face
       File.open('face.yml', 'w') { |h| h.write first }
       @score = YAML.load_file('face.yml')
     end
+    if File.exist?('low_face.yml')
+      @low_score = YAML.load_file('low_face.yml')
+    else
+      File.new('low_face.yml', 'w')
+      first = { 'none' => 100 }.to_yaml
+      File.open('low_face.yml', 'w') { |h| h.write first }
+      @low_score = YAML.load_file('low_face.yml')
+    end
   end
 
   def top(m)
     @score = YAML.load_file('face.yml')
     m.reply "#{@score.first[0]} Beauty: #{@score.first[1]}/100"
+  end
+
+  def low(m)
+    @low_score = YAML.load_file('low_face.yml')
+    m.reply "#{@low_score.first[0]} Beauty: #{@low_score.first[1]}/100"
   end
 
   def execute(m, command, face, link)
@@ -49,11 +65,18 @@ class Face
 
     hash = { link => beauty }
     @score = YAML.load_file('face.yml')
+    @low_score = YAML.load_file('low_face.yml')
     if beauty > @score.first[1] && sex == 'Female'
       File.open('face.yml', 'w') do |h|
         h.write hash.to_yaml
       end
       m.reply "ding ding ding new high score"
+    end
+    if beauty < @low_score.first[1]
+      File.open('low_face.yml', 'w') do |h|
+        h.write hash.to_yaml
+      end
+      m.reply "dun dun dun new low score..."
     end
 
     m.reply "#{race.capitalize} #{sex} | Age: #{age} | Status: #{status} | Beauty: #{beauty}/100"
@@ -61,6 +84,14 @@ class Face
 
   def help(m)
     m.reply 'returns estimated race, sex, age, and beauty for specified image'
+  end
+
+  def help_top(m)
+    m.reply 'returns highest beauty scored image'
+  end
+
+  def help_low(m)
+    m.reply 'returns lowest beauty scored image'
   end
 
 end
