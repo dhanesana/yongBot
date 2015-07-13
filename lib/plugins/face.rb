@@ -1,6 +1,6 @@
 require 'open-uri'
 require 'unirest'
-require 'yaml'
+require 'pg'
 
 class Face
   include Cinch::Plugin
@@ -14,32 +14,48 @@ class Face
 
   def initialize(*args)
     super
-    if File.exist?('face.yml')
-      @score = YAML.load_file('face.yml')
+
+    # DROP DB
+    # conn = PG.connect( dbname: 'postgres' )
+    # conn.exec("DROP DATABASE scores")
+
+    conn = PG.connect( dbname: 'template1' )
+    res = conn.exec(
+      'SELECT * from pg_database where datname = $1', ['scores']
+    )
+    if res.ntuples == 1 # db exists
+      conn_scores = PG.connect(dbname: 'scores')
     else
-      File.new('face.yml', 'w')
-      first = { 'none' => 0 }.to_yaml
-      File.open('face.yml', 'w') { |h| h.write first }
-      @score = YAML.load_file('face.yml')
-    end
-    if File.exist?('low_face.yml')
-      @low_score = YAML.load_file('low_face.yml')
-    else
-      File.new('low_face.yml', 'w')
-      first = { 'none' => 100 }.to_yaml
-      File.open('low_face.yml', 'w') { |h| h.write first }
-      @low_score = YAML.load_file('low_face.yml')
+      puts 'CREATE DATABASE'
+      conn.exec('CREATE DATABASE scores')
+      conn = PGconn.connect( :dbname => 'scores')
+      conn.exec(
+        "create table top (url varchar, score decimal);"
+      )
+      conn.exec(
+        "create table low (url varchar, score decimal);"
+      )
+      conn.exec(
+        "INSERT INTO top (url, score) VALUES ('http://google.com', 0.001);"
+      )
+      conn.exec(
+        "INSERT INTO low (url, score) VALUES ('http://apple.com', 100);"
+      )
     end
   end
 
   def top(m)
-    @score = YAML.load_file('face.yml')
-    m.reply "#{@score.first[0]} Beauty: #{@score.first[1]}/100"
+    conn_scores = PG.connect(dbname: 'scores')
+    urls = conn_scores.exec("SELECT url FROM top")
+    scores = conn_scores.exec("SELECT score FROM top")
+    m.reply "#{urls[0]['url']} Beauty: #{scores[0]['score']}/100"
   end
 
   def low(m)
-    @low_score = YAML.load_file('low_face.yml')
-    m.reply "#{@low_score.first[0]} Beauty: #{@low_score.first[1]}/100"
+    conn_scores = PG.connect(dbname: 'scores')
+    urls = conn_scores.exec("SELECT url FROM low")
+    scores = conn_scores.exec("SELECT score FROM low")
+    m.reply "#{urls[0]['url']} Beauty: #{scores[0]['score']}/100"
   end
 
   def execute(m, command, face, link)
@@ -64,18 +80,29 @@ class Face
     status = 'legal' if age > 17
 
     hash = { link => beauty }
-    @score = YAML.load_file('face.yml')
-    @low_score = YAML.load_file('low_face.yml')
-    if beauty > @score.first[1] && sex == 'Female'
-      File.open('face.yml', 'w') do |h|
-        h.write hash.to_yaml
-      end
+    scores_db = PG.connect(dbname: 'scores')
+    top_urls = scores_db.exec("SELECT url from top")
+    top_scores = scores_db.exec("SELECT score from top")
+    high_score = top_scores[0]['score'].to_f
+    low_urls = scores_db.exec("SELECT url from low")
+    low_scores = scores_db.exec("SELECT score from low")
+    low_score = low_scores[0]['score'].to_f
+    if beauty > high_score && sex == 'Female'
+      scores_db.exec(
+        "update top set score = #{beauty} where score = #{high_score}"
+      )
+      scores_db.exec(
+        "update top set url = '#{link}' where url = '#{top_urls[0]['url']}'"
+      )
       m.reply "ding ding ding new high score"
     end
-    if beauty < @low_score.first[1]
-      File.open('low_face.yml', 'w') do |h|
-        h.write hash.to_yaml
-      end
+    if beauty < low_score
+      scores_db.exec(
+        "update low set score = #{beauty} where score = #{low_score}"
+      )
+      scores_db.exec(
+        "update low set url = '#{link}' where url = '#{low_urls[0]['url']}'"
+      )
       m.reply "dun dun dun new low score..."
     end
 
