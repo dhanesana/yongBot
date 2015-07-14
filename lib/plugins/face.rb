@@ -92,7 +92,8 @@ class Face
       posts << post['data']['preview']['images'].first['source']['url'] if post['data']['domain'] == 'instagram.com'
       # posts << post['data']['preview']['images'].first['source']['url'] unless post['data']['domain'] == 'gfycat'
     end
-    url = URI.encode(posts.sample)
+    link = posts.sample
+    url = URI.encode(link)
     response = Unirest.post "https://orbeus-rekognition.p.mashape.com/?api_key=#{ENV['REKOGNITION_KEY']}&api_secret=#{ENV['REKOGNITION_SECRET']}&jobs=face_part_gender_age_emotion_beauty_race_recognize&urls=#{url}",
       headers:{
         "X-Mashape-Key" => "#{ENV['REK_MASHAPE']}",
