@@ -129,7 +129,7 @@ class Face
       m.reply "dun dun dun new low score..."
     end
 
-    m.reply "#{race.capitalize} #{sex} | Age: #{age} | Status: #{status} | Beauty: #{beauty}/100"
+    m.reply "#{link} | #{race.capitalize} #{sex} | Age: #{age} | Status: #{status} | Beauty: #{beauty}/100"
   end
 
   def help(m)
