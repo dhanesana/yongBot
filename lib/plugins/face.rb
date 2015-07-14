@@ -131,7 +131,7 @@ class Face
   end
 
   def help(m)
-    m.reply 'returns estimated race, sex, age, and beauty for specified image'
+    m.reply "returns estimated race, sex, age, and beauty for specified image. if image isn't specified, random image from kpics is used"
   end
 
   def help_top(m)
