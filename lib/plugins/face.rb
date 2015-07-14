@@ -1,5 +1,6 @@
 require 'open-uri'
 require 'unirest'
+require 'httparty'
 require 'yaml'
 
 class Face
