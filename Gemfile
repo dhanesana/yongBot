@@ -11,3 +11,5 @@ gem 'dotenv-heroku'
 gem 'mechanize'
 gem 'rapgenius'
 gem 'cinch-identify'
+
+gem 'pg'
