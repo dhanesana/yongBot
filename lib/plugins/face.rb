@@ -7,6 +7,7 @@ class Face
   include Cinch::Plugin
 
   match /(face) (.+)/, prefix: /^(\.)/
+  match /(face)$/, method: :random, prefix: /^(\.)/
   match /(face top)$/, method: :top, prefix: /^(\.)/
   match /(face low)$/, method: :low, prefix: /^(\.)/
   match /(help face)$/, method: :help, prefix: /^(\.)/
@@ -96,8 +97,71 @@ class Face
     m.reply "#{race.capitalize} #{sex} | Age: #{age} | Status: #{status} | Beauty: #{beauty}/100"
   end
 
+  def random(m)
+    kpics = HTTParty.get("http://www.reddit.com/r/kpics/new.json")
+    posts = []
+    kpics['data']['children'].each do |post|
+      posts << post['data']['url'] unless post['data']['domain'] == 'gfycat.com' || post['data']['domain'] == 'instagram.com'
+      posts << post['data']['preview']['images'].first['source']['url'] if post['data']['domain'] == 'instagram.com'
+    end
+    posts.delete_if { |post| post.include? 'gifv' }
+    posts.delete_if { |post| post.include? '/a/' }
+    posts.delete_if { |post| post.include? 'webm' }
+    posts.delete_if { |post| post.include? 'gif' }
+    link = posts.sample
+    m.reply "r/kpics #{link}"
+    url = URI.encode(link)
+    response = Unirest.post "https://orbeus-rekognition.p.mashape.com/?api_key=#{ENV['REKOGNITION_KEY']}&api_secret=#{ENV['REKOGNITION_SECRET']}&jobs=face_part_gender_age_emotion_beauty_race_recognize&urls=#{url}",
+      headers:{
+        "X-Mashape-Key" => "#{ENV['REK_MASHAPE']}",
+        "Content-Type" => "application/x-www-form-urlencoded",
+        "Accept" => "application/json"
+      }
+    return m.reply 'no face detected bru' if response.body['face_detection'] == []
+
+    race = ''
+    response.body['face_detection'].first['race'].each_key { |key| race += key }
+
+    age = response.body['face_detection'].first['age'].to_i
+    beauty = (response.body['face_detection'].first['beauty'] * 100).round(3)
+    gender = response.body['face_detection'].first['sex']
+    sex = 'Male' if gender >= 0.5
+    sex = 'Female' if gender < 0.5
+    status = 'ill3gal'
+    status = 'legal' if age > 17
+
+    hash = { link => beauty }
+    scores_db = PG::Connection.new(ENV['DATABASE_URL'])
+    top_urls = scores_db.exec("SELECT url from top")
+    top_scores = scores_db.exec("SELECT score from top")
+    high_score = top_scores[0]['score'].to_f
+    low_urls = scores_db.exec("SELECT url from low")
+    low_scores = scores_db.exec("SELECT score from low")
+    low_score = low_scores[0]['score'].to_f
+    if beauty > high_score && sex == 'Female'
+      scores_db.exec(
+        "update top set score = #{beauty} where score = #{high_score}"
+      )
+      scores_db.exec(
+        "update top set url = '#{link}' where url = '#{top_urls[0]['url']}'"
+      )
+      m.reply "ding ding ding new high score"
+    end
+    if beauty < low_score
+      scores_db.exec(
+        "update low set score = #{beauty} where score = #{low_score}"
+      )
+      scores_db.exec(
+        "update low set url = '#{link}' where url = '#{low_urls[0]['url']}'"
+      )
+      m.reply "dun dun dun new low score..."
+    end
+
+    m.reply "#{race.capitalize} #{sex} | Age: #{age} | Status: #{status} | Beauty: #{beauty}/100"
+  end
+
   def help(m)
-    m.reply 'returns estimated race, sex, age, and beauty for specified image'
+    m.reply "returns estimated race, sex, age, and beauty for specified image (if image isn't specified, random image from kpics is used)"
   end
 
   def help_top(m)
