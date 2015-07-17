@@ -21,7 +21,7 @@ class Now
     long = response.body['longitude']
     response_2 = Unirest.get "http://api.timezonedb.com/?lat=#{lat}&lng=#{long}&format=json&key=#{ENV['TIMEZONE']}"
     time = response_2.body['timestamp'].to_s
-    m.reply "#{city}, #{region} | #{DateTime.strptime(time,'%s').strftime("%B %d, %Y %H:%M %Z")}"
+    m.reply "#{city}, #{region} | #{DateTime.strptime(time,'%s').strftime("%B %d, %Y %I:%M %p")}"
   end
 
   def help(m)
