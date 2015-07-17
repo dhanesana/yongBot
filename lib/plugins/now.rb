@@ -13,11 +13,15 @@ class Now
         "X-Mashape-Key" => "#{ENV['REK_MASHAPE']}",
         "Accept" => "application/json"
       }
+    return m.reply 'not a real place bru' if response.body.first.first == 'error'
+    city = response.body['city']
+    region = response.body['region']
+    country = response.body['country']
     lat = response.body['latitude']
     long = response.body['longitude']
     response_2 = Unirest.get "http://api.timezonedb.com/?lat=#{lat}&lng=#{long}&format=json&key=#{ENV['TIMEZONE']}"
     time = response_2.body['timestamp'].to_s
-    m.reply DateTime.strptime(time,'%s').strftime("%B %d, %Y %I:%M %p")
+    m.reply "#{city}, #{region} | #{DateTime.strptime(time,'%s').strftime("%B %d, %Y %H:%M %Z")}"
   end
 
   def help(m)
