@@ -21,7 +21,10 @@ class Now
     long = response.body['longitude']
     response_2 = Unirest.get "http://api.timezonedb.com/?lat=#{lat}&lng=#{long}&format=json&key=#{ENV['TIMEZONE']}"
     time = response_2.body['timestamp'].to_s
-    m.reply "#{city}, #{region} | #{DateTime.strptime(time,'%s').strftime("%B %d, %Y %I:%M %p")}"
+    response_3 = Unirest.get "http://api.openweathermap.org/data/2.5/weather?lat=#{lat}&lon=#{long}"
+    kelvin = response_3.body['main']['temp'].to_f
+    temp = ((kelvin - 273.15) * 1.8000 + 32).round(2)
+    m.reply "#{city}, #{region} | #{DateTime.strptime(time,'%s').strftime("%B %d, %Y %I:%M %p")} | Temp: #{temp} F"
   end
 
   def help(m)
