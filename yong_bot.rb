@@ -70,7 +70,8 @@ yong_bot = Cinch::Bot.new do
       Kpoppin,
       Github,
       Soundk,
-      Viki
+      Viki,
+      Now
     ]
     c.plugins.options[Cinch::Plugins::Identify] = {
       :username => "#{ENV['NICKS']}",

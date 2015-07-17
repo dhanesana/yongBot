@@ -58,7 +58,8 @@ class Help
       ".kpoppin",
       # ".github [user]",
       ".soundk",
-      ".viki [title]"
+      ".viki [title]",
+      ".now [location]"
     ]
   end
 
