@@ -14,9 +14,9 @@ class Now
         "Accept" => "application/json"
       }
     return m.reply 'not a real place bru' if response.body.first.first == 'error'
-    city = response.body['city']
-    region = response.body['region']
-    country = response.body['country']
+    # city = response.body['city']
+    # region = response.body['region']
+    # country = response.body['country']
     lat = response.body['latitude']
     long = response.body['longitude']
     response_2 = Unirest.get "http://api.timezonedb.com/?lat=#{lat}&lng=#{long}&format=json&key=#{ENV['TIMEZONE']}"
@@ -24,11 +24,11 @@ class Now
     response_3 = Unirest.get "http://api.openweathermap.org/data/2.5/weather?lat=#{lat}&lon=#{long}"
     kelvin = response_3.body['main']['temp'].to_f
     temp = ((kelvin - 273.15) * 1.8000 + 32).round(2)
-    m.reply "#{city}, #{region} | #{DateTime.strptime(time,'%s').strftime("%B %d, %Y %I:%M %p")} | Temp: #{temp} F"
+    m.reply "#{DateTime.strptime(time,'%s').strftime("%B %d, %Y %I:%M %p")} | Temp: #{temp} F"
   end
 
   def help(m)
-    m.reply 'returns current date and time for specified location'
+    m.reply 'returns current date, time, and temp for specified location'
   end
 
 end
