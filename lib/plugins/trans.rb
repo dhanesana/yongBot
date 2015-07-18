@@ -1,5 +1,6 @@
 require 'unirest'
 require 'open-uri'
+require 'cgi'
 
 class Trans
   include Cinch::Plugin
@@ -12,7 +13,7 @@ class Trans
     response = Unirest.get("https://www.googleapis.com/language/translate/v2?key=#{ENV['GOOGLE']}&q=#{string}&target=en")
     translated = response.body['data']['translations'].first['translatedText']
     source_lang = response.body['data']['translations'].first['detectedSourceLanguage']
-    m.reply "Language: #{source_lang.upcase} => #{translated}"
+    m.reply "Language: #{source_lang.upcase} => #{CGI.unescape_html(translated).gsub(/"/, '').gsub(/\s+/, ' ')}"
   end
 
   def help(m)
