@@ -59,7 +59,8 @@ class Help
       # ".github [user]",
       ".soundk",
       ".viki [title]",
-      ".now [location]"
+      ".now [location]",
+      ".trans [words]"
     ]
   end
 
