@@ -60,7 +60,8 @@ class Help
       ".soundk",
       ".viki [title]",
       ".now [location]",
-      ".trans [words]"
+      ".trans [words]",
+      ".ud [word]"
     ]
   end
 
