@@ -9,7 +9,11 @@ GEM
       unf (>= 0.0.5, < 1.0.0)
     dotenv-heroku (0.0.1)
       rake
+    excon (0.45.4)
     hashie (2.1.2)
+    heroku-api (0.3.23)
+      excon (~> 0.44)
+      multi_json (~> 1.8)
     httmultiparty (0.3.16)
       httparty (>= 0.7.3)
       mimemagic
@@ -65,6 +69,7 @@ DEPENDENCIES
   cinch
   cinch-identify
   dotenv-heroku
+  heroku-api
   httparty
   json
   mechanize

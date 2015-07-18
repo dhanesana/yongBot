@@ -13,3 +13,4 @@ gem 'rapgenius'
 gem 'cinch-identify'
 
 gem 'pg'
+gem 'heroku-api'
