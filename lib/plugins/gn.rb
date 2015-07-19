@@ -23,7 +23,11 @@ class Gn
       "http://i.imgur.com/awUeHzO.jpg",
       "http://i.imgur.com/Gw0Xn7X.jpg",
       "http://i.imgur.com/uho9c4M.png",
-      "http://i.imgur.com/rCN7cbH.jpg"
+      "http://i.imgur.com/rCN7cbH.jpg",
+      "http://i.imgur.com/V2VIfhJ.jpg",
+      "http://i.imgur.com/WQVEyxu.jpg",
+      "http://i.imgur.com/ubFCnrw.jpg",
+      "http://i.imgur.com/7XHEqqa.jpg"
     ]
   end
 
