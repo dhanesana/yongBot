@@ -7,9 +7,10 @@ class Twins
   match /(twins) (.+)/, prefix: /^(\.)/
   match /(help twins)$/, method: :help, prefix: /^(\.)/
 
-  def execute(m, command, twins, link, link2)
-    url = URI.encode(link)
-    url_2 = URI.encode(link2)
+  def execute(m, command, twins, links)
+    urls = links.split(/[[:space:]]/)
+    url = URI.encode(urls[0])
+    url_2 = URI.encode(urls[1])
     response = Unirest.post "https://rekognition.com/func/api/?api_key=#{ENV['REKOGNITION_KEY']}&api_secret=#{ENV['REKOGNITION_SECRET']}&jobs=face_compare&urls=#{url}&urls_compare=#{url_2}",
       headers:{
         "X-Mashape-Key" => "#{ENV['REK_MASHAPE']}",
