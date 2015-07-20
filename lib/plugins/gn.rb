@@ -27,7 +27,8 @@ class Gn
       "http://i.imgur.com/V2VIfhJ.jpg",
       "http://i.imgur.com/WQVEyxu.jpg",
       "http://i.imgur.com/ubFCnrw.jpg",
-      "http://i.imgur.com/7XHEqqa.jpg"
+      "http://i.imgur.com/7XHEqqa.jpg",
+      "http://i.imgur.com/LrgA6VG.jpg"
     ]
   end
 
