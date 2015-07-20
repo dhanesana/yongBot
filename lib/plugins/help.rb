@@ -61,7 +61,8 @@ class Help
       ".viki [title]",
       ".now [location]",
       ".trans [words]",
-      ".ud [word]"
+      ".ud [word]",
+      ".twins [img_url] [img_url_2]"
     ]
   end
 
