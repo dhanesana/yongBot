@@ -5,7 +5,7 @@ class Gaon
   include Cinch::Plugin
 
   match /(gaon)$/, prefix: /^(\.)/
-  match /(gaon) (.+)/, prefix: /^(\.)/
+  match /(gaon) (.+)/, method: :with_num, prefix: /^(\.)/
   match /(help gaon)$/, method: :help, prefix: /^(\.)/
 
   def execute(m)
