@@ -1,4 +1,6 @@
-require 'httparty'
+require 'nokogiri'
+require 'open-uri'
+require 'cgi'
 
 class Lineup
   include Cinch::Plugin
@@ -7,7 +9,12 @@ class Lineup
   match /(help lineup)$/, method: :help, prefix: /^(\.)/
 
   def execute(m)
-    m.reply HTTParty.get('https://yongchicken.herokuapp.com/lineup').body
+    html = open('http://yongchicken.herokuapp.com/lineup')
+    doc = Nokogiri::HTML(html.read)
+    doc.encoding = 'utf-8'
+    text = doc.css('body').text
+    escaped_text = CGI.unescape_html(text).gsub(/"/, '').gsub(/\s+/, ' ')
+    m.reply escaped_text
   end
 
   def help(m)
