@@ -62,7 +62,8 @@ class Help
       ".now [location]",
       ".trans [words]",
       ".ud [word]",
-      ".twins [img_url] [img_url_2]"
+      ".twins [img_url] [img_url_2]",
+      ".sh"
     ]
   end
 
