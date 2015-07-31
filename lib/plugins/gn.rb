@@ -29,7 +29,14 @@ class Gn
       "http://i.imgur.com/ubFCnrw.jpg",
       "http://i.imgur.com/7XHEqqa.jpg",
       "http://i.imgur.com/LrgA6VG.jpg",
-      "http://i.imgur.com/S1P66fV.gifv"
+      "http://i.imgur.com/S1P66fV.gifv",
+      "http://i.imgur.com/ow92Wv8.jpg",
+      "http://i.imgur.com/6cyvpFE.jpg",
+      "http://i.imgur.com/98CPRWN.jpg",
+      "http://i.imgur.com/7zxduO7.jpg",
+      "http://i.imgur.com/QTrb69y.jpg",
+      "http://i.imgur.com/N0lJJj0.jpg",
+      "http://i.imgur.com/N0lJJj0.jpg"
     ]
   end
 
