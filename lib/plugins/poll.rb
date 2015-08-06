@@ -23,7 +23,7 @@ class Poll
       @active = 0
       m.reply "TIME'S UP"
       results = []
-      @results.each { |k, v| results << k if v == @results.values.max }
+      @results.each { |k, v| results << k if v.size == @results.values.max.size }
       return m.reply "Winner: #{@results.first.first}!" if results.size < 2
       m.reply "We have a tie: #{results.join(', ')}"
     end
@@ -41,7 +41,7 @@ class Poll
   end
 
   def help_poll(m)
-    m.reply "creates a new active 60 second poll"
+    m.reply "creates a new 60 second poll"
   end
 
   def help_vote(m)
