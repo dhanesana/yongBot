@@ -16,10 +16,13 @@ class Poll
     return m.reply 'wait stupee' if @active == 1
     @results = {}
     le_question = question
-    m.reply "60 Second Poll: #{question}"
+    m.reply "90 Second Poll: #{question}"
     m.reply 'type .vote [choice] to cast your vote!'
     @active = 1
-    Timer(60, options = {shots: 1}) do |x|
+    Timer(75, options = {shots: 1}) do |x|
+      m.reply '15 seconds remaining!'
+    end
+    Timer(90, options = {shots: 1}) do |x|
       @active = 0
       m.reply "TIME'S UP"
       results = []
@@ -41,7 +44,7 @@ class Poll
   end
 
   def help_poll(m)
-    m.reply "creates a new 60 second poll"
+    m.reply "creates a new 90 second poll"
   end
 
   def help_vote(m)
