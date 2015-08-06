@@ -63,7 +63,9 @@ class Help
       ".trans [words]",
       ".ud [word]",
       ".twins [img_url] [img_url_2]",
-      ".sh"
+      ".sh",
+      ".poll [question]",
+      ".vote [choice]"
     ]
   end
 

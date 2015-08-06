@@ -75,7 +75,8 @@ yong_bot = Cinch::Bot.new do
       Trans,
       Ud,
       Twins,
-      Sh
+      Sh,
+      Poll
     ]
     c.plugins.options[Cinch::Plugins::Identify] = {
       :username => "#{ENV['NICKS']}",
