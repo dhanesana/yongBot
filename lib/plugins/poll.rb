@@ -35,10 +35,12 @@ class Poll
   def vote(m, command, vote, choice)
     return m.reply 'no active poll stupee' if @active == 0
     @results.values.each { |v| return m.reply "u alrdy voted #{m.user.nick.downcase}!" if v.include? m.user.nick }
-    if @results[choice.downcase].nil?
-      @results[choice.downcase] = [m.user.nick]
+    choice_array = choice.split(/[[:space:]]/)
+    selection = choice_array.join(' ').downcase
+    if @results[selection].nil?
+      @results[selection] = [m.user.nick]
     else
-      @results[choice.downcase] << m.user.nick
+      @results[selection] << m.user.nick
     end
     m.reply "#{m.user.nick} voted"
   end
