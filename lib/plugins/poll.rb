@@ -26,8 +26,9 @@ class Poll
       @active = 0
       m.reply "TIME'S UP"
       results = []
-      @results.each { |k, v| results << k if v.size == @results.values.max.size }
-      return m.reply "Winner: #{@results.first.first}!" if results.size < 2
+      num = @results.values.max {|a,b| a.size <=> b.size}.size
+      @results.each { |k, v| results << k if v.size == num }
+      return m.reply "Winner: #{results.first}!" if results.size < 2
       m.reply "We have a tie: #{results.join(', ')}"
     end
   end
