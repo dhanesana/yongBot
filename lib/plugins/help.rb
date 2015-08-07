@@ -65,7 +65,8 @@ class Help
       ".twins [img_url] [img_url_2]",
       ".sh",
       ".poll [question]",
-      ".vote [choice]"
+      ".vote [choice]",
+      ".who [artist(s)]"
     ]
   end
 
