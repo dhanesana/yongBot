@@ -19,7 +19,7 @@ class Who
     result = JSON.parse(feed)
     url = result['items'].first['url']
     kpop_id = result['items'].first['id']
-    feed_2 = open("http://kpop.wikia.com/api/v1/Articles/Details/?ids=#{kpop_id}&abstract=500").read
+    feed_2 = open("http://kpop.wikia.com/api/v1/Articles/Details/?ids=#{kpop_id}&abstract=350").read
     result_2 = JSON.parse(feed_2)
     result_ab = result_2['items'].first[1]['abstract']
     abstract = CGI.unescape_html(result_ab).gsub(/"/, '').gsub(/\s+/, ' ')
