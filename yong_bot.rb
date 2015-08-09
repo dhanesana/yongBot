@@ -59,7 +59,6 @@ yong_bot = Cinch::Bot.new do
       Wshh,
       Instiz,
       Gaon,
-      Mto,
       Fresh,
       Agb,
       Tnms,
