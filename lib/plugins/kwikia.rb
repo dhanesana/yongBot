@@ -2,13 +2,13 @@ require 'open-uri'
 require 'json'
 require 'cgi'
 
-class Who
+class Kwikia
   include Cinch::Plugin
 
-  match /(who) (.+)/, prefix: /^(\.)/
-  match /(help who)$/, method: :help, prefix: /^(\.)/
+  match /(kwikia) (.+)/, prefix: /^(\.)/
+  match /(help kwikia)$/, method: :help, prefix: /^(\.)/
 
-  def execute(m, command, who, term)
+  def execute(m, command, kwikia, term)
     begin
       term_array = term.split(/[[:space:]]/)
       search_terms = term_array.join(' ').downcase

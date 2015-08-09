@@ -77,7 +77,7 @@ yong_bot = Cinch::Bot.new do
       Twins,
       Sh,
       Poll,
-      Who
+      Kwikia
     ]
     c.plugins.options[Cinch::Plugins::Identify] = {
       :username => "#{ENV['NICKS']}",

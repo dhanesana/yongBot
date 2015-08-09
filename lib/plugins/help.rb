@@ -66,7 +66,7 @@ class Help
       ".sh",
       ".poll [question]",
       ".vote [choice]",
-      ".who [artist(s)]"
+      ".kwikia [term]"
     ]
   end
 
