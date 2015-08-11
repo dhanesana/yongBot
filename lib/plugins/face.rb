@@ -48,7 +48,7 @@ class Face
 
   def execute(m, command, face, link)
     url = URI.encode(link)
-    response = Unirest.post "https://orbeus-rekognition.p.mashape.com/?api_key=#{ENV['REKOGNITION_KEY']}&api_secret=#{ENV['REKOGNITION_SECRET']}&jobs=face_part_gender_age_emotion_beauty_race_recognize&urls=#{url}",
+    response = Unirest.post "http://rekognition.com/func/api/?api_key=#{ENV['REKOGNITION_KEY']}&api_secret=#{ENV['REKOGNITION_SECRET']}&jobs=face_part_gender_age_emotion_beauty_race_recognize&urls=#{url}",
       headers:{
         "X-Mashape-Key" => "#{ENV['REK_MASHAPE']}",
         "Content-Type" => "application/x-www-form-urlencoded",
@@ -111,7 +111,7 @@ class Face
     link = posts.sample
     m.reply "r/kpics #{link}"
     url = URI.encode(link)
-    response = Unirest.post "https://orbeus-rekognition.p.mashape.com/?api_key=#{ENV['REKOGNITION_KEY']}&api_secret=#{ENV['REKOGNITION_SECRET']}&jobs=face_part_gender_age_emotion_beauty_race_recognize&urls=#{url}",
+    response = Unirest.post "http://rekognition.com/func/api/?api_key=#{ENV['REKOGNITION_KEY']}&api_secret=#{ENV['REKOGNITION_SECRET']}&jobs=face_part_gender_age_emotion_beauty_race_recognize&urls=#{url}",
       headers:{
         "X-Mashape-Key" => "#{ENV['REK_MASHAPE']}",
         "Content-Type" => "application/x-www-form-urlencoded",
