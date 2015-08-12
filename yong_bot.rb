@@ -87,8 +87,7 @@ yong_bot = Cinch::Bot.new do
   end
 
   on :message, ".thyme" do |m|
-    t = Time.now
-    m.reply "#{t}"
+    m.reply Time.now.strftime("%Y-%m-%d %H:%M %Z")
   end
 
   helpers do
