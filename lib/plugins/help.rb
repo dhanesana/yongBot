@@ -27,7 +27,7 @@ class Help
       ".cpme",
       ".yomama",
       ".pokemon [name]",
-      ".cafe [num]",
+      ".cafe [query]",
       ".naver [num]",
       ".daum [num]",
       ".eat [food_name]",
