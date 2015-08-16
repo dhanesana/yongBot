@@ -26,11 +26,11 @@ class Now
     country = response.body['sys']['country']
     response_2 = Unirest.get "http://api.timezonedb.com/?lat=#{lat}&lng=#{long}&format=json&key=#{ENV['TIMEZONE']}"
     time = response_2.body['timestamp'].to_s
-    m.reply "#{city}, #{country} | #{DateTime.strptime(time,'%s').strftime("%B %d, %Y %I:%M %p")} | Temp: #{temp} F (Feels like #{feels.round(2)} F | Humidity: #{humid}%"
+    m.reply "#{city}, #{country} | #{DateTime.strptime(time,'%s').strftime("%B %d, %Y %I:%M %p")} | Temp: #{temp} F (feels like #{feels.round(2)} F tho) | Humidity: #{humid}%"
   end
 
   def help(m)
-    m.reply 'returns current date, time, and temp for specified city or zip code'
+    m.reply 'returns current date, time, temp, heat index, and humidity for specified city or zip code'
   end
 
 end
