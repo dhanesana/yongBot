@@ -109,7 +109,7 @@ yong_bot = Cinch::Bot.new do
     end
   end
 
-  on :message, /^.nick (.+)/ do |m, name|
+  on :message, /^.setnick (.+)/ do |m, name|
     if is_admin?(m.user)
       return @bot.nick = name
     else
