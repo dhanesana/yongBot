@@ -109,6 +109,14 @@ yong_bot = Cinch::Bot.new do
     end
   end
 
+  on :message, /^.nick (.+)/ do |m, name|
+    if is_admin?(m.user)
+      return @bot.nick = name
+    else
+      m.reply "https://youtu.be/OBWpzvJGTz4"
+    end
+  end
+
 end
 
 yong_bot.start
