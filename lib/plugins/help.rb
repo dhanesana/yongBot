@@ -67,7 +67,8 @@ class Help
       ".poll [question]",
       ".vote [choice]",
       ".kwikia [term]",
-      ".wa [query]"
+      ".wa [query]",
+      ".ebay [query]"
     ]
   end
 
