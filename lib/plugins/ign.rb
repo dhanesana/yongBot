@@ -8,7 +8,7 @@ class Ign
   match /(help ign)$/, method: :help, prefix: /^(\.)/
 
   def execute(m, command, ign, game)
-    game_uri = URI.encode(game.downcase)
+    game_uri = URI.encode(game.split(/[[:space:]]/).join(' ').downcase)
     response = Unirest.get "https://videogamesrating.p.mashape.com/get.php?count=5&game=#{game_uri}",
       headers:{
         "X-Mashape-Key" => "#{ENV['MASHAPE_KEY']}",

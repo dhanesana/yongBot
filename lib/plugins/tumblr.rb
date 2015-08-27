@@ -9,7 +9,8 @@ class Tumblr
 
 
   def execute(m, command, tumblr, tag)
-    response = HTTParty.get("http://api.tumblr.com/v2/blog/#{tag.downcase}.tumblr.com/posts/photo?api_key=#{ENV['TUMBLR_KEY']}")
+    query = tag.split(/[[:space:]]/).join(' ').downcase
+    response = HTTParty.get("http://api.tumblr.com/v2/blog/#{URI.encode(query)}.tumblr.com/posts/photo?api_key=#{ENV['TUMBLR_KEY']}")
     post = []
     response['response']['posts'].first['photos'].each do |pic|
       post << pic['original_size']['url']
