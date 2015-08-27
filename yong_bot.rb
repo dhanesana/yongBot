@@ -7,12 +7,7 @@ $master = "#{ENV['MASTER']}"
 yong_bot = Cinch::Bot.new do
   configure do |c|
     c.server = "#{ENV['SERVER']}"
-    c.channels = [
-      "#{ENV['CHANNEL_1']}",
-      "#{ENV['CHANNEL_2']}",
-      "#{ENV['CHANNEL_3']}",
-      "#{ENV['CHANNEL_4']}"
-    ]
+    c.channels = ["#{ENV['CHANNELS']}"]
     c.nicks = ["#{ENV['NICKS']}"]
     c.realname = "yongBot v1.0"
 
