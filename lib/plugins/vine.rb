@@ -9,7 +9,7 @@ class Vine
   def execute(m)
     response = Unirest.get "https://community-vineapp.p.mashape.com/timelines/popular",
       headers:{
-        "X-Mashape-Key" => "#{ENV['VINE_MASHAPE']}",
+        "X-Mashape-Key" => "#{ENV['MASHAPE_KEY']}",
         "Accept" => "application/json"
       }
     num = response.body['data']['records'].size

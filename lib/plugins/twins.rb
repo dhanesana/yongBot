@@ -13,7 +13,7 @@ class Twins
     url_2 = URI.encode(urls[1])
     response = Unirest.post "http://rekognition.com/func/api/?api_key=#{ENV['REKOGNITION_KEY']}&api_secret=#{ENV['REKOGNITION_SECRET']}&jobs=face_compare&urls=#{url}&urls_compare=#{url_2}",
       headers:{
-        "X-Mashape-Key" => "#{ENV['REK_MASHAPE']}",
+        "X-Mashape-Key" => "#{ENV['MASHAPE_KEY']}",
         "Content-Type" => "application/x-www-form-urlencoded",
         "Accept" => "application/json"
       }

@@ -48,7 +48,7 @@ class Face
     url = URI.encode(link)
     response = Unirest.post "https://orbeus-rekognition.p.mashape.com/?api_key=#{ENV['REKOGNITION_KEY']}&api_secret=#{ENV['REKOGNITION_SECRET']}&jobs=face_part_gender_age_emotion_beauty_race_recognize&urls=#{url}",
       headers:{
-        "X-Mashape-Key" => "#{ENV['REK_MASHAPE']}",
+        "X-Mashape-Key" => "#{ENV['MASHAPE_KEY']}",
         "Content-Type" => "application/x-www-form-urlencoded",
         "Accept" => "application/json"
       }
@@ -96,7 +96,7 @@ class Face
     url = URI.encode(link)
     response = Unirest.post "https://orbeus-rekognition.p.mashape.com/?api_key=#{ENV['REKOGNITION_KEY']}&api_secret=#{ENV['REKOGNITION_SECRET']}&jobs=face_part_gender_age_emotion_beauty_race_recognize&urls=#{url}",
       headers:{
-        "X-Mashape-Key" => "#{ENV['REK_MASHAPE']}",
+        "X-Mashape-Key" => "#{ENV['MASHAPE_KEY']}",
         "Content-Type" => "application/x-www-form-urlencoded",
         "Accept" => "application/json"
       }

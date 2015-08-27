@@ -11,7 +11,7 @@ class Ign
     game_uri = URI.encode(game.downcase)
     response = Unirest.get "https://videogamesrating.p.mashape.com/get.php?count=5&game=#{game_uri}",
       headers:{
-        "X-Mashape-Key" => "#{ENV['IGN_MASHAPE']}",
+        "X-Mashape-Key" => "#{ENV['MASHAPE_KEY']}",
         "Accept" => "application/json"
       }
     title = response.body.first['title']
