@@ -75,6 +75,7 @@ yong_bot = Cinch::Bot.new do
       Wa,
       Ebay
     ]
+    c.delay_joins = :identified
     c.plugins.options[Cinch::Plugins::Identify] = {
       :username => "#{ENV['NICKS']}",
       :password => "#{ENV['PW']}",
