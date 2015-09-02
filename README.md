@@ -60,16 +60,28 @@ Usage
 
 ### Deploying to [Heroku](https://www.heroku.com/)
 
-Run the following commands from within the root directory:
+Run the following commands from within the root directory to create your Heroku app:
 
 ```
 heroku create [App Name]
-git push heroku master
+```
+
+If the app name is taken, pick a new one and make sure to update your .env file accordingly.
+Push your .env configuration to heroku using the following rake command:
+
+```
+rake config:push
+```
+
+Once your app is created and your configuration is set, run these last two commands to start up your bot:
+
+```
 heroku scale web=0
 heroku scale bot=1
 ```
 
-Keep in mind that bots depoloyed to Heroku will run 24/7. To auto-scale your bot according to time of day, install [Heroku Scheduler](https://addons.heroku.com/scheduler) and schedule the following rake tasks:
+Keep in mind that bots depoloyed to Heroku will run 24/7. Scale your bot to 0 to shut it down.
+To auto-scale your bot according to time of day, install [Heroku Scheduler](https://addons.heroku.com/scheduler) and schedule the following rake tasks:
 
 ```
 rake scale_down
