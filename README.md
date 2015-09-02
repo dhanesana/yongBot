@@ -29,7 +29,7 @@ Create a .env file within the root directory, and populate with the following va
 | -------------      |:-----:
 | APP_NAME           | *Heroku App Name*
 | SERVER             | *IRC Server (ex. irc.snoonet.org)*
-| CHANNELS           | *IRC #channels seperated by commas*
+| CHANNELS           | *IRC #Channels (with hash, comma-seperated, no spaces)*
 | NICKS              | *Bot IRC Nickname*
 | PW                 | *Password for registered bot nickname*
 | MASTER             | *Your IRC Nickname*
@@ -51,6 +51,7 @@ Create a .env file within the root directory, and populate with the following va
 | STEAM_KEY          | [Steam API Key](http://steamcommunity.com/dev)
 | TIMEZONE           | [TimeZoneDB API Key](http://timezonedb.com/)
 | TUMBLR_KEY         | [Tumblr API Key](https://www.tumblr.com/docs/en/api/v2)
+| TWITCH_USERS       | [Twitch.tv](http://www.twitch.tv/) Users (comma-seperated, no spaces)
 | VIKI               | [Viki AppID](http://dev.viki.com/)
 | WA_ID              | [Wolfram Alpha AppID](http://products.wolframalpha.com/api/)
 
