@@ -23,9 +23,9 @@ class Twitch
       url = user_get.body['stream']['channel']['url']
       name = user_get.body['stream']['channel']['display_name']
       viewers = user_get.body['stream']['viewers']
-      response += " #{name} is streaming #{title}, Viewers: #{viewers}, #{url} |"
+      response += " #{url} |"
     end
-    return m.reply "None of the twitch channels are live bru" if response.size < 6
+    return m.reply "none of the twitch channels are live bru" if response.size < 6
     m.reply response
   end
 
@@ -38,7 +38,7 @@ class Twitch
       url = user_get.body['stream']['channel']['url']
       name = user_get.body['stream']['channel']['display_name']
       viewers = user_get.body['stream']['viewers']
-      response += " #{name} is streaming #{title}, Viewers: #{viewers}, #{url} |"
+      response += " #{url} |"
     end
     return if response.size < 6
     ENV["CHANNELS"].split(',').each do |channel|
@@ -54,12 +54,12 @@ class Twitch
     url = user_get.body['stream']['channel']['url']
     name = user_get.body['stream']['channel']['display_name']
     viewers = user_get.body['stream']['viewers']
-    m.reply "Live: #{name} is streaming #{title}, Viewers: #{viewers}, #{url}"
+    m.reply "#{name} is streaming #{title}, Viewers: #{viewers}, #{url}"
   end
 
   def help(m)
     m.reply "checks every 10 minutes for live specified twitch channels."
-    m.reply "type .twitch [user] to check specific channel"
+    m.reply "type .twitch [user] to check specific channel for detailed info"
   end
 
 end
