@@ -12,6 +12,7 @@ class Twitch
   def initialize(*args)
     super
     @users = ENV['TWITCH_USERS'].split(',')
+    @online = []
   end
 
   def execute(m)
@@ -33,7 +34,10 @@ class Twitch
     response = "Live:"
     @users.each do |user|
       user_get = Unirest.get "https://api.twitch.tv/kraken/streams/#{URI.encode(user)}"
+      @online.delete(user) if user_get.body['stream'].nil?
       next if user_get.body['stream'].nil?
+      next if @online.include? user
+      @online << user
       title = user_get.body['stream']['game']
       url = user_get.body['stream']['channel']['url']
       name = user_get.body['stream']['channel']['display_name']
@@ -58,8 +62,8 @@ class Twitch
   end
 
   def help(m)
-    m.reply "checks every 10 minutes for live specified twitch channels."
-    m.reply "type .twitch [user] to check specific channel for detailed info"
+    m.reply "checks every 10 minutes if specified twitch channels are live."
+    m.reply "type .twitch [user] to check specific channel for detailed info or just .twitch to check all pre-specified channels"
   end
 
 end
