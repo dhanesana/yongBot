@@ -69,7 +69,8 @@ class Help
       ".kwikia [term]",
       ".wa [query]",
       ".ebay [query]",
-      ".twitch [user]"
+      ".twitch [user]",
+      ".kquiz"
     ]
   end
 

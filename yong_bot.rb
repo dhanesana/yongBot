@@ -74,7 +74,8 @@ yong_bot = Cinch::Bot.new do
       Kwikia,
       Wa,
       Ebay,
-      Twitch
+      Twitch,
+      Kquiz
     ]
     c.delay_joins = :identified
     c.plugins.options[Cinch::Plugins::Identify] = {
