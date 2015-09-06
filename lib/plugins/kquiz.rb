@@ -59,7 +59,7 @@ class Kquiz
         response = Unirest.get("https://www.googleapis.com/language/translate/v2?key=#{ENV['GOOGLE']}&q=#{user_guess}&target=ko")
         kor_word = response.body['data']['translations'].first['translatedText']
         if kor_word == @all_games[channel][@kor]
-          return m.reply "CLOSE... not what I'm looking for though"
+          return m.reply "yes... but '#{user_guess}' isn't quite the word i'm looking for"
         end
         return m.reply "wroong! it's not '#{user_guess}'.." if rand(0..1) == 0
         m.reply "nope.. it's not '#{user_guess}'"
