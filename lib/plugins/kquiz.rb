@@ -27,7 +27,7 @@ class Kquiz
       response = Unirest.get("https://www.googleapis.com/language/translate/v2?key=#{ENV['GOOGLE']}&q=#{eng_word}&target=ko")
       kor_word = response.body['data']['translations'].first['translatedText']
       @all_games[channel] = [eng_word, kor_word]
-      m.reply "30 seconds to guess! Word is #{kor_word}!"
+      m.reply "60 seconds to guess! Word is #{kor_word}!"
       m.reply "Type .guess [word] to make your guess"
       game_start(m, kor_word)
     end
@@ -35,10 +35,10 @@ class Kquiz
 
   def game_start(m, kor_word)
     channel = m.channel.name
-    Timer(15, options = { shots: 1 }) do |x|
+    Timer(45, options = { shots: 1 }) do |x|
       m.reply '15 seconds remaining!' if @all_games[channel][@kor] == kor_word
     end
-    Timer(30, options = { shots: 1 }) do |x|
+    Timer(60, options = { shots: 1 }) do |x|
       if @all_games[channel][@kor] == kor_word
         eng_word = @all_games[channel][@eng]
         kor_word = @all_games[channel][@kor]
