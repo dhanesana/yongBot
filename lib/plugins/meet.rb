@@ -43,7 +43,14 @@ class Meet
 
     meets = meets.sort_by { |title, date| date.first }
     unconfirmed = unconfirmed.sort_by { |title, date| date.first }
-    m.reply "Confirmed => #{meets.first.first} #{((Time.strptime(meets.first[1].first.to_s, '%Q').utc - (07 * 3600)) + (16 * 3600)).strftime("%m/%d %H:%MKST")} http://mwave.interest.me/meetgreet/view/#{meets.first[1][1]}, Unconfirmed => #{unconfirmed.first.first} #{((Time.strptime(unconfirmed.first[1].first.to_s, '%Q').utc - (07 * 3600)) + (16 * 3600)).strftime("%m/%d %H:%MKST")} http://mwave.interest.me/meetgreet/view/#{unconfirmed.first[1][1]}"
+    if meets.size > 0
+      m.reply "Confirmed => #{meets.first.first} #{((Time.strptime(meets.first[1].first.to_s, '%Q').utc - (07 * 3600)) + (16 * 3600)).strftime("%m/%d %H:%MKST")} http://mwave.interest.me/meetgreet/view/#{meets.first[1][1]}"
+    else
+      m.reply "No confirmed meets"
+    end
+    if unconfirmed.size > 0
+      m.reply "Unconfirmed => #{unconfirmed.first.first} #{((Time.strptime(unconfirmed.first[1].first.to_s, '%Q').utc - (07 * 3600)) + (16 * 3600)).strftime("%m/%d %H:%MKST")} http://mwave.interest.me/meetgreet/view/#{unconfirmed.first[1][1]}"
+    end
   end
 
   def list(m)
