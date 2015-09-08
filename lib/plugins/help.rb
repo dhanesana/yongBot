@@ -70,7 +70,8 @@ class Help
       ".wa [query]",
       ".ebay [query]",
       ".twitch [user]",
-      ".kquiz"
+      ".kquiz",
+      ".genie [num]"
     ]
   end
 
