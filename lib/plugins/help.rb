@@ -71,7 +71,8 @@ class Help
       ".ebay [query]",
       ".twitch [user]",
       ".kquiz",
-      ".genie [num]"
+      ".genie [num]",
+      ".olleh [num]"
     ]
   end
 
