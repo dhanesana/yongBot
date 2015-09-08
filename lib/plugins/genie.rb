@@ -17,7 +17,7 @@ class Genie
     m.reply "Genie Rank 1: #{artist} - #{title} | #{date} #{hour}:00KST"
   end
 
-  def with_num(m, command, tnms, num)
+  def with_num(m, command, genie, num)
     return m.reply 'invalid num bru' if num.to_i < 1
     return m.reply 'less than 21 bru' if num.to_i > 50
     page = Nokogiri::HTML(open("http://www.genie.co.kr/chart/f_top_100.asp"))
