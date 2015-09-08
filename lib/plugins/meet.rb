@@ -46,7 +46,7 @@ class Meet
     if meets.size > 0
       m.reply "Confirmed => #{meets.first.first} #{((Time.strptime(meets.first[1].first.to_s, '%Q').utc - (07 * 3600)) + (16 * 3600)).strftime("%m/%d %H:%MKST")} http://mwave.interest.me/meetgreet/view/#{meets.first[1][1]}"
     else
-      m.reply "No confirmed meets"
+      m.reply "No confirmed meet & greets"
     end
     if unconfirmed.size > 0
       m.reply "Unconfirmed => #{unconfirmed.first.first} #{((Time.strptime(unconfirmed.first[1].first.to_s, '%Q').utc - (07 * 3600)) + (16 * 3600)).strftime("%m/%d %H:%MKST")} http://mwave.interest.me/meetgreet/view/#{unconfirmed.first[1][1]}"
@@ -93,8 +93,16 @@ class Meet
       break if u == 5
       un_list += ", "
     end
-    m.reply list
-    m.reply un_list
+    if list.size > 11
+      list.slice!(-2..-1)
+      m.reply list
+    else
+      m.reply 'No confirmed meet & greets'
+    end
+    if un_list.size > 13
+      un_list.slice!(-2..-1)
+      m.reply un_list
+    end
   end
 
   def help(m)
