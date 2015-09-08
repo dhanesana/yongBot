@@ -6,7 +6,7 @@ class Kquiz
   include Cinch::Plugin
 
   match /(kquiz)$/, prefix: /^(\.)/
-  match /(guess) (.+)/, method: :guess, prefix: /^(\.)/
+  listen_to :channel, :method => :guess
   match /(help kquiz)$/, method: :help, prefix: /^(\.)/
 
   def initialize(*args)
@@ -27,18 +27,18 @@ class Kquiz
       response = Unirest.get("https://www.googleapis.com/language/translate/v2?key=#{ENV['GOOGLE']}&q=#{eng_word}&target=ko")
       kor_word = response.body['data']['translations'].first['translatedText']
       @all_games[channel] = [eng_word, kor_word]
-      m.reply "60 seconds to guess! Word is #{kor_word}!"
-      m.reply "Type .guess [word] to make your guess"
+      m.reply "30 seconds to guess! Word is #{kor_word}!"
       game_start(m, kor_word)
     end
   end
 
   def game_start(m, kor_word)
-    channel = m.channel.name
-    Timer(45, options = { shots: 1 }) do |x|
+    Timer(15, options = { shots: 1 }) do |x|
       m.reply '15 seconds remaining!' if @all_games[channel][@kor] == kor_word
     end
-    Timer(60, options = { shots: 1 }) do |x|
+    Timer(30, options = { shots: 1 }) do |x|
+      channel = m.channel.name
+      # if @all_games.keys.include? channel
       if @all_games[channel][@kor] == kor_word
         eng_word = @all_games[channel][@eng]
         kor_word = @all_games[channel][@kor]
@@ -48,24 +48,21 @@ class Kquiz
     end
   end
 
-  def guess(m, command, guess, words)
+  def guess(m)
     channel = m.channel.name
-    user_guess = words.split(/[[:space:]]/).join(' ')
+    words_only = m.message.gsub(/[^0-9a-z ]/i, '')
+    user_guess = words_only.split(/[[:space:]]/).join(' ')
     if @all_games.keys.include? channel
       if @all_games[channel][@eng].downcase == user_guess.downcase
+        m.reply "ding ding ding! word is '#{@all_games[channel][@eng]}'. good job #{m.user.nick}"
         @all_games.delete(channel)
-        m.reply "ding ding ding! good job #{m.user.nick}"
       else
-        response = Unirest.get("https://www.googleapis.com/language/translate/v2?key=#{ENV['GOOGLE']}&q=#{user_guess}&target=ko")
+        response = Unirest.get("https://www.googleapis.com/language/translate/v2?key=#{ENV['GOOGLE']}&q=#{URI.encode(user_guess)}&target=ko")
         kor_word = response.body['data']['translations'].first['translatedText']
         if kor_word == @all_games[channel][@kor]
           return m.reply "yes... but '#{user_guess}' isn't quite the word i'm looking for"
         end
-        return m.reply "wroong! it's not '#{user_guess}'.." if rand(0..1) == 0
-        m.reply "nope.. it's not '#{user_guess}'"
       end
-    else
-      m.reply "wat u guessing for? type .kquiz to start the quiz"
     end
   end
 
