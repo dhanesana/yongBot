@@ -72,7 +72,8 @@ class Help
       ".twitch [user]",
       ".kquiz",
       ".genie [num]",
-      ".olleh [num]"
+      ".olleh [num]",
+      ".mnet [num]"
     ]
   end
 
