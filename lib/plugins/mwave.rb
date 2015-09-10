@@ -38,7 +38,7 @@ class Mwave
   end
 
   def help(m)
-    m.reply 'returns current song at specified mwave rank'
+    m.reply 'returns current song at specified mcountdown rank'
   end
 
 end
