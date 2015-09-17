@@ -8,42 +8,51 @@ class Poll
 
   def initialize(*args)
     super
-    @results = {}
-    @active = 0
+    @all_games = {}
   end
 
   def execute(m, command, poll, question)
-    return m.reply 'wait stupee' if @active == 1
-    @results = {}
-    le_question = question
-    m.reply "90 Second Poll: #{question}"
-    m.reply 'type .vote [choice] to cast your vote!'
-    @active = 1
-    Timer(75, options = {shots: 1}) do |x|
-      m.reply '15 seconds remaining!'
-    end
-    Timer(90, options = {shots: 1}) do |x|
-      @active = 0
-      m.reply "TIME'S UP"
-      results = []
-      num = @results.values.max {|a,b| a.size <=> b.size}.size
-      @results.each { |k, v| results << k if v.size == num }
-      return m.reply "Winner: #{results.first}!" if results.size < 2
-      m.reply "We have a tie: #{results.join(', ')}"
+    channel = m.channel.name
+    if @all_games.keys.include? channel
+      m.reply "there's already a poll stupee"
+    else
+      m.reply "90 Second Poll: #{question}"
+      m.reply 'type .vote [choice] to cast your vote!'
+      @all_games[channel] = {}
+      Timer(75, options = {shots: 1}) do |x|
+        m.reply '15 seconds remaining!'
+      end
+      Timer(90, options = {shots: 1}) do |x|
+        game = @all_games[channel]
+        m.reply "no one voted..." if game.size < 1
+        return @all_games.delete(channel) if game.size < 1
+        m.reply "TIME'S UP"
+        results = []
+        num = game.values.max { |a, b| a.size <=> b.size }.size
+        game.each { |k, v| results << k if v.size == num }
+        @all_games.delete(channel)
+        return m.reply "Winner: #{results.first}!" if results.size < 2
+        m.reply "We have a tie: #{results.join(', ')}"
+      end
     end
   end
 
   def vote(m, command, vote, choice)
-    return m.reply 'no active poll stupee' if @active == 0
-    @results.values.each { |v| return m.reply "u alrdy voted #{m.user.nick.downcase}!" if v.include? m.user.nick }
+    channel = m.channel.name
     choice_array = choice.split(/[[:space:]]/)
     selection = choice_array.join(' ').downcase
-    if @results[selection].nil?
-      @results[selection] = [m.user.nick]
+    if @all_games.keys.include? channel
+      game = @all_games[channel]
+      game.values.each { |v| return m.reply "u alrdy voted #{m.user.nick.downcase}!" if v.include? m.user.nick }
+      if game[selection].nil?
+        game[selection] = [m.user.nick]
+      else
+        game[selection] << m.user.nick
+      end
+      m.reply "#{m.user.nick} voted!"
     else
-      @results[selection] << m.user.nick
+      m.reply "no active poll stupee"
     end
-    m.reply "#{m.user.nick} voted"
   end
 
   def help_poll(m)
