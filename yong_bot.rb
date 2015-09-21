@@ -79,7 +79,8 @@ yong_bot = Cinch::Bot.new do
       Kquiz,
       Genie,
       Olleh,
-      Mnet
+      Mnet,
+      Log
     ]
     c.delay_joins = :identified
     c.plugins.options[Cinch::Plugins::Identify] = {

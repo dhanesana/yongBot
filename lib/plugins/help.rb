@@ -73,7 +73,8 @@ class Help
       ".kquiz",
       ".genie [num]",
       ".olleh [num]",
-      ".mnet [num]"
+      ".mnet [num]",
+      ".log"
     ]
   end
 
