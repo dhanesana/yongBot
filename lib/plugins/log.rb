@@ -13,6 +13,7 @@ class Log
   end
 
   def execute(m)
+    # don't accept pms
     return if m.channel.nil?
     return m.reply 'wait bru (5 minutes)' if @nicks.include? m.user.nick
     return m.reply 'wait bru (1 minute)' if @triggers > 2
@@ -36,7 +37,9 @@ class Log
 
   def log_msg(m)
     return if m.channel.nil?
-    return if m.message == '.log'
+    # don't log commands
+    return if m.message[0] == '.' && m.message[1] != '.'
+    return if m.message[0] == '!' && m.message[1] != '.'
     channel = m.channel.name
     time = m.time.utc.strftime("%H:%M:%S %Z")
     user = m.user.nick
