@@ -129,7 +129,7 @@ yong_bot = Cinch::Bot.new do
         users << user.first.nick
       end
       users.delete(@bot.nick)
-      m.reply users.join(', ')
+      m.reply users.join(' ')
     else
       m.reply 'sry ops only'
     end
