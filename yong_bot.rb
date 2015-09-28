@@ -121,6 +121,20 @@ yong_bot = Cinch::Bot.new do
     end
   end
 
+  on :message, ".ping" do |m|
+    ops = Channel(m.channel.name).ops.map { |x| x.nick }
+    if ops.include? m.user.nick || is_admin?(m.user)
+      users = []
+      Channel(m.channel.name).users.each do |user|
+        users << user.first.nick
+      end
+      users.delete(@bot.nick)
+      m.reply users.join(', ')
+    else
+      m.reply 'sry ops only'
+    end
+  end
+
 end
 
 yong_bot.start
