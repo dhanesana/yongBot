@@ -74,7 +74,8 @@ class Help
       ".genie [num]",
       ".olleh [num]",
       ".mnet [num]",
-      ".log"
+      ".log",
+      ".powerball"
     ]
   end
 
