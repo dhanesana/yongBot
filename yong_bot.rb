@@ -123,16 +123,24 @@ yong_bot = Cinch::Bot.new do
   end
 
   on :message, ".ping" do |m|
+    return m.reply "too many ppls bru" if Channel(m.channel.name).users.size > 30
     ops = Channel(m.channel.name).ops.map { |x| x.nick }
-    if ops.include? m.user.nick || is_admin?(m)
-      users = []
+    users = []
+    if is_admin?(m)
+      Channel(m.channel.name).users.each do |user|
+        users << user.first.nick
+      end
+      users.delete(@bot.nick)
+      return m.reply users.join(' ')
+    end
+    if ops.include? m.user.nick
       Channel(m.channel.name).users.each do |user|
         users << user.first.nick
       end
       users.delete(@bot.nick)
       m.reply users.join(' ')
     else
-      m.reply 'sry ops only'
+      m.reply 'master or ops only bru'
     end
   end
 
