@@ -1,5 +1,6 @@
 # Plugins List
 
+require_relative "../lib/plugins/master"
 require_relative "../lib/plugins/help"
 require_relative "../lib/plugins/lineup"
 require_relative "../lib/plugins/iono"
