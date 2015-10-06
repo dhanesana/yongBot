@@ -32,7 +32,7 @@ Create a .env file within the root directory, and populate with the following va
 | CHANNELS           | *IRC #Channels (with hash, comma-seperated, no spaces)*
 | NICKS              | *Bot IRC Nickname*
 | PW                 | *Password for registered bot nickname*
-| MASTER             | *Your IRC Nickname*
+| MASTER             | [Your IP Host & Domain](http://www.ircbeginner.com/opvinfo/masks.html)
 | HEROKU_API         | [Heroku API Key](https://dashboard.heroku.com/account)
 | HEROKU_BOT_HIGH    | 1
 | HEROKU_BOT_LOW     | 0
