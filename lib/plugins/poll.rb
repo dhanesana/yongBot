@@ -38,16 +38,18 @@ class Poll
   end
 
   def vote(m, command, vote, choice)
+    # get user address
+    user_address = m.prefix.match(/@(.+)/)[1]
     channel = m.channel.name
     choice_array = choice.split(/[[:space:]]/)
     selection = choice_array.join(' ').downcase
     if @all_games.keys.include? channel
       game = @all_games[channel]
-      game.values.each { |v| return m.reply "u alrdy voted #{m.user.nick.downcase}!" if v.include? m.user.nick }
+      game.values.each { |v| return m.reply "u alrdy voted #{m.user.nick.downcase}!" if v.include? user_address }
       if game[selection].nil?
-        game[selection] = [m.user.nick]
+        game[selection] = [user_address]
       else
-        game[selection] << m.user.nick
+        game[selection] << user_address
       end
       m.reply "#{m.user.nick} voted!"
     else

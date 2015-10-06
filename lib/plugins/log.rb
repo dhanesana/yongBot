@@ -8,24 +8,26 @@ class Log
   def initialize(*args)
     super
     @all_chans = {}
-    @nicks = []
+    @user_addrs = []
     @triggers = 0
   end
 
   def execute(m)
+    # get user address from prefix
+    user_address = m.prefix.match(/@(.+)/)[1]
     # don't accept pms
     return if m.channel.nil?
-    return m.reply 'wait bru (5 minutes)' if @nicks.include? m.user.nick
+    return m.reply 'wait bru (5 minutes)' if @user_addrs.include? user_address
     return m.reply 'wait bru (1 minute)' if @triggers > 2
     # 3 calls per minute
     @triggers += 1
-    Timer(60, options = {shots: 1}) do |x|
+    Timer(60, options = { shots: 1 }) do |x|
       @triggers = 0
     end
     # 1 call every 5 minutes per user
-    @nicks << m.user.nick
-    Timer(300, options = {shots: 1}) do |x|
-      @nicks.delete(m.user.nick)
+    @user_addrs << user_address
+    Timer(300, options = { shots: 1 }) do |x|
+      @user_addrs.delete(user_address)
     end
     channel = m.channel.name
     chan_msgs = @all_chans[channel]
