@@ -97,12 +97,12 @@ yong_bot = Cinch::Bot.new do
 
   helpers do
     def is_admin?(user)
-      true if user.nick == $master
+      true if user.prefix.match(/@(.+)/)[1] == $master
     end
   end
 
   on :message, /^.join (.+)/ do |m, channel|
-    bot.join(channel) if is_admin?(m.user)
+    bot.join(channel) if is_admin?(m)
   end
 
   on :message, /^.part(?: (.+))?/ do |m, channel|
@@ -110,12 +110,12 @@ yong_bot = Cinch::Bot.new do
     channel = channel || m.channel
 
     if channel
-      bot.part(channel) if is_admin?(m.user)
+      bot.part(channel) if is_admin?(m)
     end
   end
 
   on :message, /^.setnick (.+)/ do |m, name|
-    if is_admin?(m.user)
+    if is_admin?(m)
       return @bot.nick = name
     else
       m.reply "https://youtu.be/OBWpzvJGTz4"
@@ -124,7 +124,7 @@ yong_bot = Cinch::Bot.new do
 
   on :message, ".ping" do |m|
     ops = Channel(m.channel.name).ops.map { |x| x.nick }
-    if ops.include? m.user.nick || is_admin?(m.user)
+    if ops.include? m.user.nick || is_admin?(m)
       users = []
       Channel(m.channel.name).users.each do |user|
         users << user.first.nick
