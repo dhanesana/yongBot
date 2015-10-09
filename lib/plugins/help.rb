@@ -33,6 +33,7 @@ class Help
       ".eat [food_name]",
       ".dispatch",
       ".face [img_url]",
+      ".faceplus [img_url]",
       ".vine",
       ".ign [title]",
       ".steam [user]",

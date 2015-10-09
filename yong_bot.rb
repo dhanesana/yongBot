@@ -82,7 +82,8 @@ yong_bot = Cinch::Bot.new do
       Olleh,
       Mnet,
       Log,
-      Powerball
+      Powerball,
+      FacePlus
     ]
     c.delay_joins = :identified
     c.plugins.options[Cinch::Plugins::Identify] = {
