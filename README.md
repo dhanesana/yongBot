@@ -38,6 +38,8 @@ Create a .env file within the root directory, and populate with the following va
 | HEROKU_BOT_LOW     | 0
 | DAUM_KEY           | [Daum API Key](https://developers.daum.net/services)
 | EBAY_ID            | [eBay AppID](https://go.developer.ebay.com/)
+| FACEPLUS_KEY       | [Face++ API Key](http://www.faceplusplus.com/create-a-new-app/)
+| FACEPLUS_SECRET    | [Face++ API Secret](http://www.faceplusplus.com/create-a-new-app/)
 | FLICKR_KEY         | [Flickr API Key](https://www.flickr.com/services/api/misc.api_keys.html)
 | GOOGLE             | [Google API Key](https://cloud.google.com/translate/v2/getting_started)
 | IG_ID              | [Instagram Client ID](https://instagram.com/developer/)
