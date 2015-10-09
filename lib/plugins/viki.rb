@@ -7,7 +7,7 @@ class Viki
   match /(viki) (.+)/, prefix: /^(\.)/
   match /(help viki)$/, method: :help, prefix: /^(\.)/
 
-  def execute(m, command, viki, keywords)
+  def execute(m, prefix, viki, keywords)
     query = keywords.split(/[[:space:]]/).join(' ').downcase
     response = HTTParty.get("http://api.viki.io/v4/search.json?term=#{URI.encode(query)}&app=#{ENV['VIKI']}")
     return m.reply "no drama found bru" if response['response'] == []

@@ -6,7 +6,7 @@ class Sc
   match /(sc) (.+)/, prefix: /^(\.)/
   match /(help sc)$/, method: :help, prefix: /^(\.)/
 
-  def execute(m, command, sc, keywords)
+  def execute(m, prefix, sc, keywords)
     query = keywords.split(/[[:space:]]/).join(' ').downcase
     client = Soundcloud.new(:client_id => ENV['SC_ID'])
     tracks = client.get('/tracks', :q => "#{query}")

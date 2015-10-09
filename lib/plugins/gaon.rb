@@ -16,7 +16,7 @@ class Gaon
     m.reply "Gaon Rank 1: #{title} by #{artist}"
   end
 
-  def with_num(m, command, gaon, num)
+  def with_num(m, prefix, gaon, num)
     return m.reply 'invalid num bru' if num.to_i < 1
     page = Nokogiri::HTML(open('http://gaonchart.co.kr/main/section/chart/online.gaon?serviceGbn=ALL&termGbn=week&hitYear=2015&targetTime=&nationGbn=K'))
     rank = num.to_i - 1

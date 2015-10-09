@@ -18,7 +18,7 @@ class Instiz
     m.reply "iChart Rank 1: #{one_song} by #{one_artist}"
   end
 
-  def with_num(m, command, instiz, num)
+  def with_num(m, prefix, instiz, num)
     return m.reply 'invalid num bru' if num.to_i < 1
     agent = Mechanize.new
     referer_url = 'http://ichart.instiz.net/'

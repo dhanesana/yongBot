@@ -17,7 +17,7 @@ class Mnet
     m.reply "Mnet Rank #{num}: #{artist} - #{title} | #{date}"
   end
 
-  def with_num(m, command, mnet, num)
+  def with_num(m, prefix, mnet, num)
     return m.reply 'invalid num bru' if num.to_i < 1
     return m.reply 'less than 51 bru' if num.to_i > 50
     page = Nokogiri::HTML(open("http://www.mnet.com/chart/top100/"))

@@ -7,7 +7,7 @@ class Pokemon
   match /(pokemon) (.+)/, prefix: /^(\.)/
   match /(help pokemon)$/, method: :help, prefix: /^(\.)/
 
-  def execute(m, command, pokemon, name)
+  def execute(m, prefix, pokemon, name)
     link = open("http://pokeapi.co/api/v1/pokemon/#{name.downcase}").read
     result = JSON.parse(link)
     id = result['national_id']

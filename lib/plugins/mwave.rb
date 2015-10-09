@@ -18,7 +18,7 @@ class Mwave
     m.reply "Mwave Rank #{rank}: #{artist} - #{song} | #{date}"
   end
 
-  def with_num(m, command, mwave, num)
+  def with_num(m, prefix, mwave, num)
     return m.reply 'invalid num bru' if num.to_i < 1
     return m.reply 'less than 51 bru' if num.to_i > 50
     link = open("http://mwave.interest.me/mcountdown/vote/mcdChart.json").read

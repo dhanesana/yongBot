@@ -7,7 +7,7 @@ class Ign
   match /(ign) (.+)/, prefix: /^(\.)/
   match /(help ign)$/, method: :help, prefix: /^(\.)/
 
-  def execute(m, command, ign, game)
+  def execute(m, prefix, ign, game)
     game_uri = URI.encode(game.split(/[[:space:]]/).join(' ').downcase)
     response = Unirest.get "https://videogamesrating.p.mashape.com/get.php?count=5&game=#{game_uri}",
       headers:{

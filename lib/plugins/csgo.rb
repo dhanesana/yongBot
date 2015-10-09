@@ -8,7 +8,7 @@ class Csgo
   match /(csgo) (.+)/, prefix: /^(\.)/
   match /(help csgo)$/, method: :help, prefix: /^(\.)/
 
-  def execute(m, command, csgo, user)
+  def execute(m, prefix, csgo, user)
     page = Nokogiri::XML(open("http://steamcommunity.com/id/#{user}/?xml=1"))
     return m.reply "invalid user bru" if page.text == "The specified profile could not be found."
     steamID64 = page.xpath("//steamID64").text

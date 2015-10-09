@@ -8,7 +8,7 @@ class Kwikia
   match /(kwikia) (.+)/, prefix: /^(\.)/
   match /(help kwikia)$/, method: :help, prefix: /^(\.)/
 
-  def execute(m, command, kwikia, term)
+  def execute(m, prefix, kwikia, term)
     begin
       term_array = term.split(/[[:space:]]/)
       search_terms = term_array.join(' ').downcase

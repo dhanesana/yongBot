@@ -15,7 +15,7 @@ class Naver
     m.reply "Naver Trending [1]: #{text} #{url}"
   end
 
-  def with_num(m, command, naver, num)
+  def with_num(m, prefix, naver, num)
     return m.reply 'invalid num bru' if num.to_i < 1
     page = Nokogiri::HTML(open("http://www.naver.com/"))
     text = page.css('ol#realrank li a')[num.to_i - 1].children.first.text

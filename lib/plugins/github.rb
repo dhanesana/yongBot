@@ -7,7 +7,7 @@ class Github
   match /(github) (.+)/, prefix: /^(\.)/
   match /(help github)$/, method: :help, prefix: /^(\.)/
 
-  def execute(m, command, github, user)
+  def execute(m, prefix, github, user)
     resp = HTTParty.get("https://api.github.com/users/#{user}/events")
     m.reply resp.first['payload']
     message = resp.first['payload']['commits'].first['message']

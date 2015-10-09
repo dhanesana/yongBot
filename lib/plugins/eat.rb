@@ -7,7 +7,7 @@ class Eat
   match /(eat) (.+)/, prefix: /^(\.)/
   match /(help eat)$/, method: :help, prefix: /^(\.)/
 
-  def execute(m, command, eat, item)
+  def execute(m, prefix, eat, item)
     # GET FOOD ID
     query = item.split(/[[:space:]]/).join(' ').downcase
     link = open("https://api.nutritionix.com/v1_1/search/#{URI.encode(query.downcase)}?results=0%3A1&cal_min=0&cal_max=50000&fields=item_name%2Cbrand_name%2Citem_id%2Cbrand_id&appId=#{ENV['NUTRITIONX_ID']}&appKey=#{ENV['NUTRITION_KEY']}").read

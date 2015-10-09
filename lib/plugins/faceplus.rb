@@ -7,7 +7,7 @@ class FacePlus
   match /(faceplus)$/, method: :random, prefix: /^(\.)/
   match /(help faceplus)$/, method: :help, prefix: /^(\.)/
 
-  def execute(m, command, face, link)
+  def execute(m, prefix, face, link)
     url = URI.encode(link)
     response = Unirest.get("https://apius.faceplusplus.com/v2/detection/detect?url=#{url}&api_secret=#{ENV['FACEPLUS_SECRET']}&api_key=#{ENV['FACEPLUS_KEY']}&attribute=glass,gender,age,race,smiling")
     # Error Code Handling

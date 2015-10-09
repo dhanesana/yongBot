@@ -47,7 +47,7 @@ class Twitch
     end
   end
 
-  def check_user(m, command, check_user, user)
+  def check_user(m, prefix, check_user, user)
     query = user.split(/[[:space:]]/).join(' ')
     user_get = Unirest.get "https://api.twitch.tv/kraken/streams/#{URI.encode(query)}"
     return m.reply "#{user} is not live bru" if user_get.body['stream'].nil?

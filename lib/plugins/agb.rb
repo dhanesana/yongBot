@@ -19,7 +19,7 @@ class Agb
     m.reply "#{date}AGB Nielson Rank 1: #{station} - #{title}"
   end
 
-  def with_num(m, command, agb, num)
+  def with_num(m, prefix, agb, num)
     return m.reply 'invalid num bru' if num.to_i < 1
     return m.reply 'less than 21 bru' if num.to_i > 20
     page = Nokogiri::HTML(open('http://www.agbnielsen.co.kr/_hannet/agb/f_rating/rating_01a.asp'))

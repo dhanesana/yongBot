@@ -46,7 +46,7 @@ class Face
     m.reply "#{urls[0]['url']} Beauty: #{scores[0]['score']}/100"
   end
 
-  def execute(m, command, face, link)
+  def execute(m, prefix, face, link)
     url = URI.encode(link)
     response = Unirest.post "http://rekognition.com/func/api/?api_key=#{ENV['REKOGNITION_KEY']}&api_secret=#{ENV['REKOGNITION_SECRET']}&jobs=face_aggressive_part_gender_age_emotion_beauty_race_recognize&urls=#{url}",
       headers:{

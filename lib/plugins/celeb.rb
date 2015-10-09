@@ -7,7 +7,7 @@ class Celeb
   match /(celeb) (.+)/, prefix: /^(\.)/
   match /(help celeb)$/, method: :help, prefix: /^(\.)/
 
-  def execute(m, command, celeb, link)
+  def execute(m, prefix, celeb, link)
     url = URI.encode(link)
     response = Unirest.post "http://rekognition.com/func/api/?api_key=#{ENV['REKOGNITION_KEY']}&api_secret=#{ENV['REKOGNITION_SECRET']}&jobs=face_celebrity&urls=#{url}",
       headers:{

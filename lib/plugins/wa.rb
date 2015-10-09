@@ -7,7 +7,7 @@ class Wa
   match /(wa) (.+)/, prefix: /^(\.)/
   match /(help wa)$/, method: :help, prefix: /^(\.)/
 
-  def execute(m, command, wa, text)
+  def execute(m, prefix, wa, text)
     input_array = text.split(/[[:space:]]/)
     input = input_array.join(' ').downcase
     response = Nokogiri::XML(open("http://api.wolframalpha.com/v2/query?input=#{URI.encode(input)}&appid=#{ENV['WA_ID']}"))

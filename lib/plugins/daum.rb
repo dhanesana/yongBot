@@ -15,7 +15,7 @@ class Daum
     m.reply "Daum Trending [1]: #{text} #{url}"
   end
 
-  def with_num(m, command, daum, num)
+  def with_num(m, prefix, daum, num)
     return m.reply 'invalid num bru' if num.to_i < 1
     page = Nokogiri::HTML(open('http://www.daum.net/'))
     text = page.css('ol#realTimeSearchWord div div a')[num.to_i].text.delete!("\n") # NAME

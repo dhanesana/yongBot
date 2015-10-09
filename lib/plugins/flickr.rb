@@ -8,7 +8,7 @@ class Flickr
   match /(flickr) (.+)/, prefix: /^(\.)/
   match /(help flickr)$/, method: :help, prefix: /^(\.)/
 
-  def execute(m, command, flickr, user)
+  def execute(m, prefix, flickr, user)
     username = URI.encode(user.split(/[[:space:]]/).join(' ').downcase)
     buffet = open("https://api.flickr.com/services/rest/?method=flickr.people.findByUsername&api_key=#{ENV['FLICKR_KEY']}&username=#{username}&format=json&nojsoncallback=1").read
     result = JSON.parse(buffet)

@@ -7,7 +7,7 @@ class Ud
   match /(ud) (.+)/, prefix: /^(\.)/
   match /(help ud)$/, method: :help, prefix: /^(\.)/
 
-  def execute(m, command, ud, keywords)
+  def execute(m, prefix, ud, keywords)
     query = keywords.split(/[[:space:]]/).join(' ').downcase
     response = Unirest.get("http://api.urbandictionary.com/v0/define?term=#{URI.encode(query)}")
     return m.reply "no word found bru" if response.body['list'] == []

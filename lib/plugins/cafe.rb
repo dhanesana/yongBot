@@ -7,7 +7,7 @@ class Cafe
   match /(cafe) (.+)/, prefix: /^(\.)/
   match /(help cafe)$/, method: :help, prefix: /^(\.)/
 
-  def execute(m, command, cafe, text)
+  def execute(m, prefix, cafe, text)
     query = text.split(/[[:space:]]/).join(' ').downcase
     response = Unirest.post "https://apis.daum.net/search/cafe?apikey=#{ENV['DAUM_KEY']}&q=#{URI.encode(query)}&result=20&output=json"
     cafe_hash = {}

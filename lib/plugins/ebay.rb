@@ -9,7 +9,7 @@ class Ebay
   match /(store) (.+)/, method: :store, prefix: /^(\.)/
   match /(help ebay)$/, method: :help, prefix: /^(\.)/
 
-  def execute(m, command, ebay, term)
+  def execute(m, prefix, ebay, term)
     query = term.split(/[[:space:]]/).join(' ').downcase
     response = Unirest.get(
       "http://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findItemsByKeywords&SERVICE-VERSION=1.0.0&SECURITY-APPNAME=#{ENV['EBAY_ID']}&RESPONSE-DATA-FORMAT=JSON&REST-PAYLOAD&keywords=#{URI.encode(query)}"

@@ -8,7 +8,7 @@ class Tumblr
   match /(help tumblr)$/, method: :help, prefix: /^(\.)/
 
 
-  def execute(m, command, tumblr, tag)
+  def execute(m, prefix, tumblr, tag)
     query = tag.split(/[[:space:]]/).join(' ').downcase
     response = HTTParty.get("http://api.tumblr.com/v2/blog/#{URI.encode(query)}.tumblr.com/posts/photo?api_key=#{ENV['TUMBLR_KEY']}")
     post = []

@@ -15,7 +15,7 @@ class Tnms
     m.reply "TNmS Rank 1: #{station} - #{title}"
   end
 
-  def with_num(m, command, tnms, num)
+  def with_num(m, prefix, tnms, num)
     return m.reply 'invalid num bru' if num.to_i < 1
     return m.reply 'less than 21 bru' if num.to_i > 20
     rank = num.to_i - 1

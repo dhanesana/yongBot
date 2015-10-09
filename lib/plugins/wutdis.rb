@@ -7,7 +7,7 @@ class Wutdis
   match /(wutdis) (.+)/, prefix: /^(\.)/
   match /(help wutdis)$/, method: :help, prefix: /^(\.)/
 
-  def execute(m, command, wutdis, link)
+  def execute(m, prefix, wutdis, link)
     url = URI.encode(link)
     response = Unirest.post "http://rekognition.com/func/api/?api_key=#{ENV['REKOGNITION_KEY']}&api_secret=#{ENV['REKOGNITION_SECRET']}&jobs=scene_understanding_3&urls=#{url}",
       headers:{

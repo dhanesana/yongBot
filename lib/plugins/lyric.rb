@@ -6,7 +6,7 @@ class Lyric
   match /(lyric) (.+)/, prefix: /^(\.)/
   match /(help lyric)$/, method: :help, prefix: /^(\.)/
 
-  def execute(m, command, lyric, keywords)
+  def execute(m, prefix, lyric, keywords)
     query = keywords.split(/[[:space:]]/).join(' ').downcase
     RapGenius::Client.access_token = "#{ENV['RAPGENIUS']}"
     return m.reply 'no song found bru :(' if RapGenius.search_by_lyrics(query) == []

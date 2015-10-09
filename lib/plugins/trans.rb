@@ -8,7 +8,7 @@ class Trans
   match /(trans) (.+)/, prefix: /^(\.)/
   match /(help trans)$/, method: :help, prefix: /^(\.)/
 
-  def execute(m, command, trans, sentence)
+  def execute(m, prefix, trans, sentence)
     string = URI.encode(sentence.split(/[[:space:]]/).join(' '))
     response = Unirest.get("https://www.googleapis.com/language/translate/v2?key=#{ENV['GOOGLE']}&q=#{string}&target=en")
     translated = response.body['data']['translations'].first['translatedText']

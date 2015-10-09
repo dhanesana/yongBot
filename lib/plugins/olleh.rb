@@ -24,7 +24,7 @@ class Olleh
     m.reply "Olleh Rank 1: #{artist} - #{title} | #{date} #{time}:00KST"
   end
 
-  def with_num(m, command, olleh, num)
+  def with_num(m, prefix, olleh, num)
     return m.reply 'invalid num bru' if num.to_i < 1
     return m.reply 'less than 51 bru' if num.to_i > 50
     agent = Mechanize.new

@@ -9,7 +9,7 @@ class Steam
   match /(steam) (.+)/, prefix: /^(\.)/
   match /(help steam)$/, method: :help, prefix: /^(\.)/
 
-  def execute(m, command, steam, user)
+  def execute(m, prefix, steam, user)
     page = Nokogiri::XML(open("http://steamcommunity.com/id/#{user}/?xml=1"))
     return m.reply "invalid user bru" if page.text == "The specified profile could not be found."
     steamID64 = page.xpath("//steamID64").text

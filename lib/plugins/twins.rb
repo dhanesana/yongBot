@@ -7,7 +7,7 @@ class Twins
   match /(twins) (.+)/, prefix: /^(\.)/
   match /(help twins)$/, method: :help, prefix: /^(\.)/
 
-  def execute(m, command, twins, links)
+  def execute(m, prefix, twins, links)
     urls = links.split(/[[:space:]]/)
     url = URI.encode(urls[0])
     url_2 = URI.encode(urls[1])

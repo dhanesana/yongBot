@@ -11,7 +11,7 @@ class Poll
     @all_games = {}
   end
 
-  def execute(m, command, poll, question)
+  def execute(m, prefix, poll, question)
     channel = m.channel.name
     if @all_games.keys.include? channel
       m.reply "there's already a poll stupee"
@@ -37,7 +37,7 @@ class Poll
     end
   end
 
-  def vote(m, command, vote, choice)
+  def vote(m, prefix, vote, choice)
     # get user address
     user_address = m.prefix.match(/@(.+)/)[1]
     channel = m.channel.name

@@ -7,7 +7,7 @@ class Now
   match /(now) (.+)/, prefix: /^(\.)/
   match /(help now)$/, method: :help, prefix: /^(\.)/
 
-  def execute(m, command, now, location)
+  def execute(m, prefix, now, location)
     loc_array = location.split(/[[:space:]]/)
     loc = loc_array.join(' ').downcase
     if loc.to_i == 0

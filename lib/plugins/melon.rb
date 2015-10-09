@@ -17,7 +17,7 @@ class Melon
     m.reply "Melon Rank #{rank}: #{artist} - #{song}"
   end
 
-  def with_num(m, command, melon, num)
+  def with_num(m, prefix, melon, num)
     return m.reply 'invalid num bru' if num.to_i < 1
     link = open("http://www.melon.com/chart/index.htm.json").read
     result = JSON.parse(link)
