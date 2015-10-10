@@ -76,7 +76,8 @@ class Help
       ".olleh [num]",
       ".mnet [num]",
       ".log",
-      ".powerball"
+      ".powerball",
+      ".romanize [words]"
     ]
   end
 

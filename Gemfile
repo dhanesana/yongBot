@@ -11,6 +11,7 @@ gem 'dotenv-heroku'
 gem 'mechanize'
 gem 'rapgenius'
 gem 'cinch-identify'
+gem 'unidecoder'
 
 gem 'pg'
 gem 'heroku-api'
