@@ -11,9 +11,9 @@ class Now
     loc_array = location.split(/[[:space:]]/)
     loc = loc_array.join(' ').downcase
     if loc.to_i == 0
-      response = Unirest.get "http://api.openweathermap.org/data/2.5/weather?q=#{URI.encode(loc)}"
+      response = Unirest.get "http://api.openweathermap.org/data/2.5/weather?q=#{URI.encode(loc)}&APPID=#{ENV['WEATHER_KEY']}"
     else
-      response = Unirest.get "http://api.openweathermap.org/data/2.5/weather?zip=#{loc.to_i}"
+      response = Unirest.get "http://api.openweathermap.org/data/2.5/weather?zip=#{loc.to_i}&APPID=#{ENV['WEATHER_KEY']}"
     end
     long = response.body['coord']['lon']
     lat = response.body['coord']['lat']
