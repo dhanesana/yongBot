@@ -56,6 +56,7 @@ Create a .env file within the root directory, and populate with the following va
 | TWITCH_USERS       | [Twitch.tv](http://www.twitch.tv/) Users (comma-seperated, no spaces)
 | VIKI               | [Viki AppID](http://dev.viki.com/)
 | WA_ID              | [Wolfram Alpha AppID](http://products.wolframalpha.com/api/)
+| WEATHER_KEY        | [OpenWeatherMap API Key](http://openweathermap.org/appid#get)
 
 Usage
 -----
