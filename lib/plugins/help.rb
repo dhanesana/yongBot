@@ -77,7 +77,8 @@ class Help
       ".mnet [num]",
       ".log",
       ".powerball",
-      ".romanize [words]"
+      ".romanize [words]",
+      ".nfl"
     ]
   end
 
