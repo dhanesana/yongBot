@@ -12,18 +12,18 @@ class Nfl
     utc = Time.now.utc
     date = (utc + Time.zone_offset('PDT')).strftime("%Y%m%d")
     game = "00"
-    games = ""
-    games_2 = ""
+    games = "|"
+    games_2 = "|"
     while game.to_i < 100
       begin
         feed = JSON.parse(open("http://www.nfl.com/liveupdate/game-center/#{date}#{game}/#{date}#{game}_gtd.json").read)
-        break if feed == {}
+
         quarter = feed["#{date}#{game}"]['qtr']
         home_team = feed["#{date}#{game}"]['home']['abbr']
         home_score = feed["#{date}#{game}"]['home']['score']['T']
         away_team = feed["#{date}#{game}"]['away']['abbr']
         away_score = feed["#{date}#{game}"]['away']['score']['T']
-        the_game = "| #{home_team}: #{home_score}, #{away_team}: #{away_score} [#{quarter}] "
+        the_game = " #{home_team}: #{home_score}, #{away_team}: #{away_score} [ #{quarter} ] |"
         if game.to_i < 6
           games += the_game
         else
@@ -41,9 +41,9 @@ class Nfl
           end
       end
     end
-    games = "no live or completed games rn" if games == ""
+    games = "no live or completed games rn" if games == "|"
     m.reply games
-    m.reply games_2 unless games_2 == ""
+    m.reply games_2 unless games_2 == "|"
   end
 
   def help(m)
