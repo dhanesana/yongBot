@@ -57,7 +57,7 @@ class Help
       ".asc",
       ".csgo [user]",
       ".kpoppin",
-      # ".github [user]",
+      ".github [user]",
       ".soundk",
       ".viki [title]",
       ".now [location]",
