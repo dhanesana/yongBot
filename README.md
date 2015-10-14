@@ -41,6 +41,8 @@ Create a .env file within the root directory, and populate with the following va
 | FACEPLUS_KEY       | [Face++ API Key](http://www.faceplusplus.com/create-a-new-app/)
 | FACEPLUS_SECRET    | [Face++ API Secret](http://www.faceplusplus.com/create-a-new-app/)
 | FLICKR_KEY         | [Flickr API Key](https://www.flickr.com/services/api/misc.api_keys.html)
+| GITHUB_ID          | [GitHub Client ID](https://github.com/settings/applications/new)
+| GITHUB_SECRET      | [GitHub Client Secret](https://github.com/settings/applications/new)
 | GOOGLE             | [Google API Key](https://cloud.google.com/translate/v2/getting_started)
 | IG_ID              | [Instagram Client ID](https://instagram.com/developer/)
 | MASHAPE_KEY        | [Mashape API Key](http://docs.mashape.com/api-keys)
