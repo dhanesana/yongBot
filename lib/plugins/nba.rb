@@ -9,33 +9,33 @@ class Nba
   match /(help nba)$/, method: :help, prefix: /^(\.)/
 
   def execute(m)
-    begin
-      utc = Time.now.utc
-      today_pdt = utc + Time.zone_offset('PDT')
-      today = today_pdt.strftime("%Y%m%d")
-      feed = open("http://data.nba.com/5s/json/cms/noseason/scoreboard/#{today}/games.json").read
-    rescue
-      return m.reply 'no games today bru' if feed.nil?
-    end
+    utc = Time.now.utc
+    today_pdt = utc + Time.zone_offset('PDT')
+    today = today_pdt.strftime("%Y%m%d")
+    feed = open("http://data.nba.com/5s/json/cms/noseason/scoreboard/#{today}/games.json").read
     result = JSON.parse(feed)
+    return m.reply "no games today bru" if result['sports_content']['games'] == ""
     num_of_games = result['sports_content']['games']['game'].size
-    string = "| "
+    games = "|"
+    games_2 = "|"
     i = 0
     while i < num_of_games
-      string += result['sports_content']['games']['game'][i]['home']['nickname']
-      string += ": "
-      string += result['sports_content']['games']['game'][i]['home']['score']
-      string += ", "
-      string += result['sports_content']['games']['game'][i]['visitor']['nickname']
-      string += ": "
-      string += result['sports_content']['games']['game'][i]['visitor']['score']
-      string += " ["
-      string += result['sports_content']['games']['game'][i]['period_time']['period_status']
-      string += " #{result['sports_content']['games']['game'][i]['period_time']['game_clock']}"
-      string += "] | "
+      home = result['sports_content']['games']['game'][i]['home']['nickname']
+      home_score = result['sports_content']['games']['game'][i]['home']['score']
+      visitor = result['sports_content']['games']['game'][i]['visitor']['nickname']
+      visitor_score = result['sports_content']['games']['game'][i]['visitor']['score']
+      period = result['sports_content']['games']['game'][i]['period_time']['period_status']
+      clock = result['sports_content']['games']['game'][i]['period_time']['game_clock']
+      period += " #{clock}" unless clock == ""
+      if i < 5
+        games += " #{home}: #{home_score}, #{visitor}: #{visitor_score} [#{period}] |"
+      else
+        games_2 += " #{home}: #{home_score}, #{visitor}: #{visitor_score} [#{period}] |"
+      end
       i += 1
     end
-    m.reply string
+    m.reply games
+    m.reply games_2 unless games_2 == "|"
   end
 
   def help(m)
