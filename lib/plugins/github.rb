@@ -16,6 +16,7 @@ class Github
       response_2 = Unirest.get("https://api.github.com/repos/#{user}/#{repo}/commits?&client_id=#{ENV['GITHUB_ID']}&client_secret=#{ENV['GITHUB_SECRET']}").body
       if response_2.first[1].nil?
         message = response_2.first['commit']['message']
+        message = message.slice(0..(message.index("\n") - 1)) if message.include? "\n"
         commit_url = response_2.first['html_url']
         break
       else
