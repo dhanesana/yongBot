@@ -6,9 +6,9 @@ module Cinch
     class Naver
       include Cinch::Plugin
 
-      match /(naver)$/, prefix: /^(\.)/
-      match /(naver) (.+)/, method: :with_num, prefix: /^(\.)/
-      match /(help naver)$/, method: :help, prefix: /^(\.)/
+      match /(naver)$/
+      match /(naver) (.+)/, method: :with_num
+      match /(help naver)$/, method: :help
 
       def execute(m)
         page = Nokogiri::HTML(open("http://www.naver.com/"))

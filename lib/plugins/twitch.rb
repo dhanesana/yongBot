@@ -7,9 +7,9 @@ module Cinch
       include Cinch::Plugin
 
       timer 600, method: :check_live
-      match /(twitch)$/, prefix: /^(\.)/
-      match /(twitch) (.+)/, method: :check_user, prefix: /^(\.)/
-      match /(help twitch)$/, method: :help, prefix: /^(\.)/
+      match /(twitch)$/
+      match /(twitch) (.+)/, method: :check_user
+      match /(help twitch)$/, method: :help
 
       def initialize(*args)
         super

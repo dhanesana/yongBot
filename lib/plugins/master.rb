@@ -3,12 +3,12 @@ module Cinch
     class Master
       include Cinch::Plugin
 
-      match /(thyme)$/, method: :thyme, prefix: /^(\.)/
-      match /(join) (.+)/, method: :join, prefix: /^(\.)/
-      match /(part)$/, method: :part, prefix: /^(\.)/
-      match /(part) (.+)/, method: :part_specified, prefix: /^(\.)/
-      match /(setnick) (.+)/, method: :set_nick, prefix: /^(\.)/
-      match /(ping)$/, method: :ping, prefix: /^(\.)/
+      match /(thyme)$/, method: :thyme
+      match /(join) (.+)/, method: :join
+      match /(part)$/, method: :part
+      match /(part) (.+)/, method: :part_specified
+      match /(setnick) (.+)/, method: :set_nick
+      match /(ping)$/, method: :ping
 
       def initialize(*args)
         super

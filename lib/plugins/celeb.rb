@@ -6,8 +6,8 @@ module Cinch
     class Celeb
       include Cinch::Plugin
 
-      match /(celeb) (.+)/, prefix: /^(\.)/
-      match /(help celeb)$/, method: :help, prefix: /^(\.)/
+      match /(celeb) (.+)/
+      match /(help celeb)$/, method: :help
 
       def execute(m, prefix, celeb, link)
         url = URI.encode(link)

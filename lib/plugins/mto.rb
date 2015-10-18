@@ -6,8 +6,8 @@ module Cinch
     class Mto
       include Cinch::Plugin
 
-      match /(mto)$/, prefix: /^(\.)/
-      match /(help mto)$/, method: :help, prefix: /^(\.)/
+      match /(mto)$/
+      match /(help mto)$/, method: :help
 
       def execute(m)
         num = rand(0..19)

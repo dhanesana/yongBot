@@ -6,8 +6,8 @@ module Cinch
     class Wa
       include Cinch::Plugin
 
-      match /(wa) (.+)/, prefix: /^(\.)/
-      match /(help wa)$/, method: :help, prefix: /^(\.)/
+      match /(wa) (.+)/
+      match /(help wa)$/, method: :help
 
       def execute(m, prefix, wa, text)
         input_array = text.split(/[[:space:]]/)

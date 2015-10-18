@@ -7,8 +7,8 @@ module Cinch
     class Flickr
       include Cinch::Plugin
 
-      match /(flickr) (.+)/, prefix: /^(\.)/
-      match /(help flickr)$/, method: :help, prefix: /^(\.)/
+      match /(flickr) (.+)/
+      match /(help flickr)$/, method: :help
 
       def execute(m, prefix, flickr, user)
         username = URI.encode(user.split(/[[:space:]]/).join(' ').downcase)

@@ -8,13 +8,13 @@ module Cinch
     class Face
       include Cinch::Plugin
 
-      match /(face) (.+)/, prefix: /^(\.)/
-      match /(face)$/, method: :random, prefix: /^(\.)/
-      match /(face top)$/, method: :top, prefix: /^(\.)/
-      match /(face low)$/, method: :low, prefix: /^(\.)/
-      match /(help face)$/, method: :help, prefix: /^(\.)/
-      match /(help face top)$/, method: :help_top, prefix: /^(\.)/
-      match /(help face low)$/, method: :help_low, prefix: /^(\.)/
+      match /(face) (.+)/
+      match /(face)$/, method: :random
+      match /(face top)$/, method: :top
+      match /(face low)$/, method: :low
+      match /(help face)$/, method: :help
+      match /(help face top)$/, method: :help_top
+      match /(help face low)$/, method: :help_low
 
       def initialize(*args)
         super

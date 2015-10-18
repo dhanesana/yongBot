@@ -6,8 +6,8 @@ module Cinch
     class Kpoppin
       include Cinch::Plugin
 
-      match /(kpoppin)$/, prefix: /^(\.)/
-      match /(help kpoppin)$/, method: :help, prefix: /^(\.)/
+      match /(kpoppin)$/
+      match /(help kpoppin)$/, method: :help
 
       def execute(m)
         page = Nokogiri::HTML(open('http://www.arirang.co.kr/Radio/Radio_MessageBoard.asp?PROG_CODE=RADR0143&MENU_CODE=101862&code=Be6'))

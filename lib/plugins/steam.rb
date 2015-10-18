@@ -8,8 +8,8 @@ module Cinch
     class Steam
       include Cinch::Plugin
 
-      match /(steam) (.+)/, prefix: /^(\.)/
-      match /(help steam)$/, method: :help, prefix: /^(\.)/
+      match /(steam) (.+)/
+      match /(help steam)$/, method: :help
 
       def execute(m, prefix, steam, user)
         page = Nokogiri::XML(open("http://steamcommunity.com/id/#{user}/?xml=1"))

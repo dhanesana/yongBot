@@ -6,8 +6,8 @@ module Cinch
     class Asc
       include Cinch::Plugin
 
-      match /(asc)$/, prefix: /^(\.)/
-      match /(help asc)$/, method: :help, prefix: /^(\.)/
+      match /(asc)$/
+      match /(help asc)$/, method: :help
 
       def execute(m)
         page = Nokogiri::HTML(open('http://www.arirang.co.kr/Tv2/Tv_PlusHomepage_Full.asp?PROG_CODE=TVCR0688&MENU_CODE=101717&sys_lang=Eng'))

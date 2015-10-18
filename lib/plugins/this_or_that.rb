@@ -3,8 +3,8 @@ module Cinch
     class ThisOrThat
       include Cinch::Plugin
 
-      match /([^\s]+) (or) ([^\s]+)$/, prefix: /^(\.)/
-      match /(help)\s(this)\s(or)\s(that)/, method: :help, prefix: /^(\.)/
+      match /([^\s]+) (or) ([^\s]+)$/
+      match /(help)\s(this)\s(or)\s(that)/, method: :help
 
       def execute(m, prefix, this, orr, that)
         decision = rand(0..1) == 0 ? this : that

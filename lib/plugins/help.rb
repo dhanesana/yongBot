@@ -3,7 +3,7 @@ module Cinch
     class Help
       include Cinch::Plugin
 
-      match /(help)$/, prefix: /^(\.)/
+      match /(help)$/
 
       def initialize(*args)
         super

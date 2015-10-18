@@ -5,8 +5,8 @@ module Cinch
     class Cpme
       include Cinch::Plugin
 
-      match /(cpme)$/, prefix: /^(\.)/
-      match /(help cpme)$/, method: :help, prefix: /^(\.)/
+      match /(cpme)$/
+      match /(help cpme)$/, method: :help
 
       def execute(m)
         url = 'https://crayonpop.me/feed/'

@@ -7,8 +7,8 @@ module Cinch
     class Kwikia
       include Cinch::Plugin
 
-      match /(kwikia) (.+)/, prefix: /^(\.)/
-      match /(help kwikia)$/, method: :help, prefix: /^(\.)/
+      match /(kwikia) (.+)/
+      match /(help kwikia)$/, method: :help
 
       def execute(m, prefix, kwikia, term)
         begin

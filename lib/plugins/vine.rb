@@ -5,8 +5,8 @@ module Cinch
     class Vine
       include Cinch::Plugin
 
-      match /(vine)$/, prefix: /^(\.)/
-      match /(help vine)$/, method: :help, prefix: /^(\.)/
+      match /(vine)$/
+      match /(help vine)$/, method: :help
 
       def execute(m)
         response = Unirest.get "https://community-vineapp.p.mashape.com/timelines/popular",

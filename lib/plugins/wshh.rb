@@ -6,8 +6,8 @@ module Cinch
     class Wshh
       include Cinch::Plugin
 
-      match /(wshh)$/, prefix: /^(\.)/
-      match /(help wshh)$/, method: :help, prefix: /^(\.)/
+      match /(wshh)$/
+      match /(help wshh)$/, method: :help
 
       def execute(m)
         page = Nokogiri::HTML(open('http://www.worldstarhiphop.com/videos/'))

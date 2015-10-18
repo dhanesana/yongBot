@@ -6,8 +6,8 @@ module Cinch
     class Sub
       include Cinch::Plugin
 
-      match /(sub) (.+)/, prefix: /^(\.)/
-      match /(help sub)$/, method: :help, prefix: /^(\.)/
+      match /(sub) (.+)/
+      match /(help sub)$/, method: :help
 
       def execute(m, prefix, sub, tag)
         response = HTTParty.get("http://www.reddit.com/r/#{tag.downcase}/new.json")

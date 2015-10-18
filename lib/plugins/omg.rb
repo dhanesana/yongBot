@@ -6,8 +6,8 @@ module Cinch
     class Omg
       include Cinch::Plugin
 
-      match /(omg)$/, prefix: /^(\.)/
-      match /(help omg)$/, method: :help, prefix: /^(\.)/
+      match /(omg)$/
+      match /(help omg)$/, method: :help
 
       def execute(m)
         tag = URI.encode('오마이걸')

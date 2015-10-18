@@ -6,8 +6,8 @@ module Cinch
     class Github
       include Cinch::Plugin
 
-      match /(github) (.+)/, prefix: /^(\.)/
-      match /(help github)$/, method: :help, prefix: /^(\.)/
+      match /(github) (.+)/
+      match /(help github)$/, method: :help
 
       def execute(m, prefix, github, user)
         response = Unirest.get("https://api.github.com/users/#{URI.encode(user)}/repos?&sort=pushed&client_id=#{ENV['GITHUB_ID']}&client_secret=#{ENV['GITHUB_SECRET']}").body

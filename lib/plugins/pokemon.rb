@@ -6,8 +6,8 @@ module Cinch
     class Pokemon
       include Cinch::Plugin
 
-      match /(pokemon) (.+)/, prefix: /^(\.)/
-      match /(help pokemon)$/, method: :help, prefix: /^(\.)/
+      match /(pokemon) (.+)/
+      match /(help pokemon)$/, method: :help
 
       def execute(m, prefix, pokemon, name)
         link = open("http://pokeapi.co/api/v1/pokemon/#{name.downcase}").read

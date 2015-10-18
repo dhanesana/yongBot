@@ -6,8 +6,8 @@ module Cinch
     class Lovelyz
       include Cinch::Plugin
 
-      match /(lovelyz)$/, prefix: /^(\.)/
-      match /(help lovelyz)$/, method: :help, prefix: /^(\.)/
+      match /(lovelyz)$/
+      match /(help lovelyz)$/, method: :help
 
       def execute(m)
         tag = URI.encode('러블리즈')

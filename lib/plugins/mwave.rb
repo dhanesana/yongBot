@@ -6,9 +6,9 @@ module Cinch
     class Mwave
       include Cinch::Plugin
 
-      match /(mwave)$/, prefix: /^(\.)/
-      match /(mwave) (.+)/, method: :with_num, prefix: /^(\.)/
-      match /(help mwave)$/, method: :help, prefix: /^(\.)/
+      match /(mwave)$/
+      match /(mwave) (.+)/, method: :with_num
+      match /(help mwave)$/, method: :help
 
       def execute(m)
         link = open("http://mwave.interest.me/mcountdown/vote/mcdChart.json").read

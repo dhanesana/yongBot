@@ -6,8 +6,8 @@ module Cinch
     class Eat
       include Cinch::Plugin
 
-      match /(eat) (.+)/, prefix: /^(\.)/
-      match /(help eat)$/, method: :help, prefix: /^(\.)/
+      match /(eat) (.+)/
+      match /(help eat)$/, method: :help
 
       def execute(m, prefix, eat, item)
         # GET FOOD ID

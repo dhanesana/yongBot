@@ -6,8 +6,8 @@ module Cinch
     class Kmodel
       include Cinch::Plugin
 
-      match /(kmodel)$/, prefix: /^(\.)/
-      match /(help kmodel)$/, method: :help, prefix: /^(\.)/
+      match /(kmodel)$/
+      match /(help kmodel)$/, method: :help
 
       def execute(m)
         resp = HTTParty.get('http://www.reddit.com/r/KoreanModel/new.json')

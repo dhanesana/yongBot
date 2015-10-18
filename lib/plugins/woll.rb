@@ -3,8 +3,8 @@ module Cinch
     class Woll
       include Cinch::Plugin
 
-      match /(woll)$/, prefix: /^(\.)/
-      match /(help woll)$/, method: :help, prefix: /^(\.)/
+      match /(woll)$/
+      match /(help woll)$/, method: :help
 
       def execute(m)
         die_1 = rand(1..6)

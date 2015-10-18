@@ -6,9 +6,9 @@ module Cinch
     class Gaon
       include Cinch::Plugin
 
-      match /(gaon)$/, prefix: /^(\.)/
-      match /(gaon) (.+)/, method: :with_num, prefix: /^(\.)/
-      match /(help gaon)$/, method: :help, prefix: /^(\.)/
+      match /(gaon)$/
+      match /(gaon) (.+)/, method: :with_num
+      match /(help gaon)$/, method: :help
 
       def execute(m)
         page = Nokogiri::HTML(open('http://gaonchart.co.kr/main/section/chart/online.gaon?serviceGbn=ALL&termGbn=week&hitYear=2015&targetTime=&nationGbn=K'))

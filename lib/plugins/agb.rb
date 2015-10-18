@@ -6,9 +6,9 @@ module Cinch
     class Agb
       include Cinch::Plugin
 
-      match /(agb)$/, prefix: /^(\.)/
-      match /(agb) (.+)/, method: :with_num, prefix: /^(\.)/
-      match /(help agb)$/, method: :help, prefix: /^(\.)/
+      match /(agb)$/
+      match /(agb) (.+)/, method: :with_num
+      match /(help agb)$/, method: :help
 
       def execute(m)
         page = Nokogiri::HTML(open('http://www.agbnielsen.co.kr/_hannet/agb/f_rating/rating_01a.asp'))

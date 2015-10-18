@@ -6,8 +6,8 @@ module Cinch
     class Cafe
       include Cinch::Plugin
 
-      match /(cafe) (.+)/, prefix: /^(\.)/
-      match /(help cafe)$/, method: :help, prefix: /^(\.)/
+      match /(cafe) (.+)/
+      match /(help cafe)$/, method: :help
 
       def execute(m, prefix, cafe, text)
         query = text.split(/[[:space:]]/).join(' ').downcase

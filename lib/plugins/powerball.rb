@@ -6,10 +6,10 @@ module Cinch
     class Powerball
       include Cinch::Plugin
 
-      match /(powerball)$/, prefix: /^(\.)/
-      match /(jackpot)$/, method: :jackpot, prefix: /^(\.)/
-      match /(quickpick)$/, method: :quickpick, prefix: /^(\.)/
-      match /(help powerball)$/, method: :help, prefix: /^(\.)/
+      match /(powerball)$/
+      match /(jackpot)$/, method: :jackpot
+      match /(quickpick)$/, method: :quickpick
+      match /(help powerball)$/, method: :help
 
       def initialize(*args)
         super

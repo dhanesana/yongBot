@@ -3,8 +3,8 @@ module Cinch
     class Gn
       include Cinch::Plugin
 
-      match /(gn)$/, prefix: /^(\.)/
-      match /(help gn)$/, method: :help, prefix: /^(\.)/
+      match /(gn)$/
+      match /(help gn)$/, method: :help
 
       def initialize(*args)
         super

@@ -5,9 +5,9 @@ module Cinch
     class FacePlus
       include Cinch::Plugin
 
-      match /(faceplus) (.+)/, prefix: /^(\.)/
-      match /(faceplus)$/, method: :random, prefix: /^(\.)/
-      match /(help faceplus)$/, method: :help, prefix: /^(\.)/
+      match /(faceplus) (.+)/
+      match /(faceplus)$/, method: :random
+      match /(help faceplus)$/, method: :help
 
       def execute(m, prefix, face, link)
         url = URI.encode(link)
