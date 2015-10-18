@@ -1,19 +1,23 @@
 require 'httparty'
 require 'open-uri'
 
-class Ig
-  include Cinch::Plugin
+module Cinch
+  module Plugins
+    class Ig
+      include Cinch::Plugin
 
-  match /(ig) (.+)/, prefix: /^(\.)/
-  match /(help ig)$/, method: :help, prefix: /^(\.)/
+      match /(ig) (.+)/, prefix: /^(\.)/
+      match /(help ig)$/, method: :help, prefix: /^(\.)/
 
-  def execute(m, prefix, ig, tag)
-    response = HTTParty.get("https://api.instagram.com/v1/tags/#{URI.encode(tag)}/media/recent?client_id=#{ENV['IG_ID']}")
-    m.reply response["data"].first['link']
+      def execute(m, prefix, ig, tag)
+        response = HTTParty.get("https://api.instagram.com/v1/tags/#{URI.encode(tag)}/media/recent?client_id=#{ENV['IG_ID']}")
+        m.reply response["data"].first['link']
+      end
+
+      def help(m)
+        m.reply 'returns most recent instagram pic related to specified hashtag'
+      end
+
+    end
   end
-
-  def help(m)
-    m.reply 'returns most recent instagram pic related to specified hashtag'
-  end
-
 end
