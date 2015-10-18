@@ -19,7 +19,7 @@ module Cinch
         while game.to_i < 100
           begin
             feed = JSON.parse(open("http://www.nfl.com/liveupdate/game-center/#{date}#{game}/#{date}#{game}_gtd.json").read)
-
+            break if feed == {}
             quarter = feed["#{date}#{game}"]['qtr']
             home_team = feed["#{date}#{game}"]['home']['abbr']
             home_score = feed["#{date}#{game}"]['home']['score']['T']
