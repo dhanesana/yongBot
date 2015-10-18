@@ -6,9 +6,9 @@ module Cinch
     class Tnms
       include Cinch::Plugin
 
-      match /(tnms)$/, prefix: /^(\.)/
-      match /(tnms) (.+)/, method: :with_num, prefix: /^(\.)/
-      match /(help tnms)$/, method: :help, prefix: /^(\.)/
+      match /(tnms)$/
+      match /(tnms) (.+)/, method: :with_num
+      match /(help tnms)$/, method: :help
 
       def execute(m)
         page = Nokogiri::HTML(open('http://www.tnms.tv/rating/default.asp'))

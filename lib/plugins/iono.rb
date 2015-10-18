@@ -3,8 +3,8 @@ module Cinch
     class Iono
       include Cinch::Plugin
 
-      match /(iono)$/, prefix: /^(\.)/
-      match /(help iono)$/, method: :help, prefix: /^(\.)/
+      match /(iono)$/
+      match /(help iono)$/, method: :help
 
       def execute(m)
         yes = ['yes', 'yeah', 'yeee', 'ya', 'ye'].sample

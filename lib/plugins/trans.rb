@@ -7,8 +7,8 @@ module Cinch
     class Trans
       include Cinch::Plugin
 
-      match /(trans) (.+)/, prefix: /^(\.)/
-      match /(help trans)$/, method: :help, prefix: /^(\.)/
+      match /(trans) (.+)/
+      match /(help trans)$/, method: :help
 
       def execute(m, prefix, trans, sentence)
         string = URI.encode(sentence.split(/[[:space:]]/).join(' '))

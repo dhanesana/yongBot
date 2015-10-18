@@ -6,8 +6,8 @@ module Cinch
     class Dispatch
       include Cinch::Plugin
 
-      match /(dispatch)$/, prefix: /^(\.)/
-      match /(help dispatch)$/, method: :help, prefix: /^(\.)/
+      match /(dispatch)$/
+      match /(help dispatch)$/, method: :help
 
       def execute(m)
         page = Nokogiri::HTML(open('http://www.dispatch.co.kr/today'))

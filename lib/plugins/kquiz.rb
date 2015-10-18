@@ -7,9 +7,9 @@ module Cinch
     class Kquiz
       include Cinch::Plugin
 
-      match /(kquiz)$/, prefix: /^(\.)/
+      match /(kquiz)$/
       listen_to :channel, :method => :guess
-      match /(help kquiz)$/, method: :help, prefix: /^(\.)/
+      match /(help kquiz)$/, method: :help
 
       def initialize(*args)
         super

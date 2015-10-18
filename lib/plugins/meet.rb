@@ -7,10 +7,10 @@ module Cinch
     class Meet
       include Cinch::Plugin
 
-      match /(meet)$/, prefix: /^(\.)/
-      match /(meet list)$/, method: :list, prefix: /^(\.)/
-      match /(help meet)$/, method: :help, prefix: /^(\.)/
-      match /(help meet list)$/, method: :help_meet, prefix: /^(\.)/
+      match /(meet)$/
+      match /(meet list)$/, method: :list
+      match /(help meet)$/, method: :help
+      match /(help meet list)$/, method: :help_meet
 
       def initialize(*args)
         super

@@ -6,8 +6,8 @@ module Cinch
     class Sh
       include Cinch::Plugin
 
-      match /(sh)$/, prefix: /^(\.)/
-      match /(help sh)$/, method: :help, prefix: /^(\.)/
+      match /(sh)$/
+      match /(help sh)$/, method: :help
 
       def execute(m)
         html = open('http://www.speedhunters.com/category/content/')

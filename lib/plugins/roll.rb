@@ -3,8 +3,8 @@ module Cinch
     class Roll
       include Cinch::Plugin
 
-      match /(roll)$/, prefix: /^(\.)/
-      match /(help roll)$/, method: :help, prefix: /^(\.)/
+      match /(roll)$/
+      match /(help roll)$/, method: :help
 
       def initialize(*args)
         super

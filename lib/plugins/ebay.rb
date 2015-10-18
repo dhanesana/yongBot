@@ -7,10 +7,10 @@ module Cinch
     class Ebay
       include Cinch::Plugin
 
-      match /(ebay) (.+)/, prefix: /^(\.)/
-      match /(store) (.+)/, method: :store, prefix: /^(\.)/
-      match /(sold) (.+)/, method: :sold, prefix: /^(\.)/
-      match /(help ebay)$/, method: :help, prefix: /^(\.)/
+      match /(ebay) (.+)/
+      match /(store) (.+)/, method: :store
+      match /(sold) (.+)/, method: :sold
+      match /(help ebay)$/, method: :help
 
       def execute(m, prefix, ebay, term)
         query = term.split(/[[:space:]]/).join(' ').downcase

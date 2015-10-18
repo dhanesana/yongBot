@@ -7,8 +7,8 @@ module Cinch
     class Lineup
       include Cinch::Plugin
 
-      match /(lineup)/, prefix: /^(\.)/
-      match /(help lineup)$/, method: :help, prefix: /^(\.)/
+      match /(lineup)/
+      match /(help lineup)$/, method: :help
 
       def execute(m)
         html = open('http://yongchicken.herokuapp.com/lineup')

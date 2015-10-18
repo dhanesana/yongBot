@@ -6,9 +6,9 @@ module Cinch
     class Genie
       include Cinch::Plugin
 
-      match /(genie)$/, prefix: /^(\.)/
-      match /(genie) (.+)/, method: :with_num, prefix: /^(\.)/
-      match /(help genie)$/, method: :help, prefix: /^(\.)/
+      match /(genie)$/
+      match /(genie) (.+)/, method: :with_num
+      match /(help genie)$/, method: :help
 
       def execute(m)
         page = Nokogiri::HTML(open("http://www.genie.co.kr/chart/f_top_100.asp"))

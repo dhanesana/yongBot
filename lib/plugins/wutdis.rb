@@ -6,8 +6,8 @@ module Cinch
     class Wutdis
       include Cinch::Plugin
 
-      match /(wutdis) (.+)/, prefix: /^(\.)/
-      match /(help wutdis)$/, method: :help, prefix: /^(\.)/
+      match /(wutdis) (.+)/
+      match /(help wutdis)$/, method: :help
 
       def execute(m, prefix, wutdis, link)
         url = URI.encode(link)

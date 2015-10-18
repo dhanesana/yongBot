@@ -6,8 +6,8 @@ module Cinch
     class Soundk
       include Cinch::Plugin
 
-      match /(soundk)$/, prefix: /^(\.)/
-      match /(help soundk)$/, method: :help, prefix: /^(\.)/
+      match /(soundk)$/
+      match /(help soundk)$/, method: :help
 
       def execute(m)
         page = Nokogiri::HTML(open('http://www.arirang.co.kr/Radio/Radio_MessageBoard.asp?PROG_CODE=RADR0147&MENU_CODE=101865&code=Be6'))

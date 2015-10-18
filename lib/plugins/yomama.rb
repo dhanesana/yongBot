@@ -7,8 +7,8 @@ module Cinch
     class Yomama
       include Cinch::Plugin
 
-      match /(yomama)$/, prefix: /^(\.)/
-      match /(help yomama)$/, method: :help, prefix: /^(\.)/
+      match /(yomama)$/
+      match /(help yomama)$/, method: :help
 
       def execute(m)
         link = open("http://api.yomomma.info/").read

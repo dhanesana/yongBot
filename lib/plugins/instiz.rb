@@ -5,9 +5,9 @@ module Cinch
     class Instiz
       include Cinch::Plugin
 
-      match /(instiz)$/, prefix: /^(\.)/
-      match /(instiz) (.+)/, method: :with_num, prefix: /^(\.)/
-      match /(help instiz)$/, method: :help, prefix: /^(\.)/
+      match /(instiz)$/
+      match /(instiz) (.+)/, method: :with_num
+      match /(help instiz)$/, method: :help
 
       def execute(m)
         agent = Mechanize.new

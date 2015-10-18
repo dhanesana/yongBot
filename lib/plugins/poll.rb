@@ -3,10 +3,10 @@ module Cinch
     class Poll
       include Cinch::Plugin
 
-      match /(poll) (.+)/, prefix: /^(\.)/
-      match /(vote) (.+)/, method: :vote, prefix: /^(\.)/
-      match /(help poll)$/, method: :help_poll, prefix: /^(\.)/
-      match /(help vote)$/, method: :help_vote, prefix: /^(\.)/
+      match /(poll) (.+)/
+      match /(vote) (.+)/, method: :vote
+      match /(help poll)$/, method: :help_poll
+      match /(help vote)$/, method: :help_vote
 
       def initialize(*args)
         super

@@ -6,8 +6,8 @@ module Cinch
     class Fresh
       include Cinch::Plugin
 
-      match /(fresh)$/, prefix: /^(\.)/
-      match /(help fresh)$/, method: :help, prefix: /^(\.)/
+      match /(fresh)$/
+      match /(help fresh)$/, method: :help
 
       def execute(m)
         response = HTTParty.get("http://www.reddit.com/r/hiphopheads/.json")

@@ -6,8 +6,8 @@ module Cinch
     class Yongpop
       include Cinch::Plugin
 
-      match /(yongpop)$/, prefix: /^(\.)/
-      match /(help yongpop)$/, method: :help, prefix: /^(\.)/
+      match /(yongpop)$/
+      match /(help yongpop)$/, method: :help
 
       def execute(m)
         tag = URI.encode('크레용팝')

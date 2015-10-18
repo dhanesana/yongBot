@@ -6,8 +6,8 @@ module Cinch
     class Ig
       include Cinch::Plugin
 
-      match /(ig) (.+)/, prefix: /^(\.)/
-      match /(help ig)$/, method: :help, prefix: /^(\.)/
+      match /(ig) (.+)/
+      match /(help ig)$/, method: :help
 
       def execute(m, prefix, ig, tag)
         response = HTTParty.get("https://api.instagram.com/v1/tags/#{URI.encode(tag)}/media/recent?client_id=#{ENV['IG_ID']}")

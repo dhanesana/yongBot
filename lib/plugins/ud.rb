@@ -6,8 +6,8 @@ module Cinch
     class Ud
       include Cinch::Plugin
 
-      match /(ud) (.+)/, prefix: /^(\.)/
-      match /(help ud)$/, method: :help, prefix: /^(\.)/
+      match /(ud) (.+)/
+      match /(help ud)$/, method: :help
 
       def execute(m, prefix, ud, keywords)
         query = keywords.split(/[[:space:]]/).join(' ').downcase

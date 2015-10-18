@@ -4,8 +4,8 @@ module Cinch
     class Rollu
       include Cinch::Plugin
 
-      match /(rollu)$/, prefix: /^(\.)/
-      match /(help rollu)$/, method: :help, prefix: /^(\.)/
+      match /(rollu)$/
+      match /(help rollu)$/, method: :help
 
       def initialize(*args)
         super

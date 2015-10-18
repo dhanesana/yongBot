@@ -6,9 +6,9 @@ module Cinch
     class Mnet
       include Cinch::Plugin
 
-      match /(mnet)$/, prefix: /^(\.)/
-      match /(mnet) (.+)/, method: :with_num, prefix: /^(\.)/
-      match /(help mnet)$/, method: :help, prefix: /^(\.)/
+      match /(mnet)$/
+      match /(mnet) (.+)/, method: :with_num
+      match /(help mnet)$/, method: :help
 
       def execute(m)
         num = 1

@@ -6,8 +6,8 @@ module Cinch
     class Viki
       include Cinch::Plugin
 
-      match /(viki) (.+)/, prefix: /^(\.)/
-      match /(help viki)$/, method: :help, prefix: /^(\.)/
+      match /(viki) (.+)/
+      match /(help viki)$/, method: :help
 
       def execute(m, prefix, viki, keywords)
         query = keywords.split(/[[:space:]]/).join(' ').downcase

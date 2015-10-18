@@ -5,8 +5,8 @@ module Cinch
     class Sc
       include Cinch::Plugin
 
-      match /(sc) (.+)/, prefix: /^(\.)/
-      match /(help sc)$/, method: :help, prefix: /^(\.)/
+      match /(sc) (.+)/
+      match /(help sc)$/, method: :help
 
       def execute(m, prefix, sc, keywords)
         query = keywords.split(/[[:space:]]/).join(' ').downcase

@@ -6,9 +6,9 @@ module Cinch
     class Melon
       include Cinch::Plugin
 
-      match /(melon)$/, prefix: /^(\.)/
-      match /(melon) (.+)/, method: :with_num, prefix: /^(\.)/
-      match /(help melon)$/, method: :help, prefix: /^(\.)/
+      match /(melon)$/
+      match /(melon) (.+)/, method: :with_num
+      match /(help melon)$/, method: :help
 
       def execute(m)
         link = open("http://www.melon.com/chart/index.htm.json").read

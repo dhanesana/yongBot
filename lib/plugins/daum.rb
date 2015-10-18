@@ -6,9 +6,9 @@ module Cinch
     class Daum
       include Cinch::Plugin
 
-      match /(daum)$/, prefix: /^(\.)/
-      match /(daum) (.+)/, method: :with_num, prefix: /^(\.)/
-      match /(help daum)$/, method: :help, prefix: /^(\.)/
+      match /(daum)$/
+      match /(daum) (.+)/, method: :with_num
+      match /(help daum)$/, method: :help
 
       def execute(m)
         page = Nokogiri::HTML(open('http://www.daum.net/'))

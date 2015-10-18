@@ -6,8 +6,8 @@ module Cinch
     class Now
       include Cinch::Plugin
 
-      match /(now) (.+)/, prefix: /^(\.)/
-      match /(help now)$/, method: :help, prefix: /^(\.)/
+      match /(now) (.+)/
+      match /(help now)$/, method: :help
 
       def execute(m, prefix, now, location)
         loc_array = location.split(/[[:space:]]/)

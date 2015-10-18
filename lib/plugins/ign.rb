@@ -6,8 +6,8 @@ module Cinch
     class Ign
       include Cinch::Plugin
 
-      match /(ign) (.+)/, prefix: /^(\.)/
-      match /(help ign)$/, method: :help, prefix: /^(\.)/
+      match /(ign) (.+)/
+      match /(help ign)$/, method: :help
 
       def execute(m, prefix, ign, game)
         game_uri = URI.encode(game.split(/[[:space:]]/).join(' ').downcase)

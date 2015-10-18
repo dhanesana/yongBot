@@ -6,8 +6,8 @@ module Cinch
     class Buzz
       include Cinch::Plugin
 
-      match /(buzz)$/, prefix: /^(\.)/
-      match /(help buzz)$/, method: :help, prefix: /^(\.)/
+      match /(buzz)$/
+      match /(help buzz)$/, method: :help
 
       def execute(m)
         page = Nokogiri::HTML(open('http://netizenbuzz.blogspot.com/'))

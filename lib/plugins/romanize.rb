@@ -5,8 +5,8 @@ module Cinch
     class Romanize
       include Cinch::Plugin
 
-      match /(romanize) (.+)/, prefix: /^(\.)/
-      match /(help romanize)$/, method: :help, prefix: /^(\.)/
+      match /(romanize) (.+)/
+      match /(help romanize)$/, method: :help
 
       def execute(m, prefix, romanize, words)
         input = words.split(/[[:space:]]/).join(' ')

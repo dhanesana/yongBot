@@ -5,9 +5,9 @@ module Cinch
     class Olleh
       include Cinch::Plugin
 
-      match /(olleh)$/, prefix: /^(\.)/
-      match /(olleh) (.+)/, method: :with_num, prefix: /^(\.)/
-      match /(help olleh)$/, method: :help, prefix: /^(\.)/
+      match /(olleh)$/
+      match /(olleh) (.+)/, method: :with_num
+      match /(help olleh)$/, method: :help
 
       def execute(m)
         agent = Mechanize.new

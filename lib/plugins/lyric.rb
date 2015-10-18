@@ -5,8 +5,8 @@ module Cinch
     class Lyric
       include Cinch::Plugin
 
-      match /(lyric) (.+)/, prefix: /^(\.)/
-      match /(help lyric)$/, method: :help, prefix: /^(\.)/
+      match /(lyric) (.+)/
+      match /(help lyric)$/, method: :help
 
       def execute(m, prefix, lyric, keywords)
         query = keywords.split(/[[:space:]]/).join(' ').downcase

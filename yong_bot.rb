@@ -11,6 +11,7 @@ yong_bot = Cinch::Bot.new do
     c.nicks = ["#{ENV['NICKS']}"]
     c.realname = "yongBot v1.0"
     c.user = "yongBot"
+    c.plugins.prefix = /^(\.)/
 
     c.plugins.plugins = [
       Cinch::Plugins::Identify,

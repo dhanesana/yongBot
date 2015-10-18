@@ -6,8 +6,8 @@ module Cinch
     class Tumblr
       include Cinch::Plugin
 
-      match /(tumblr) (.+)/, prefix: /^(\.)/
-      match /(help tumblr)$/, method: :help, prefix: /^(\.)/
+      match /(tumblr) (.+)/
+      match /(help tumblr)$/, method: :help
 
 
       def execute(m, prefix, tumblr, tag)

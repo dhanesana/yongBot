@@ -3,9 +3,9 @@ module Cinch
     class Log
       include Cinch::Plugin
 
-      match /(log)$/, prefix: /^(\.)/
+      match /(log)$/
       listen_to :channel, :method => :log_msg
-      match /(help log)$/, method: :help, prefix: /^(\.)/
+      match /(help log)$/, method: :help
 
       def initialize(*args)
         super

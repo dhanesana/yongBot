@@ -7,8 +7,8 @@ module Cinch
     class Csgo
       include Cinch::Plugin
 
-      match /(csgo) (.+)/, prefix: /^(\.)/
-      match /(help csgo)$/, method: :help, prefix: /^(\.)/
+      match /(csgo) (.+)/
+      match /(help csgo)$/, method: :help
 
       def execute(m, prefix, csgo, user)
         page = Nokogiri::XML(open("http://steamcommunity.com/id/#{user}/?xml=1"))

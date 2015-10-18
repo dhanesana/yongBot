@@ -6,8 +6,8 @@ module Cinch
     class Simply
       include Cinch::Plugin
 
-      match /(simply)$/, prefix: /^(\.)/
-      match /(help simply)$/, method: :help, prefix: /^(\.)/
+      match /(simply)$/
+      match /(help simply)$/, method: :help
 
       def execute(m)
         page = Nokogiri::HTML(open('http://www.arirang.co.kr/Tv2/Tv_PlusHomepage_Full.asp?PROG_CODE=TVCR0636&MENU_CODE=101505&sys_lang=Eng'))

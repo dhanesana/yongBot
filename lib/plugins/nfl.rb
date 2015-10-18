@@ -7,8 +7,8 @@ module Cinch
     class Nfl
       include Cinch::Plugin
 
-      match /(nfl)$/, prefix: /^(\.)/
-      match /(help nfl)$/, method: :help, prefix: /^(\.)/
+      match /(nfl)$/
+      match /(help nfl)$/, method: :help
 
       def execute(m)
         utc = Time.now.utc

@@ -6,8 +6,8 @@ module Cinch
     class Twins
       include Cinch::Plugin
 
-      match /(twins) (.+)/, prefix: /^(\.)/
-      match /(help twins)$/, method: :help, prefix: /^(\.)/
+      match /(twins) (.+)/
+      match /(help twins)$/, method: :help
 
       def execute(m, prefix, twins, links)
         urls = links.split(/[[:space:]]/)
