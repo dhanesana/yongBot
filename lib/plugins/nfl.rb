@@ -20,7 +20,11 @@ module Cinch
           begin
             feed = JSON.parse(open("http://www.nfl.com/liveupdate/game-center/#{date}#{game}/#{date}#{game}_gtd.json").read)
             break if feed == {}
-            quarter = feed["#{date}#{game}"]['qtr']
+            quarter = feed["#{date}#{game}"]['qtr'].to_s
+            quarter += "th" if quarter.to_i == 4
+            quarter += "rd" if quarter.to_i == 3
+            quarter += "nd" if quarter.to_i == 2
+            quarter += "st" if quarter.to_i == 1
             home_team = feed["#{date}#{game}"]['home']['abbr']
             home_score = feed["#{date}#{game}"]['home']['score']['T']
             away_team = feed["#{date}#{game}"]['away']['abbr']
