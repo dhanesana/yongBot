@@ -9,6 +9,7 @@ module Cinch
       match /(part) (.+)/, method: :part_specified
       match /(setnick) (.+)/, method: :set_nick
       match /(ping)$/, method: :ping
+      match /(echo) (.+)/, method: :echo
 
       def initialize(*args)
         super
@@ -66,6 +67,36 @@ module Cinch
           m.reply users.join(' ')
         else
           m.reply 'master or ops only bru'
+        end
+      end
+
+      def echo(m, prefix, echo, words)
+        if is_admin?(m)
+          channels = @bot.channels.map { |x| x.name }
+          if m.channel.nil?
+            if words[0] == '#'
+              ray = words.split(' ')
+              channel = ray.first
+              ray.delete_at(0)
+              sentence = ray.join(' ')
+            else
+              return m.reply "please specify #channel (with # prefix)"
+            end
+          else
+            if words[0] == '#'
+              ray = words.split(' ')
+              channel = ray.first
+              ray.delete_at(0)
+              sentence = ray.join(' ')
+            else
+              channel = m.channel.name
+              sentence = words
+            end
+          end
+          return Channel(channel).send sentence if channels.include? channel
+          m.reply 'no external msgs bru'
+        else
+          m.reply @unauthorized
         end
       end
 
