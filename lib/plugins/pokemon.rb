@@ -26,7 +26,10 @@ module Cinch
           result['types'].each { |type| types += "#{type['name']}" }
         end
 
+        # Easter Egg Images
         image = 'http://i.imgur.com/diheSTI.jpg' if name.downcase == "squirtle"
+        image = 'http://i.imgur.com/ONewqhC.png' if name.downcase == "staryu"
+
         m.reply "ID: #{id} | #{types} | #{hp} Atk: #{result['attack']} Def: #{result['defense']} | #{image}"
       end
 
