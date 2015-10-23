@@ -1,4 +1,4 @@
-require 'unirest'
+require 'nokogiri'
 require 'open-uri'
 
 module Cinch
@@ -13,9 +13,15 @@ module Cinch
 
       def initialize(*args)
         super
+        begin
         @page = Nokogiri::HTML(open('http://powerball.com/'))
         @draw_date = @page.css('font').first.text
         @jackpot = @page.css('strong')[6].text
+        rescue Errno::ETIMEDOUT
+          puts '*' * 50
+          puts "Connection to http://powerball.com/ timed out"
+          puts '*' * 50
+        end
       end
 
       def execute(m)
