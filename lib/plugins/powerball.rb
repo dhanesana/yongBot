@@ -21,6 +21,10 @@ module Cinch
           puts '*' * 50
           puts "Connection to http://powerball.com/ timed out"
           puts '*' * 50
+        rescue Errno::ECONNRESET
+          puts '*' * 50
+          puts 'Connection reset by peer'
+          puts '*' * 50
         end
       end
 
