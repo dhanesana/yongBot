@@ -21,7 +21,7 @@ module Cinch
           i += 1
         end
         response_string.slice!(-2..-1)
-        m.reply "[#{date}]#{response_string}"
+        m.reply "[#{date} 10:30KST]#{response_string}"
       end
 
       def help(m)
