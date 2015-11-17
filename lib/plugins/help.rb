@@ -57,10 +57,10 @@ module Cinch
           ".lyric [lyrics]",
           ".simply",
           ".asc",
-          ".csgo [user]",
           ".kpoppin",
-          ".github [user]",
           ".soundk",
+          ".popsinseoul",
+          ".csgo [user]",
           ".viki [title]",
           ".now [location]",
           ".trans [words]",
@@ -80,6 +80,7 @@ module Cinch
           ".log",
           ".powerball",
           ".romanize [words]",
+          ".github [user]",
           ".nfl"
         ]
       end
