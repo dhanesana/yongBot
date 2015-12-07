@@ -87,7 +87,8 @@ yong_bot = Cinch::Bot.new do
       Cinch::Plugins::FacePlus,
       Cinch::Plugins::Romanize,
       Cinch::Plugins::Nfl,
-      Cinch::Plugins::Popsinseoul
+      Cinch::Plugins::Popsinseoul,
+      Cinch::Plugins::Superkpop
     ]
     c.delay_joins = :identified
     c.plugins.options[Cinch::Plugins::Identify] = {

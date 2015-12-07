@@ -60,6 +60,7 @@ module Cinch
           ".kpoppin",
           ".soundk",
           ".popsinseoul",
+          ".superkpop",
           ".csgo [user]",
           ".viki [title]",
           ".now [location]",
