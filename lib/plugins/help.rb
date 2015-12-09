@@ -82,7 +82,8 @@ module Cinch
           ".powerball",
           ".romanize [words]",
           ".github [user]",
-          ".nfl"
+          ".nfl",
+          ".weekly"
         ]
       end
 
