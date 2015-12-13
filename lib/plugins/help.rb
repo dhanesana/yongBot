@@ -42,7 +42,7 @@ module Cinch
           ".sc [keywords]",
           ".celeb [img_url]",
           ".wutdis [img_url]",
-          ".[this] or [that]",
+          ".[this] OR [that]",
           ".kst",
           ".buzz",
           ".meet",
