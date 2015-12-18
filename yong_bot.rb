@@ -50,7 +50,6 @@ yong_bot = Cinch::Bot.new do
       Cinch::Plugins::Sc,
       Cinch::Plugins::Celeb,
       Cinch::Plugins::Wutdis,
-      Cinch::Plugins::ThisOrThat,
       Cinch::Plugins::Kst,
       Cinch::Plugins::Buzz,
       Cinch::Plugins::Meet,
