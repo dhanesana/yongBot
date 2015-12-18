@@ -42,7 +42,6 @@ module Cinch
           ".sc [keywords]",
           ".celeb [img_url]",
           ".wutdis [img_url]",
-          ".[this] OR [that]",
           ".kst",
           ".buzz",
           ".meet",
@@ -50,7 +49,6 @@ module Cinch
           ".wshh",
           ".instiz [num]",
           ".gaon [num]",
-          # ".mto",
           ".fresh",
           ".agb [num]",
           ".tnms [num]",
@@ -83,7 +81,8 @@ module Cinch
           ".romanize [words]",
           ".github [user]",
           ".nfl",
-          ".weekly"
+          ".weekly",
+          ".choice [option_1] or [option_2]"
         ]
       end
 
