@@ -82,7 +82,7 @@ module Cinch
           ".github [user]",
           ".nfl",
           ".weekly",
-          ".choice [option_1] or [option_2]"
+          ".choice [option_1] or [option_2] or ..."
         ]
       end
 
