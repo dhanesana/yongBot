@@ -16,10 +16,18 @@ module Cinch
         game = "00"
         games = "|"
         games_2 = "|"
+        empty_json_counter = 0
         while game.to_i < 100
           begin
             feed = JSON.parse(open("http://www.nfl.com/liveupdate/game-center/#{date}#{game}/#{date}#{game}_gtd.json").read)
-            break if feed == {}
+            if feed == {}
+              empty_json_counter += 1
+              game = game.to_i
+              game += 1
+              game = "0" + game.to_s if game < 10
+              break if empty_json_counter == 10
+              next
+            end
             quarter = feed["#{date}#{game}"]['qtr'].to_s
             quarter += "th" if quarter.to_i == 4
             quarter += "rd" if quarter.to_i == 3
