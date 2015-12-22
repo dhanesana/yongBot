@@ -43,7 +43,7 @@ module Cinch
           name = user_get.body['stream']['channel']['display_name']
           title = user_get.body['stream']['channel']['status']
           viewers = user_get.body['stream']['viewers']
-          ENV["CHANNELS"].split(',').each do |channel|
+          ENV["TWITCH_CHANNELS"].split(',').each do |channel|
             Channel(channel).send "LIVE: '#{title}' (#{name} playing #{game}) => #{url}"
           end
         end
