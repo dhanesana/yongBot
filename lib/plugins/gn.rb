@@ -38,12 +38,22 @@ module Cinch
           "http://i.imgur.com/7zxduO7.jpg",
           "http://i.imgur.com/QTrb69y.jpg",
           "http://i.imgur.com/N0lJJj0.jpg",
-          "http://i.imgur.com/N0lJJj0.jpg"
+          "http://i.imgur.com/N0lJJj0.jpg",
+          "http://i.imgur.com/hbWdKmy.jpg",
+          "http://i.imgur.com/06WFZku.jpg",
+          "http://i.imgur.com/deCEKeH.jpg",
+          "http://i.imgur.com/0HlUkPj.jpg",
+          "http://i.imgur.com/vy49uKb.jpg",
+          "http://i.imgur.com/tdVbV9f.jpg",
+          "http://i.imgur.com/ch8MgXg.jpg",
+          "http://i.imgur.com/kXOio8B.jpg",
+          "http://i.imgur.com/PfxpFDn.jpg",
+          "http://i.imgur.com/jLNfGr8.jpg"
         ]
       end
 
       def execute(m)
-        m.reply @gn[rand(0..@gn.size - 1)]
+        m.reply @gn.sample
       end
 
       def help(m)
