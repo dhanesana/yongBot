@@ -8,6 +8,7 @@ module Cinch
 
       def initialize(*args)
         super
+        @gn_pairs = {}
         @gn = [
           "http://i.imgur.com/zseA3sP.jpg",
           "http://i.imgur.com/eT3TWtE.png",
@@ -53,7 +54,15 @@ module Cinch
       end
 
       def execute(m)
-        m.reply @gn.sample
+        if @gn_pairs.keys.include? m.user.nick.downcase
+          m.reply "u get wat u deserve: #{@gn_pairs[m.user.nick.downcase]}"
+        else
+          @gn_pairs[m.user.nick.downcase] = @gn.sample
+          m.reply @gn_pairs[m.user.nick.downcase]
+          Timer(3600, options = { shots: 1 }) do |x|
+            @gn_pairs.delete(m.user.nick.downcase)
+          end
+        end
       end
 
       def help(m)
