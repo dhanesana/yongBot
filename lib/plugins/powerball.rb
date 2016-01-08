@@ -14,7 +14,7 @@ module Cinch
       def initialize(*args)
         super
         begin
-        @page = Nokogiri::HTML(open('http://powerball.com/'))
+        @page = Nokogiri::HTML(open('http://www.powerball.com/pb_home.asp'))
         @draw_date = @page.css('font').first.text
         @jackpot = @page.css('strong')[6].text
         rescue Errno::ETIMEDOUT
