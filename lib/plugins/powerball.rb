@@ -37,7 +37,13 @@ module Cinch
       end
 
       def quickpick(m)
-        m.reply "Quick Pick => #{rand(1..59)}, #{rand(1..59)}, #{rand(1..59)}, #{rand(1..59)}, #{rand(1..59)}, [#{rand(1..35)}]"
+        other_nums = []
+        loop do
+          num = rand(1..59)
+          other_nums << num unless other_nums.include? num
+          break if other_nums.size > 4
+        end
+        m.reply "Quick Pick => #{other_nums.join(', ')}, [#{rand(1..35)}]"
       end
 
       def draw(num)
