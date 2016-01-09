@@ -90,7 +90,8 @@ yong_bot = Cinch::Bot.new do
       Cinch::Plugins::Superkpop,
       Cinch::Plugins::Weekly,
       Cinch::Plugins::Choice,
-      Cinch::Plugins::Horo
+      Cinch::Plugins::Horo,
+      Cinch::Plugins::Zodiac
     ]
     c.delay_joins = :identified
     c.plugins.options[Cinch::Plugins::Identify] = {

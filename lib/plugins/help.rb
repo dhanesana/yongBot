@@ -83,7 +83,8 @@ module Cinch
           ".nfl",
           ".weekly",
           ".choice [option_1] or [option_2] or ...",
-          ".horo [sign]"
+          ".horo [sign]",
+          ".zodiac [sign]"
         ]
       end
 
