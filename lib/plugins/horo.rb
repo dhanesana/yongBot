@@ -16,8 +16,8 @@ module Cinch
 
       def with_sign(m, prefix, horo, sign)
         page = Nokogiri::HTML(open("http://new.theastrologer.com/#{sign}/"))
-        text = page.css('div.tab-content p').first.text
-        date = page.css('div.daily-horoscope-date').first.text
+        text = page.css('div#today p').first.text
+        date = page.css('div#today div.daily-horoscope-date').first.text
         m.reply "[#{date}] #{text}"
       end
 
