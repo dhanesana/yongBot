@@ -82,7 +82,8 @@ module Cinch
           ".github [user]",
           ".nfl",
           ".weekly",
-          ".choice [option_1] or [option_2] or ..."
+          ".choice [option_1] or [option_2] or ...",
+          ".horo [sign]"
         ]
       end
 
