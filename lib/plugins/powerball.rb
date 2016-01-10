@@ -39,11 +39,11 @@ module Cinch
       def quickpick(m)
         other_nums = []
         loop do
-          num = rand(1..59)
+          num = rand(1..69)
           other_nums << num unless other_nums.include? num
           break if other_nums.size > 4
         end
-        m.reply "Quick Pick => #{other_nums.join(', ')}, [#{rand(1..35)}]"
+        m.reply "Quick Pick => #{other_nums.join(', ')}, [#{rand(1..26)}]"
       end
 
       def draw(num)
