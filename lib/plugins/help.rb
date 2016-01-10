@@ -84,7 +84,8 @@ module Cinch
           ".weekly",
           ".choice [option_1] or [option_2] or ...",
           ".horo [sign]",
-          ".zodiac [sign]"
+          ".zodiac [sign]",
+          ".rm"
         ]
       end
 
