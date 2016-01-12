@@ -16,9 +16,10 @@ module Cinch
         time = '9:00KST'
         artists = []
         page.css('div.ahtml_h1').each do |artist|
-          artists << artist.text.slice(0..(artist.text.index('-') - 2))
+          # artists << artist.text.slice(0..(artist.text.index('-') - 2))
+          artists << artist.text
         end
-        m.reply "#{episode} - #{artists.join(', ')} | #{date} #{time}"
+        m.reply "#{episode}: #{artists.join(', ')} | #{date} #{time}"
       end
 
       def help(m)
