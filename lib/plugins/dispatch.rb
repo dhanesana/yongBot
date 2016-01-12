@@ -11,9 +11,8 @@ module Cinch
 
       def execute(m)
         page = Nokogiri::HTML(open('http://www.dispatch.co.kr/today'))
-        num = page.css('div#article-container div h5').size
-        title = page.css('div#article-container div h5').first.text
-        url = page.css('div#article-container div h5 a').first.first[1]
+        title = page.css('div.col h6').first.text
+        url = "http://www.dispatch.co.kr" + page.css('div.container-fluid a').first.first[1]
         m.reply "#{title}: #{url}"
       end
 
