@@ -23,7 +23,7 @@ module Cinch
               # Slice broadcast date and omit filming date
               date = date.slice(0..(date.index("\n") - 1)) if date.include? "\n"
               guests = row.css('td')[1].text.split(",\n").join(', ')
-              guests = guests.slice(0..(guests.index('[') - 1))
+              guests = guests.slice(0..(guests.index('[') - 1)) if guests.include? '['
               lineup << "[#{date} => #{guests}]"
             end
           end
