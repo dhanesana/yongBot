@@ -85,7 +85,8 @@ module Cinch
           ".choice [option_1] or [option_2] or ...",
           ".horo [sign]",
           ".zodiac [sign]",
-          ".rm"
+          ".rm",
+          ".p101 [rank]"
         ]
       end
 
