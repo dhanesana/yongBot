@@ -25,6 +25,12 @@ module Cinch
           puts '*' * 50
           puts 'Connection reset by peer'
           puts '*' * 50
+        rescue OpenURI::HTTPError => error
+          response = error.io
+          puts 'powerball.rb'
+          puts '*' * 50
+          puts response.status
+            # => ["503", "Service Unavailable"]
         end
       end
 
