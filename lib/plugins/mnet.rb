@@ -11,20 +11,15 @@ module Cinch
       match /(help mnet)$/, method: :help
 
       def execute(m)
-        num = 1
-        page = Nokogiri::HTML(open("http://www.mnet.com/chart/top100/"))
-        title = page.css('a.MMLI_Song')[num].text
-        artist = page.css('div.MMLITitle_Info')[num].css('a.MMLIInfo_Artist').text
-        date = page.css('ul.date li.day span.num_set2').text
-        m.reply "Mnet Rank #{num}: #{artist} - #{title} | #{date}"
+        with_num(m, '.', 'mnet', 1)
       end
 
       def with_num(m, prefix, mnet, num)
         return m.reply 'invalid num bru' if num.to_i < 1
         return m.reply 'less than 51 bru' if num.to_i > 50
         page = Nokogiri::HTML(open("http://www.mnet.com/chart/top100/"))
-        title = page.css('a.MMLI_Song')[num.to_i].text
-        artist = page.css('div.MMLITitle_Info')[num.to_i].css('a.MMLIInfo_Artist').text
+        title = page.css('a.MMLI_Song')[num.to_i - 1].text
+        artist = page.css('div.MMLITitle_Info')[num.to_i - 1].css('a.MMLIInfo_Artist').text
         date = page.css('ul.date li.day span.num_set2').text
         m.reply "Mnet Rank #{num}: #{artist} - #{title} | #{date}"
       end
