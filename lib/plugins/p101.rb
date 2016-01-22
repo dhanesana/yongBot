@@ -15,7 +15,8 @@ module Cinch
       end
 
       def with_num(m, prefix, p101, rank)
-        return m.reply 'invalid rank bru' if rank.to_i < 1
+        return m.reply 'invalid rank bru' if rank == "0"
+        return with_name(m, '.', 'p101', rank) if rank.to_i < 1
         return m.reply "there's only 101 bru" if rank.to_i > 101
         feed = open("http://p101.pmrowla.com/api/idols?q={%22order_by%22:[{%22field%22:%22vote_percentage%22,%22direction%22:%22desc%22}]}&results_per_page=101").read
         result = JSON.parse(feed)
@@ -33,8 +34,27 @@ module Cinch
         m.reply "Rank #{rank}(#{rank_change}): #{name}, #{age}, Agency: #{agency}, Votes: #{votes}%(+#{votes_change})"
       end
 
+      def with_name(m, prefix, p101, name)
+        input_array = name.split(/[[:space:]]/)
+        input = input_array.join(' ').downcase
+        feed = open("http://p101.pmrowla.com/api/idols?q={%22order_by%22:[{%22field%22:%22vote_percentage%22,%22direction%22:%22desc%22}]}&results_per_page=101").read
+        result = JSON.parse(feed)
+        rank = ''
+        result['objects'].each do |object|
+          if object['name_kr'] == name
+            puts '*' * 50
+            rank += "#{result['objects'].index(object) + 1}"
+          elsif "#{object['last_name_en'].downcase} #{object['first_name_en'].downcase}" == name.downcase
+            puts '$' * 50
+            rank += "#{result['objects'].index(object) + 1}"
+          end
+        end
+        return m.reply "#{name} not found bru" if rank == ''
+        with_num(m, '.', 'p101', rank)
+      end
+
       def help(m)
-        m.reply "returns produce101 contestant at specified voting rank"
+        m.reply "returns produce101 contestant at specified voting rank or name"
       end
 
     end
