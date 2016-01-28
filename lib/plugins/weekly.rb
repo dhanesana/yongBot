@@ -11,15 +11,24 @@ module Cinch
 
       def execute(m)
         page = Nokogiri::HTML(open('https://en.wikipedia.org/wiki/Weekly_Idol'))
-        kst = Time.now.utc + (9 * 3600)
-        month = kst.strftime("%B")
-        year = kst.strftime("%Y")
+        kst = Time.now.utc + (9 * 3600) # 3600 seconds in an hour
+        next_week = kst + 604800 # 604800 seconds in a week
+        months = []
+        years = []
+        months << kst.strftime("%B")
+        months << next_week.strftime("%B") unless months.include? next_week.strftime("%B")
+        years << kst.strftime("%Y")
+        years << next_week.strftime("%Y") unless years.include? next_week.strftime("%Y")
         lineup = []
-        page.css('tr').each do |row|
-          next if row.css('td')[1].nil?
-          if row.css('td')[1].text.include? month
-            if row.css('td')[1].text.include? year
-              lineup << "[#{row.css('td')[1].text} => #{row.css('td')[2].text}]"
+        months.each do |month|
+          page.css('tr').each do |row|
+            next if row.css('td')[1].nil?
+            if row.css('td')[1].text.include? month
+              years.each do |year|
+                if row.css('td')[1].text.include? year
+                  lineup << "[#{row.css('td')[1].text} => #{row.css('td')[2].text}]"
+                end
+              end
             end
           end
         end
@@ -27,7 +36,7 @@ module Cinch
       end
 
       def help(m)
-        m.reply "returns current month's schedule for mbc weekly idol"
+        m.reply "returns current month's and next week's schedule for mbc weekly idol"
       end
 
     end
