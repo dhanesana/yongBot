@@ -10,6 +10,8 @@ module Cinch
       match /(setnick) (.+)/, method: :set_nick
       match /(ping)$/, method: :ping
       match /(echo) (.+)/, method: :echo
+      match /(notice)$/, method: :notice
+      match /(notice) (.+)/, method: :notice_nick
 
       def initialize(*args)
         super
@@ -95,6 +97,22 @@ module Cinch
           end
           return Channel(channel).send sentence if channels.include? channel
           m.reply 'no external msgs bru'
+        else
+          m.reply @unauthorized
+        end
+      end
+
+      def notice(m)
+        return User(m.user.nick).notice('I NOTICE U') if is_admin?(m)
+        m.reply @unauthorized
+      end
+
+      def notice_nick(m, prefix, notice, nick_msg)
+        if is_admin?(m)
+          nick = nick_msg.split(' ').first
+          msg = nick_msg.split(' ')[1..-1].join(' ')
+          msg = 'I NOTICE U' if nick_msg.split(' ').size == 1
+          User(nick).notice(msg)
         else
           m.reply @unauthorized
         end
