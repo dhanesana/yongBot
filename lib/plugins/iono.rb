@@ -7,8 +7,8 @@ module Cinch
       match /(help iono)$/, method: :help
 
       def execute(m)
-        yes = ['yes', 'yeah', 'yeee', 'ya', 'ye'].sample
-        no = ['no', 'nah', 'nope', 'nooo', 'nein bro'].sample
+        yes = ['yes', 'yeah', 'yeee', 'ya', 'YES!'].sample
+        no = ['no', 'nah', 'nope', 'nooo', 'NO!'].sample
         m.reply rand(0..1) == 0 ? yes : no
       end
 
