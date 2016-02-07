@@ -11,7 +11,7 @@ module Cinch
       match /(help gaon)$/, method: :help
 
       def execute(m)
-        page = Nokogiri::HTML(open('http://gaonchart.co.kr/main/section/chart/online.gaon?serviceGbn=ALL&termGbn=week&hitYear=2015&targetTime=&nationGbn=K'))
+        page = Nokogiri::HTML(open('http://gaonchart.co.kr/main/section/chart/online.gaon?nationGbn=T&serviceGbn=ALL'))
         title = page.css('td.subject')[0].css('p').first.text
         artist = page.css('td.subject')[0].css('p')[1].text
         artist = artist.slice(0..(artist.index('|') - 1))
@@ -20,7 +20,7 @@ module Cinch
 
       def with_num(m, prefix, gaon, num)
         return m.reply 'invalid num bru' if num.to_i < 1
-        page = Nokogiri::HTML(open('http://gaonchart.co.kr/main/section/chart/online.gaon?serviceGbn=ALL&termGbn=week&hitYear=2015&targetTime=&nationGbn=K'))
+        page = Nokogiri::HTML(open('http://gaonchart.co.kr/main/section/chart/online.gaon?nationGbn=T&serviceGbn=ALL'))
         rank = num.to_i - 1
         title = page.css('td.subject')[rank].css('p').first.text
         artist = page.css('td.subject')[rank].css('p')[1].text
@@ -29,7 +29,7 @@ module Cinch
       end
 
       def help(m)
-        m.reply 'returns song at specified weekly gaon rank'
+        m.reply 'returns song at specified weekly gaon digital chart rank'
       end
 
     end
