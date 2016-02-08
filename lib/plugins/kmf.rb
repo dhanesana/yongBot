@@ -16,11 +16,12 @@ module Cinch
           next if act.text == ''
           lineup << act.text
         end
-        m.reply "KMF Lineup: #{lineup.join(', ')}"
+        year = page.css('dt span').first.text
+        m.reply "KMF #{year}: #{lineup.join(', ')}"
       end
 
       def help(m)
-        m.reply 'returns upcoming lineup for korea times music festival'
+        m.reply 'returns recent/upcoming lineup for korea times music festival'
       end
 
     end
