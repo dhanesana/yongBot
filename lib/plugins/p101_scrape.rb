@@ -22,7 +22,7 @@ module Cinch
         name = page.css('p.name')[rank.to_i - 1].text
         agency = page.css('p.agency')[rank.to_i - 1].text
         votes = page.css('p.voteCount')[rank.to_i - 1].text
-        href = page.css('div.thumb a')[rank - 1].first[1]
+        href = page.css('div.thumb a')[rank.to_i - 1].first[1]
         m.reply "Rank #{rank} - #{name}, Agency: #{agency}, Vote Count: #{votes} http://mnettv.interest.me/#{href}"
       end
 
