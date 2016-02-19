@@ -86,7 +86,8 @@ module Cinch
           ".horo [sign]",
           ".zodiac [sign]",
           ".rm",
-          ".kmf"
+          ".kmf",
+          ".p101 [rank] or [name]"
         ]
       end
 
