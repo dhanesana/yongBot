@@ -45,6 +45,8 @@ Create a .env file within the root directory, and populate with the following va
 | GITHUB_SECRET      | [GitHub Client Secret](https://github.com/settings/applications/new)
 | GOOGLE             | [Google API Key](https://cloud.google.com/translate/v2/getting_started)
 | IG_ID              | [Instagram Client ID](https://instagram.com/developer/)
+| KMF_LOGIN          | [Korea Times ID](https://ticket.koreatimes.com/member/login.html)
+| KMF_PW             | [Korea Times Password](https://ticket.koreatimes.com/member/login.html)
 | MASHAPE_KEY        | [Mashape API Key](http://docs.mashape.com/api-keys)
 | NUTRITIONX_ID      | [Nutritionix AppID](https://www.nutritionix.com/api)
 | NUTRITION_KEY      | [Nutritionix API Key](https://www.nutritionix.com/api)
