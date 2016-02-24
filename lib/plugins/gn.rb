@@ -39,7 +39,6 @@ module Cinch
           "http://i.imgur.com/7zxduO7.jpg",
           "http://i.imgur.com/QTrb69y.jpg",
           "http://i.imgur.com/N0lJJj0.jpg",
-          "http://i.imgur.com/N0lJJj0.jpg",
           "http://i.imgur.com/hbWdKmy.jpg",
           "http://i.imgur.com/06WFZku.jpg",
           "http://i.imgur.com/deCEKeH.jpg",
@@ -49,7 +48,12 @@ module Cinch
           "http://i.imgur.com/ch8MgXg.jpg",
           "http://i.imgur.com/kXOio8B.jpg",
           "http://i.imgur.com/PfxpFDn.jpg",
-          "http://i.imgur.com/jLNfGr8.jpg"
+          "http://i.imgur.com/jLNfGr8.jpg",
+          "http://i.imgur.com/IYvy5Kn.jpg",
+          "http://i.imgur.com/0lGGgll.jpg",
+          "http://i.imgur.com/oiS3ruk.jpg",
+          "http://i.imgur.com/NpIgKu3.jpg",
+          "http://i.imgur.com/Xg5c1Tt.gifv"
         ]
       end
 
