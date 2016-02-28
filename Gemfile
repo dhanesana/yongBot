@@ -12,6 +12,7 @@ gem 'mechanize'
 gem 'rapgenius'
 gem 'cinch-identify'
 gem 'unidecoder'
+gem 'fuzzy-string-match'
 
 gem 'pg'
 gem 'heroku-api'

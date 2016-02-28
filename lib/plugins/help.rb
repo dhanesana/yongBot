@@ -87,7 +87,8 @@ module Cinch
           ".zodiac [sign]",
           ".rm",
           ".kmf",
-          ".p101 [rank] or [name]"
+          ".p101 [rank] or [name]",
+          ".sundry [artist]"
         ]
       end
 
