@@ -86,7 +86,7 @@ module Cinch
           )
           m.reply "ding ding ding new high score"
         end
-        if beauty < low_score
+        if beauty < low_score && sex == 'Female'
           scores_db.exec(
             "update low set score = #{beauty} where score = #{low_score}"
           )
@@ -149,7 +149,7 @@ module Cinch
           )
           m.reply "ding ding ding new high score"
         end
-        if beauty < low_score
+        if beauty < low_score && sex == 'Female'
           scores_db.exec(
             "update low set score = #{beauty} where score = #{low_score}"
           )
