@@ -17,7 +17,9 @@ module Cinch
         lineup = []
         page.css('tr td').first.css('p').each do |act|
           next if act.text == ''
-          lineup << act.text
+          act_name = act.text
+          act_name.slice!(',')
+          lineup << act_name
         end
         year = page.css('dt span').first.text
         m.reply "KMF #{year}: #{lineup.join(', ')}"
