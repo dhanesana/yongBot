@@ -45,13 +45,17 @@ module Cinch
         artist_page = Nokogiri::HTML(open(idol_link))
         debut = artist_page.css('div.entry-content ul').first.css('li').first.text
         debut.slice!('Debut (Y.M.D): ')
-        debut_date = Date.parse(debut)
         members = []
         artist_page.css('div.entry-content li').each do |row|
           members << row.text if row.text.include? "Real Name"
         end
         members.map { |name| name.slice!('Name (Real Name): ') }
-        m.reply "#{artist} => Debut #{debut_date.strftime("%Y-%m-%d")} :: Members => #{members.join(', ')}"
+        if debut.include? '–'
+          m.reply "#{artist} => Debut #{debut} :: Members => #{members.join(', ')}"
+        else
+          debut_date = Date.parse(debut)
+          m.reply "#{artist} => Debut #{debut_date.strftime("%Y-%m-%d")} :: Members => #{members.join(', ')}"
+        end
       end
 
       def help(m)
