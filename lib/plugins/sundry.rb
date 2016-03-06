@@ -45,16 +45,21 @@ module Cinch
         artist_page = Nokogiri::HTML(open(idol_link))
         debut = artist_page.css('div.entry-content ul').first.css('li').first.text
         debut.slice!('Debut (Y.M.D): ')
+        img_url = ' '
+        if artist_page.css('div.entry-content img.aligncenter').size > 0
+          img_url += artist_page.css('div.entry-content img.aligncenter').first.attr('src')
+          img_url = img_url.slice(0..(img_url.index('?') - 1))
+        end
         members = []
         artist_page.css('div.entry-content li').each do |row|
           members << row.text if row.text.include? "Real Name"
         end
         members.map { |name| name.slice!('Name (Real Name): ') }
         if debut.include? '–'
-          m.reply "#{artist} => Debut #{debut} :: Members => #{members.join(', ')}"
+          m.reply "#{artist} => Debut #{debut} :: Members => #{members.join(', ')}#{img_url}"
         else
           debut_date = Date.parse(debut)
-          m.reply "#{artist} => Debut #{debut_date.strftime("%Y-%m-%d")} :: Members => #{members.join(', ')}"
+          m.reply "#{artist} => Debut #{debut_date.strftime("%Y-%m-%d")} :: Members => #{members.join(', ')}#{img_url}"
         end
       end
 
