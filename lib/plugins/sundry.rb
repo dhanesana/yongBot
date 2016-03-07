@@ -56,6 +56,8 @@ module Cinch
         end
         members.map { |name| name.slice!('Name (Real Name): ') }
         if debut.include? '–'
+          debut.gsub!('–','??')
+          debut.gsub!('.','-')
           m.reply "#{artist} => Debut #{debut} :: Members => #{members.join(', ')}#{img_url}"
         else
           debut_date = Date.parse(debut)
