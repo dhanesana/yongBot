@@ -88,7 +88,8 @@ module Cinch
           ".rm",
           ".kmf",
           ".p101 [rank] or [name]",
-          ".sundry [artist]"
+          ".sundry [artist]",
+          ".vapp"
         ]
       end
 
