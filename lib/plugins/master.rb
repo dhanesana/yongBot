@@ -13,6 +13,9 @@ module Cinch
       match /(notice)$/, method: :notice
       match /(notice) (.+)/, method: :notice_nick
       match /(newlineup) (.+)/, method: :update_lineup
+      match /(approved)$/, method: :list_approved
+      match /(approved) (.+)/, method: :add_approved
+      match /(delete approved) (.+)/, method: :delete_approved
 
       def initialize(*args)
         super
@@ -21,10 +24,30 @@ module Cinch
           @bot.nick = ENV['NICKS'].split(',').first
         end
         @unauthorized = "https://youtu.be/OBWpzvJGTz4"
+        conn = PG::Connection.new(ENV['DATABASE_URL'])
+        begin
+          res = conn.exec_params("CREATE TABLE approved (username varchar);")
+          conn.exec(
+            "INSERT INTO approved (username) VALUES ('777');"
+          )
+        rescue PG::Error => pg_error
+          puts '*' * 50
+          puts "Approved Table creation failed: #{pg_error.message}"
+        end
       end
 
       def is_admin?(user)
         user.prefix.match(/@(.+)/)[1] == $master
+      end
+
+      def is_approved?(user)
+        conn = PG::Connection.new(ENV['DATABASE_URL'])
+        pg_users = conn.exec("SELECT * FROM approved")
+        users = []
+        pg_users.each do |row|
+          users << row['username']
+        end
+        users.include?(user.prefix.match(/@(.+)/)[1])
       end
 
       def thyme(m)
@@ -120,7 +143,7 @@ module Cinch
       end
 
       def update_lineup(m, prefix, update_lineup, new_lineup)
-        if is_admin?(m)
+        if is_admin?(m) || is_approved?(m)
           conn = PG::Connection.new(ENV['DATABASE_URL'])
           lineup_db = conn.exec("SELECT current FROM lineup")
           if new_lineup.to_s.size > 0
@@ -131,6 +154,42 @@ module Cinch
           else
             m.reply "can't be blank bru"
           end
+        else
+          m.reply @unauthorized
+        end
+      end
+
+      def list_approved(m)
+        if is_admin?(m)
+          conn = PG::Connection.new(ENV['DATABASE_URL'])
+          pg_users = conn.exec("SELECT * FROM approved")
+          users = []
+          pg_users.each do |row|
+            users << row['username']
+          end
+          message = "#{m.user.nick} #{users.join(', ')}"
+          notice_nick(m, '.', 'notice', message)
+          m.reply "check ur notices bru"
+        else
+          m.reply @unauthorized
+        end
+      end
+
+      def add_approved(m, prefix, add_approved, user)
+        if is_admin?(m)
+          conn = PG::Connection.new(ENV['DATABASE_URL'])
+          conn.exec("INSERT INTO approved (username) VALUES ('#{user}');")
+          m.reply "donezo"
+        else
+          m.reply @unauthorized
+        end
+      end
+
+      def delete_approved(m, prefix, delete_approved, user)
+        if is_admin?(m)
+          conn = PG::Connection.new(ENV['DATABASE_URL'])
+          conn.exec("DELETE FROM approved WHERE username = '#{user}'")
+          m.reply "donezo"
         else
           m.reply @unauthorized
         end
