@@ -12,6 +12,7 @@ module Cinch
       match /(echo) (.+)/, method: :echo
       match /(notice)$/, method: :notice
       match /(notice) (.+)/, method: :notice_nick
+      match /(newlineup) (.+)/, method: :update_lineup
 
       def initialize(*args)
         super
@@ -113,6 +114,23 @@ module Cinch
           msg = nick_msg.split(' ')[1..-1].join(' ')
           msg = 'I NOTICE U' if nick_msg.split(' ').size == 1
           User(nick).notice(msg)
+        else
+          m.reply @unauthorized
+        end
+      end
+
+      def update_lineup(m, prefix, update_lineup, new_lineup)
+        if is_admin?(m)
+          conn = PG::Connection.new(ENV['DATABASE_URL'])
+          lineup_db = conn.exec("SELECT current FROM lineup")
+          if new_lineup.to_s.size > 0
+            conn.exec(
+              "update lineup set current = '#{new_lineup}' where current = '#{lineup_db[0]['current']}'"
+            )
+            m.reply "donezo"
+          else
+            m.reply "can't be blank bru"
+          end
         else
           m.reply @unauthorized
         end

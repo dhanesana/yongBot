@@ -2,7 +2,7 @@
 
 require_relative "../lib/plugins/master"
 require_relative "../lib/plugins/help"
-require_relative "../lib/plugins/lineup"
+require_relative "../lib/plugins/lineup_pg"
 require_relative "../lib/plugins/iono"
 require_relative "../lib/plugins/roll"
 require_relative "../lib/plugins/rollu"
