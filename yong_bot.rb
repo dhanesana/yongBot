@@ -80,7 +80,6 @@ yong_bot = Cinch::Bot.new do
       Cinch::Plugins::Genie,
       Cinch::Plugins::Olleh,
       Cinch::Plugins::Mnet,
-      Cinch::Plugins::Log,
       Cinch::Plugins::Powerball,
       Cinch::Plugins::FacePlus,
       Cinch::Plugins::Romanize,
