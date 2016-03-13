@@ -13,6 +13,7 @@ gem 'rapgenius'
 gem 'cinch-identify'
 gem 'unidecoder'
 gem 'fuzzy-string-match'
+gem 'wolfram-alpha'
 
 gem 'pg'
 gem 'heroku-api'
