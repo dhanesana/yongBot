@@ -48,7 +48,6 @@ yong_bot = Cinch::Bot.new do
       Cinch::Plugins::Ign,
       Cinch::Plugins::Steam,
       Cinch::Plugins::Sc,
-      Cinch::Plugins::Celeb,
       Cinch::Plugins::Wutdis,
       Cinch::Plugins::Kst,
       Cinch::Plugins::Buzz,
