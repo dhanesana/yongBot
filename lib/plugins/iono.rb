@@ -7,6 +7,8 @@ module Cinch
       match /(help iono)$/, method: :help
 
       def execute(m)
+        yes_text = ['yes', 'yeah', 'yeee', 'ya', 'YES!'].sample
+        no_text  = ['no', 'nah', 'nope', 'nooo', 'NO!'].sample
 
         yes = [
           "http://i.imgur.com/66VXA2d.gifv",
@@ -24,7 +26,7 @@ module Cinch
           "http://i.imgur.com/40gV6k2.gifv"
         ].sample
 
-        m.reply rand(0..1) == 0 ? yes : no
+        m.reply rand(0..1) == 0 ? "#{yes_text} #{yes}" : "#{no_text} #{no}"
       end
 
       def help(m)
