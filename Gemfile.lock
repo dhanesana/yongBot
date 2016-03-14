@@ -15,6 +15,8 @@ GEM
     excon (0.45.4)
     fuzzy-string-match (0.9.7)
       RubyInline (>= 3.8.6)
+    genius (0.1.1)
+      httparty (~> 0.11.0)
     hashie (2.1.2)
     heroku-api (0.3.23)
       excon (~> 0.44)
@@ -51,8 +53,6 @@ GEM
     ntlm-http (0.1.1)
     pg (0.18.3)
     rake (10.4.2)
-    rapgenius (1.1.2)
-      httparty (~> 0.11.0)
     rest-client (1.6.7)
       mime-types (>= 1.16)
     soundcloud (0.3.2)
@@ -78,13 +78,13 @@ DEPENDENCIES
   cinch-identify
   dotenv-heroku
   fuzzy-string-match
+  genius
   heroku-api
   httparty
   json
   mechanize
   nokogiri
   pg
-  rapgenius
   soundcloud
   unidecoder
   unirest

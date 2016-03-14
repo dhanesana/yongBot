@@ -1,4 +1,4 @@
-require 'rapgenius'
+require 'genius'
 
 module Cinch
   module Plugins
@@ -6,20 +6,21 @@ module Cinch
       include Cinch::Plugin
 
       match /(lyric) (.+)/
+      match /(genius) (.+)/
       match /(help lyric)$/, method: :help
+      match /(help genius)$/, method: :help
 
       def execute(m, prefix, lyric, keywords)
+        Genius.access_token = "#{ENV['RAPGENIUS']}"
         query = keywords.split(/[[:space:]]/).join(' ').downcase
-        RapGenius::Client.access_token = "#{ENV['RAPGENIUS']}"
-        return m.reply 'no song found bru :(' if RapGenius.search_by_lyrics(query) == []
-        return m.reply "Corona - Rhythm of the Night https://youtu.be/u3ltZmI5LQw" if query.include? ('nike' && 'reebok')
-        song_id = RapGenius.search_by_lyrics(query).first.id
-        song = RapGenius::Song.find(song_id)
-        title = song.title
-        artist = song.artist.name
-        media = ''
-        media = song.media.first.url unless song.media.first == nil
-        m.reply "#{artist} - #{title} #{media}"
+        songs = Genius::Song.search(query)
+        return m.reply 'no song found bru' if songs == []
+        song_id = songs.first.resource['id']
+        song_info = Genius::Song.find(song_id)
+        full_title = song_info.raw_response['response']['song']['full_title']
+        url = ''
+        url = " => #{song_info.media.first['url']}" unless song_info.media == []
+        m.reply "#{full_title}#{url}"
       end
 
       def help(m)
