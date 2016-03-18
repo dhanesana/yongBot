@@ -24,7 +24,7 @@ module Cinch
           ".tumblr [user]",
           ".flickr [user]",
           ".nba",
-          ".melon [num]",
+          ".melon [num or title]",
           ".mwave [num]",
           ".cpme",
           ".yomama",

@@ -7,30 +7,40 @@ module Cinch
       include Cinch::Plugin
 
       match /(melon)$/
-      match /(melon) (.+)/, method: :with_num
+      match /(melon) (.+)/, method: :with_entry
       match /(melon trend)$/, method: :trend
       match /(melon trend) (.+)/, method: :trend_num
       match /(help melon)$/, method: :help
 
       def execute(m)
-        link = open("http://www.melon.com/chart/index.htm.json").read
-        result = JSON.parse(link)
-        rank = result['songList'][0]['curRank']
-        artist = result['songList'][0]['artistNameBasket']
-        song = result['songList'][0]['songName']
-        m.reply "Melon Rank #{rank}: #{artist} - #{song}"
+        with_entry(m, '.', 'melon', 1)
       end
 
-      def with_num(m, prefix, melon, num)
-        return if num.include? 'trend'
-        return m.reply '1-100 only bru' if num.to_i > 100
-        return m.reply 'invalid num bru' if num.to_i < 1
+      def with_entry(m, prefix, melon, entry)
+        return if entry.include? 'trend'
+        return m.reply '1-100 only bru' if entry.to_i > 100
+        return m.reply '1-100 only bru' if entry == '0'
+        return m.reply 'invalid num bru' if entry.to_i < 0
         link = open("http://www.melon.com/chart/index.htm.json").read
         result = JSON.parse(link)
-        rank = result['songList'][num.to_i - 1]['curRank']
-        artist = result['songList'][num.to_i - 1]['artistNameBasket']
-        song = result['songList'][num.to_i - 1]['songName']
-        m.reply "Melon Rank #{rank}: #{artist} - #{song}"
+        if !/\A\d+\z/.match(entry)
+          result['songList'].each do |song|
+            count += 1 if song['songName'] != entry
+            next if song['songName'] != entry
+            if song['songName'] == entry
+              rank = song['curRank']
+              title = song['songName']
+              artist = song['artistNameBasket']
+              return m.reply "Melon Rank #{rank}: #{artist} - #{title}"
+            end
+          end
+        else
+          rank = result['songList'][entry.to_i - 1]['curRank']
+          artist = result['songList'][entry.to_i - 1]['artistNameBasket']
+          title = result['songList'][entry.to_i - 1]['songName']
+          return m.reply "Melon Rank #{rank}: #{artist} - #{title}"
+        end
+        m.reply 'no results in top 100 bru'
       end
 
       def trend(m)
