@@ -1,5 +1,6 @@
 require 'open-uri'
 require 'json'
+require 'fuzzystringmatch'
 
 module Cinch
   module Plugins
@@ -24,15 +25,20 @@ module Cinch
         link = open("http://www.melon.com/chart/index.htm.json").read
         result = JSON.parse(link)
         if !/\A\d+\z/.match(entry)
+          all_songs = Hash.new
+          jarow_matches = Hash.new
           result['songList'].each do |song|
-            next if song['songName'].downcase != entry.downcase
-            if song['songName'].downcase == entry.downcase
-              rank = song['curRank']
-              title = song['songName']
-              artist = song['artistNameBasket']
-              return m.reply "Melon Rank #{rank}: #{artist} - #{title}"
+            all_songs[song['curRank']] = song['songName']
+            jarow = FuzzyStringMatch::JaroWinkler.create( :pure )
+            all_songs.keys.each do |key|
+              jarow_matches[key] = jarow.getDistance(entry.downcase, all_songs[key].downcase)
             end
           end
+            match = jarow_matches.max_by{ |k, v| v }
+            rank = result['songList'][match.first.to_i - 1]['curRank']
+            artist = result['songList'][match.first.to_i - 1]['artistNameBasket']
+            title = result['songList'][match.first.to_i - 1]['songName']
+            return m.reply "Melon Rank #{rank}: #{artist} - #{title}"
         else
           rank = result['songList'][entry.to_i - 1]['curRank']
           artist = result['songList'][entry.to_i - 1]['artistNameBasket']
