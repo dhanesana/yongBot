@@ -25,7 +25,6 @@ module Cinch
         result = JSON.parse(link)
         if !/\A\d+\z/.match(entry)
           result['songList'].each do |song|
-            count += 1 if song['songName'] != entry
             next if song['songName'] != entry
             if song['songName'] == entry
               rank = song['curRank']
