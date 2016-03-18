@@ -15,6 +15,7 @@ GEM
     excon (0.45.4)
     fuzzy-string-match (0.9.7)
       RubyInline (>= 3.8.6)
+    fuzzy_match (2.1.0)
     genius (0.1.1)
       httparty (~> 0.11.0)
     hashie (2.1.2)
@@ -78,6 +79,7 @@ DEPENDENCIES
   cinch-identify
   dotenv-heroku
   fuzzy-string-match
+  fuzzy_match
   genius
   heroku-api
   httparty
