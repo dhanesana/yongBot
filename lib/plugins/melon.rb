@@ -13,7 +13,7 @@ module Cinch
       match /(help melon)$/, method: :help
 
       def execute(m)
-        with_entry(m, '.', 'melon', 1)
+        with_entry(m, '.', 'melon', '1')
       end
 
       def with_entry(m, prefix, melon, entry)
