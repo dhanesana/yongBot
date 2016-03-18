@@ -25,8 +25,8 @@ module Cinch
         result = JSON.parse(link)
         if !/\A\d+\z/.match(entry)
           result['songList'].each do |song|
-            next if song['songName'] != entry
-            if song['songName'] == entry
+            next if song['songName'].downcase != entry.downcase
+            if song['songName'].downcase == entry.downcase
               rank = song['curRank']
               title = song['songName']
               artist = song['artistNameBasket']
