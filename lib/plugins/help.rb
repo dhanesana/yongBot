@@ -47,7 +47,7 @@ module Cinch
           ".meet",
           ".meet list",
           ".wshh",
-          ".instiz [num]",
+          ".instiz [num/title]",
           ".gaon [num]",
           ".fresh",
           ".agb [num]",
