@@ -45,9 +45,9 @@ module Cinch
         pg_users = conn.exec("SELECT * FROM approved")
         users = []
         pg_users.each do |row|
-          users << row['username']
+          users << row['username'].downcase
         end
-        users.include?(user.prefix.match(/@(.+)/)[1])
+        users.include?(user.prefix.match(/@(.+)/)[1].downcase)
       end
 
       def thyme(m)
