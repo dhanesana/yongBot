@@ -1,7 +1,7 @@
 require 'nokogiri'
 require 'open-uri'
+require 'fuzzy_match'
 require 'date'
-require 'fuzzystringmatch'
 
 module Cinch
   module Plugins
@@ -34,15 +34,10 @@ module Cinch
             end
           end
         end
-        jarow = FuzzyStringMatch::JaroWinkler.create( :pure )
-        jarow_matches = Hash.new
-        idol_hash.keys.each do |key|
-          jarow_matches[key] = jarow.getDistance(artist, key.downcase)
-        end
-        match = jarow_matches.max_by{ |k, v| v }
+        match = FuzzyMatch.new(idol_hash).find(artist)
         artist = match.first
-        idol_link = idol_hash[artist]
-        artist_page = Nokogiri::HTML(open(idol_link))
+        artist_link = match[1]
+        artist_page = Nokogiri::HTML(open(artist_link))
         debut = artist_page.css('div.entry-content ul').first.css('li').first.text
         debut.slice!('Debut (Y.M.D): ')
         img_url = ' '
@@ -58,15 +53,15 @@ module Cinch
         if debut.include? '–'
           debut.gsub!('–','??')
           debut.gsub!('.','-')
-          m.reply "#{artist} => Debut #{debut} :: Members => #{members.join(', ')}#{img_url}"
+          m.reply "#{artist} => Debut #{debut} :: Member(s) => #{members.join(', ')}#{img_url}"
         else
           debut_date = Date.parse(debut)
-          m.reply "#{artist} => Debut #{debut_date.strftime("%Y-%m-%d")} :: Members => #{members.join(', ')}#{img_url}"
+          m.reply "#{artist} => Debut #{debut_date.strftime("%Y-%m-%d")} :: Member(s) => #{members.join(', ')}#{img_url}"
         end
       end
 
       def help(m)
-        m.reply 'returns debut and member info for specified kpop sundry artist/group'
+        m.reply 'searches for debut and member info for specified kpop sundry artist/group'
       end
 
     end
