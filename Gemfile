@@ -12,7 +12,6 @@ gem 'mechanize'
 gem 'genius'
 gem 'cinch-identify'
 gem 'unidecoder'
-gem 'fuzzy-string-match'
 gem 'wolfram-alpha'
 gem 'fuzzy_match'
 

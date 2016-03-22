@@ -1,9 +1,6 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    RubyInline (3.12.4)
-      ZenTest (~> 4.3)
-    ZenTest (4.11.0)
     addressable (2.3.8)
     cinch (2.3.1)
     cinch-identify (1.7.0)
@@ -13,8 +10,6 @@ GEM
     dotenv-heroku (0.0.1)
       rake
     excon (0.48.0)
-    fuzzy-string-match (0.9.7)
-      RubyInline (>= 3.8.6)
     fuzzy_match (2.1.0)
     genius (0.1.1)
       httparty (~> 0.11.0)
@@ -78,7 +73,6 @@ DEPENDENCIES
   cinch
   cinch-identify
   dotenv-heroku
-  fuzzy-string-match
   fuzzy_match
   genius
   heroku-api
