@@ -46,6 +46,7 @@ module Cinch
             counter += 1
           end
           match = FuzzyMatch.new(all_titles).find(entry.downcase)
+          return m.reply "no song found bru" if match.nil?
           match_rank = all_songs.key(match).to_i
           title = page.parser.css('div.ichart_score2_song1')[match_rank - 2].text
           artist = page.parser.css('div.ichart_score2_artist1')[match_rank - 2].text
