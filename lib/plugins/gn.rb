@@ -58,13 +58,13 @@ module Cinch
       end
 
       def execute(m)
-        if @gn_pairs.keys.include? m.user.nick.downcase
-          m.reply "u get wat u deserve: #{@gn_pairs[m.user.nick.downcase]}"
+        if @gn_pairs.keys.include? m.prefix.match(/@(.+)/)[1]
+          m.reply "u get wat u deserve: #{@gn_pairs[m.prefix.match(/@(.+)/)[1]]}"
         else
-          @gn_pairs[m.user.nick.downcase] = @gn.sample
-          m.reply @gn_pairs[m.user.nick.downcase]
+          @gn_pairs[m.prefix.match(/@(.+)/)[1]] = @gn.sample
+          m.reply @gn_pairs[m.prefix.match(/@(.+)/)[1]]
           Timer(3600, options = { shots: 1 }) do |x|
-            @gn_pairs.delete(m.user.nick.downcase)
+            @gn_pairs.delete(m.prefix.match(/@(.+)/)[1])
           end
         end
       end
