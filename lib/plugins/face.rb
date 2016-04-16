@@ -11,10 +11,14 @@ module Cinch
       match /(face) (.+)/
       match /(face)$/, method: :random
       match /(face top)$/, method: :top
+      match /(face high)$/, method: :top
       match /(face low)$/, method: :low
+      match /(face bottom)$/, method: :low
       match /(help face)$/, method: :help
       match /(help face top)$/, method: :help_top
+      match /(help face high)$/, method: :help_top
       match /(help face low)$/, method: :help_low
+      match /(help face bottom)$/, method: :help_low
 
       def initialize(*args)
         super
