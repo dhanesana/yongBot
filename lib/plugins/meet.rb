@@ -8,9 +8,13 @@ module Cinch
       include Cinch::Plugin
 
       match /(meet)$/
+      match /(mng)$/
       match /(meet list)$/, method: :list
+      match /(mng list)$/, method: :list
       match /(help meet)$/, method: :help
+      match /(help mng)$/, method: :help
       match /(help meet list)$/, method: :help_meet
+      match /(help mng list)$/, method: :help_meet
 
       def initialize(*args)
         super
