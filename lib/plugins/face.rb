@@ -22,6 +22,7 @@ module Cinch
 
       def initialize(*args)
         super
+        @users = Hash.new
         conn = PG::Connection.new(ENV['DATABASE_URL'])
         begin
           res = conn.exec_params("create table top (url varchar, score decimal);")
@@ -52,70 +53,64 @@ module Cinch
         m.reply "#{urls[0]['url']} Beauty: #{scores[0]['score']}/100"
       end
 
-      def execute(m, prefix, face, link)
-        url = URI.encode(link)
-        response = Unirest.post "http://rekognition.com/func/api/?api_key=#{ENV['REKOGNITION_KEY']}&api_secret=#{ENV['REKOGNITION_SECRET']}&jobs=face_aggressive_part_gender_age_emotion_beauty_race_recognize&urls=#{url}",
-          headers:{
-            "X-Mashape-Key" => "#{ENV['MASHAPE_KEY']}",
-            "Content-Type" => "application/x-www-form-urlencoded",
-            "Accept" => "application/json"
-          }
-        return m.reply 'no face detected bru' if response.body['face_detection'] == []
-
-        race = ''
-        response.body['face_detection'].first['race'].each_key { |key| race += key }
-
-        age = response.body['face_detection'].first['age'].to_i
-        beauty = (response.body['face_detection'].first['beauty'] * 100).round(3)
-        gender = response.body['face_detection'].first['sex']
-        sex = 'Male' if gender >= 0.5
-        sex = 'Female' if gender < 0.5
-        status = 'ill3gal'
-        status = 'legal' if age > 17
-
-        hash = { link => beauty }
-        scores_db = PG::Connection.new(ENV['DATABASE_URL'])
-        top_urls = scores_db.exec("SELECT url from top")
-        top_scores = scores_db.exec("SELECT score from top")
-        high_score = top_scores[0]['score'].to_f
-        low_urls = scores_db.exec("SELECT url from low")
-        low_scores = scores_db.exec("SELECT score from low")
-        low_score = low_scores[0]['score'].to_f
-        if beauty > high_score && sex == 'Female'
-          scores_db.exec(
-            "update top set score = #{beauty} where score = #{high_score}"
-          )
-          scores_db.exec(
-            "update top set url = '#{link}' where url = '#{top_urls[0]['url']}'"
-          )
-          m.reply "ding ding ding new high score"
+      def execute(m, prefix, face, url)
+        link = URI.encode(url)
+        if @users.keys.include? m.prefix.match(/@(.+)/)[1]
+          if @users[m.prefix.match(/@(.+)/)[1]] > 3
+            return m.reply 'ur doing that too much bru'
+          else
+            @users[m.prefix.match(/@(.+)/)[1]] += 1
+            get_scores(m, link)
+        else
+          @users[m.prefix.match(/@(.+)/)[1]] = 1
+          Timer(180, options = { shots: 1 }) do |x|
+            @users.delete(m.prefix.match(/@(.+)/)[1])
+          end
+          get_scores(m, link)
         end
-        if beauty < low_score && sex == 'Female'
-          scores_db.exec(
-            "update low set score = #{beauty} where score = #{low_score}"
-          )
-          scores_db.exec(
-            "update low set url = '#{link}' where url = '#{low_urls[0]['url']}'"
-          )
-          m.reply "dun dun dun new low score..."
-        end
-
-        m.reply "#{race.capitalize} #{sex} | Age: #{age} | Status: #{status} | Beauty: #{beauty}/100"
       end
 
       def random(m)
-        kpics = HTTParty.get("http://www.reddit.com/r/kpics/new.json")
-        posts = []
-        kpics['data']['children'].each do |post|
-          posts << post['data']['url'] unless post['data']['domain'] == 'gfycat.com' || post['data']['domain'] == 'instagram.com'
-          posts << post['data']['preview']['images'].first['source']['url'] if post['data']['domain'] == 'instagram.com'
+        if @users.keys.include? m.prefix.match(/@(.+)/)[1]
+          if @users[m.prefix.match(/@(.+)/)[1]] > 3
+            return m.reply 'ur doing that too much bru'
+          else
+            @users[m.prefix.match(/@(.+)/)[1]] += 1
+            kpics = HTTParty.get("http://www.reddit.com/r/kpics/new.json")
+            posts = []
+            kpics['data']['children'].each do |post|
+              posts << post['data']['url'] unless post['data']['domain'] == 'gfycat.com' || post['data']['domain'] == 'instagram.com'
+              posts << post['data']['preview']['images'].first['source']['url'] if post['data']['domain'] == 'instagram.com'
+            end
+            posts.delete_if { |post| post.include? 'gifv' }
+            posts.delete_if { |post| post.include? '/a/' }
+            posts.delete_if { |post| post.include? 'webm' }
+            posts.delete_if { |post| post.include? 'gif' }
+            link = posts.sample
+            m.reply "r/kpics #{link}"
+            get_scores(m, link)
+        else
+          @users[m.prefix.match(/@(.+)/)[1]] = 1
+          kpics = HTTParty.get("http://www.reddit.com/r/kpics/new.json")
+          posts = []
+          kpics['data']['children'].each do |post|
+            posts << post['data']['url'] unless post['data']['domain'] == 'gfycat.com' || post['data']['domain'] == 'instagram.com'
+            posts << post['data']['preview']['images'].first['source']['url'] if post['data']['domain'] == 'instagram.com'
+          end
+          posts.delete_if { |post| post.include? 'gifv' }
+          posts.delete_if { |post| post.include? '/a/' }
+          posts.delete_if { |post| post.include? 'webm' }
+          posts.delete_if { |post| post.include? 'gif' }
+          link = posts.sample
+          m.reply "r/kpics #{link}"
+          Timer(180, options = { shots: 1 }) do |x|
+            @users.delete(m.prefix.match(/@(.+)/)[1])
+          end
+          get_scores(m, link)
         end
-        posts.delete_if { |post| post.include? 'gifv' }
-        posts.delete_if { |post| post.include? '/a/' }
-        posts.delete_if { |post| post.include? 'webm' }
-        posts.delete_if { |post| post.include? 'gif' }
-        link = posts.sample
-        m.reply "r/kpics #{link}"
+      end
+
+      def get_scores(m, link)
         url = URI.encode(link)
         response = Unirest.post "http://rekognition.com/func/api/?api_key=#{ENV['REKOGNITION_KEY']}&api_secret=#{ENV['REKOGNITION_SECRET']}&jobs=face_aggressive_part_gender_age_emotion_beauty_race_recognize&urls=#{url}",
           headers:{
