@@ -56,7 +56,7 @@ module Cinch
       def execute(m, prefix, face, url)
         link = URI.encode(url)
         if @users.keys.include? m.prefix.match(/@(.+)/)[1]
-          if @users[m.prefix.match(/@(.+)/)[1]] > 3
+          if @users[m.prefix.match(/@(.+)/)[1]] > 2
             return m.reply 'ur doing that too much bru'
           else
             @users[m.prefix.match(/@(.+)/)[1]] += 1
@@ -73,7 +73,7 @@ module Cinch
 
       def random(m)
         if @users.keys.include? m.prefix.match(/@(.+)/)[1]
-          if @users[m.prefix.match(/@(.+)/)[1]] > 3
+          if @users[m.prefix.match(/@(.+)/)[1]] > 2
             return m.reply 'ur doing that too much bru'
           else
             @users[m.prefix.match(/@(.+)/)[1]] += 1
