@@ -61,6 +61,7 @@ module Cinch
           else
             @users[m.prefix.match(/@(.+)/)[1]] += 1
             get_scores(m, link)
+          end
         else
           @users[m.prefix.match(/@(.+)/)[1]] = 1
           Timer(180, options = { shots: 1 }) do |x|
@@ -89,6 +90,7 @@ module Cinch
             link = posts.sample
             m.reply "r/kpics #{link}"
             get_scores(m, link)
+          end
         else
           @users[m.prefix.match(/@(.+)/)[1]] = 1
           kpics = HTTParty.get("http://www.reddit.com/r/kpics/new.json")
