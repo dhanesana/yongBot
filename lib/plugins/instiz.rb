@@ -39,6 +39,8 @@ module Cinch
         if !/\A\d+\z/.match(entry)
           all_songs = Hash.new
           all_titles = Array.new
+          all_titles << one_song.downcase
+          all_songs[1] = one_song
           counter = 2
           page.parser.css('div.ichart_score2_song1').each do |song|
             all_titles << song.text.downcase
@@ -46,6 +48,7 @@ module Cinch
             counter += 1
           end
           match = FuzzyMatch.new(all_titles).find(entry.downcase)
+          return m.reply "iChart Rank 1: #{one_song} by #{one_artist}" if match == one_song.downcase
           return m.reply "no song found bru" if match.nil?
           match_rank = all_songs.key(match).to_i
           title = page.parser.css('div.ichart_score2_song1')[match_rank - 2].text
