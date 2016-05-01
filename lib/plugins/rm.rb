@@ -28,7 +28,7 @@ module Cinch
             end
           end
         end
-        m.reply lineup.join(", ") + " 16:50KST"
+        m.reply lineup.join(", ") + " 18:25KST"
       end
 
       def help(m)
