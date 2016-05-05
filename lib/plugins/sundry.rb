@@ -17,6 +17,7 @@ module Cinch
         page = Nokogiri::HTML(open("https://kpopinfo114.wordpress.com/female_artist_profiles/"))
         idol_hash = Hash.new
         page.css('div.entry-content p').each do |row|
+          next if row.text == " "
           row_text = row.text
           if row_text.include? '<'
             sliced_text = row_text.slice(0..(row_text.index('<') - 2))
