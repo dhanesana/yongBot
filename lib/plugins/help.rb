@@ -100,7 +100,7 @@ module Cinch
         # m.reply "=> #{split_array[0].join(', ')}"
         # m.reply "#{split_array[1].join(', ')}"
         # m.reply ".help [command] for more info (ie '.help sub')"
-        m.send(@plugins.join(', '))
+        m.user.msg(@plugins.join(', '))
         m.reply "check ur pms for list of commands bru"
       end
 
