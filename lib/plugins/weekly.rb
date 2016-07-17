@@ -26,7 +26,7 @@ module Cinch
             if row.css('td')[1].text.include? month
               years.each do |year|
                 if row.css('td')[1].text.include? year
-                  lineup << "[#{row.css('td')[1].text} => #{row.css('td')[2].text}]"
+                  lineup << "[#{row.css('td')[1].text} => #{row.css('td')[2].text}]" unless row.css('td')[2].nil?
                 end
               end
             end
