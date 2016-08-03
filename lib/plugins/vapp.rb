@@ -7,7 +7,9 @@ module Cinch
       include Cinch::Plugin
 
       match /(vapp)$/
+      match /(vlive)$/
       match /(help vapp)$/, method: :help
+      match /(help vlive)$/, method: :help
 
       def execute(m)
         page = Nokogiri::HTML(open("http://www.vlive.tv/upcoming"))
