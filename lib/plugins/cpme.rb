@@ -11,7 +11,7 @@ module Cinch
       def execute(m)
         url = 'https://crayonpop.me/feed/'
         open(url) do |rss|
-          feed = RSS::Parser.parse(rss)
+          feed = RSS::Parser.parse(rss, false)
           m.reply "#{feed.items.first.title}: #{feed.items.first.link}"
         end
       end
