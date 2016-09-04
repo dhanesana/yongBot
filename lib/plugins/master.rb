@@ -1,3 +1,5 @@
+require 'pg'
+
 module Cinch
   module Plugins
     class Master
@@ -148,7 +150,7 @@ module Cinch
           lineup_db = conn.exec("SELECT current FROM lineup")
           if new_lineup.to_s.size > 0
             conn.exec(
-              "update lineup set current = '#{new_lineup}' where current = '#{lineup_db[0]['current']}'"
+              "update lineup set current = '#{conn.escape_string(new_lineup)}' where current = '#{conn.escape_string(lineup_db[0]['current'])}'"
             )
             m.reply "donezo"
           else
