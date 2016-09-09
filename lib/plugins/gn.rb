@@ -55,7 +55,13 @@ module Cinch
           "https://i.imgur.com/NpIgKu3.jpg",
           "https://i.imgur.com/Xg5c1Tt.gifv",
           "https://i.imgur.com/vezmTTh.jpg",
-          "https://i.imgur.com/uXenjEL.gifv"
+          "https://i.imgur.com/uXenjEL.gifv",
+          "https://i.imgur.com/YYYP0wr.jpg",
+          "https://i.imgur.com/fKiTNnX.jpg",
+          "https://i.imgur.com/951IrGs.gifv",
+          "https://i.imgur.com/9cKgxOO.jpg",
+          "https://i.imgur.com/Gp4ivfB.jpg",
+          "https://i.imgur.com/T4vvtHY.jpg"
         ]
       end
 
