@@ -19,6 +19,7 @@ module Cinch
         return m.reply '403: quota exceeded bru' if response.code == 403
         return m.reply '500: error but not ur fault bru' if response.code == 500
         return m.reply '403: auth error bru' if response.code == 403
+        return m.reply '502: server too busy bru' if response.code == 502
         age = response.body['face'].first['attribute']['age']['value']
         range = response.body['face'].first['attribute']['age']['range']
         gender = response.body['face'].first['attribute']['gender']['value']
