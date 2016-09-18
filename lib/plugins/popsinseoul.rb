@@ -11,7 +11,7 @@ module Cinch
 
       def execute(m)
         page = Nokogiri::HTML(open('http://www.arirang.com/Tv/Tv_Pagego.asp?sys_lang=Eng&PROG_CODE=TVCR0102'))
-        date = page.css('li.current').children.last.text
+        date = page.css('h4.h4date').text
         response_string = ""
         num_of_feats = page.css('div.ahtml_h1').size
         i = 0
@@ -21,7 +21,7 @@ module Cinch
           i += 1
         end
         response_string.slice!(-2..-1)
-        m.reply "[#{date} 10:30KST]#{response_string}"
+        m.reply "[#{date} 10:30KST] #{response_string}"
       end
 
       def help(m)
