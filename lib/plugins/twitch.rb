@@ -19,12 +19,15 @@ module Cinch
 
       def execute(m)
         @users.each do |user|
-          user_get = Unirest.get "https://api.twitch.tv/kraken/streams/#{URI.encode(user)}"
+          user_get = Unirest.get "https://api.twitch.tv/kraken/streams/#{URI.encode(user)}",
+            headers: { "Accept" => "application/json" },
+            parameters: { :client_id => ENV['TWITCH_ID'] }
           next if user_get.body['stream'].nil?
           game = user_get.body['stream']['game']
           url = user_get.body['stream']['channel']['url']
           name = user_get.body['stream']['channel']['display_name']
           title = user_get.body['stream']['channel']['status']
+          title = 'No Title' if title == ''
           viewers = user_get.body['stream']['viewers']
           m.reply "LIVE: '#{title}' (#{name} playing #{game}) => #{url}"
         end
@@ -33,7 +36,9 @@ module Cinch
       def check_live
         response = "LIVE:"
         @users.each do |user|
-          user_get = Unirest.get "https://api.twitch.tv/kraken/streams/#{URI.encode(user)}"
+          user_get = Unirest.get "https://api.twitch.tv/kraken/streams/#{URI.encode(user)}",
+            headers: { "Accept" => "application/json" },
+            parameters: { :client_id => ENV['TWITCH_ID'] }
           @online.delete(user) if user_get.body['stream'].nil?
           next if user_get.body['stream'].nil?
           next if @online.include? user
@@ -42,6 +47,7 @@ module Cinch
           url = user_get.body['stream']['channel']['url']
           name = user_get.body['stream']['channel']['display_name']
           title = user_get.body['stream']['channel']['status']
+          title = 'No Title' if title == ''
           viewers = user_get.body['stream']['viewers']
           ENV["TWITCH_CHANNELS"].split(',').each do |channel|
             Channel(channel).send "LIVE: '#{title}' (#{name} playing #{game}) => #{url}"
@@ -51,12 +57,15 @@ module Cinch
 
       def check_user(m, prefix, check_user, user)
         query = user.split(/[[:space:]]/).join(' ')
-        user_get = Unirest.get "https://api.twitch.tv/kraken/streams/#{URI.encode(query)}"
+        user_get = Unirest.get "https://api.twitch.tv/kraken/streams/#{URI.encode(query)}",
+          headers: { "Accept" => "application/json" },
+          parameters: { :client_id => ENV['TWITCH_ID'] }
         return m.reply "#{user} is not live bru" if user_get.body['stream'].nil?
         game = user_get.body['stream']['game']
         url = user_get.body['stream']['channel']['url']
         name = user_get.body['stream']['channel']['display_name']
         title = user_get.body['stream']['channel']['status']
+        title = 'No Title' if title == ''
         viewers = user_get.body['stream']['viewers']
         m.reply "'#{title}' (#{name} playing #{game}), Viewers: #{viewers} => #{url}"
       end
