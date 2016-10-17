@@ -22,9 +22,40 @@ module Cinch
               date = row.css('td')[0].text
               # Slice broadcast date and omit filming date
               date = date.slice(0..(date.index("\n") - 1)) if date.include? "\n"
-              guests = row.css('td')[1].text.split(",\n").join(', ')
-              guests = guests.slice(0..(guests.index('[') - 1)) if guests.include? '['
-              lineup << "[#{date} => #{guests}]"
+              guests = []
+              groups = [""]
+              counter = 0
+              row.css('td')[1].children.each do |person|
+                next if person.text == ""
+                next if person.text == ","
+                next if person.text == "\n"
+                next if person.text.to_i > 0
+                next if person.text[0] == "["
+                # if the guest isn't a group
+                if person.children.size < 2
+                  counter += 1 if person.text == " ("
+                  next if counter == 1
+                  next if person.text == " ("
+                  counter = 0 if person.text == "),"
+                  counter = 0 if person.text == ")"
+                  next if person.text == "),"
+                  next if person.text == ")"
+                  guests << person.text
+                end
+                # if the guest is a group
+                if person.children.size > 2
+                  person.children.each do |child|
+                    next if child.text == ""
+                    next if child.text == ","
+                    next if child.text == "\n"
+                    next if child.text.include? "\n"
+                    group_name = child.text
+                    group_name[-1] = ""
+                    groups << group_name
+                  end
+                end
+              end
+              lineup << "[#{date} => #{guests.join(', ')}#{groups.join(', ')}]"
             end
           end
         end
