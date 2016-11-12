@@ -6,7 +6,7 @@ module Cinch
     class Twitch
       include Cinch::Plugin
 
-      timer 600, method: :check_live
+      timer 300, method: :check_live
       match /(twitch)$/
       match /(twitch) (.+)/, method: :check_user
       match /(help twitch)$/, method: :help
@@ -18,10 +18,13 @@ module Cinch
       end
 
       def execute(m)
+        counter = 0
         @users.each do |user|
           user_get = Unirest.get "https://api.twitch.tv/kraken/streams/#{URI.encode(user)}",
             headers: { "Accept" => "application/json" },
             parameters: { :client_id => ENV['TWITCH_ID'] }
+          counter += 1 if user_get.body['stream'].nil?
+          return m.reply "no1 streaming" if counter == @users.size
           next if user_get.body['stream'].nil?
           game = user_get.body['stream']['game']
           url = user_get.body['stream']['channel']['url']
