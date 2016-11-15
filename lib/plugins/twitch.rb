@@ -74,7 +74,7 @@ module Cinch
       end
 
       def help(m)
-        m.reply "checks every 10 minutes if specified twitch broadcasts are live."
+        m.reply "checks every 5 minutes if specified twitch broadcasts are live."
         m.reply "type .twitch [user] to check status of specific twitch user"
       end
 
