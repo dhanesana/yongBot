@@ -90,7 +90,8 @@ module Cinch
           ".p101 [rank] or [name]",
           ".sundry [artist]",
           ".vapp",
-          ".kcon [city]"
+          ".kcon [city]",
+          ".beam [user]"
         ]
       end
 
