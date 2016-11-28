@@ -33,11 +33,11 @@ module Cinch
                 next if person.text[0] == "["
                 # if the guest isn't a group
                 if person.children.size < 2
+                  counter = 0 if person.text == "),"
+                  counter = 0 if person.text == ")"
                   counter += 1 if person.text == " ("
                   next if counter == 1
                   next if person.text == " ("
-                  counter = 0 if person.text == "),"
-                  counter = 0 if person.text == ")"
                   next if person.text == "),"
                   next if person.text == ")"
                   guests << person.text
