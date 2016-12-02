@@ -18,11 +18,17 @@ module Cinch
 
       def initialize(*args)
         super
-        @feed = open("http://mwave.interest.me/meetgreet/list.json").read
-        @feed_2 = open("http://mwave.interest.me/meetgreet/list.json?page=2").read
-        @result = JSON.parse(@feed)
-        @result_2 = JSON.parse(@feed_2)
-        @today = (Time.now.utc - (07 * 3600)).strftime("%Y%m%d")
+        begin
+          @feed = open("http://mwave.interest.me/meetgreet/list.json").read
+          @feed_2 = open("http://mwave.interest.me/meetgreet/list.json?page=2").read
+          @result = JSON.parse(@feed)
+          @result_2 = JSON.parse(@feed_2)
+          @today = (Time.now.utc - (07 * 3600)).strftime("%Y%m%d")
+        rescue
+          p '*' * 50
+          p 'Rescue: JSON ERROR'
+          p '*' * 50
+        end
       end
 
       def execute(m)
