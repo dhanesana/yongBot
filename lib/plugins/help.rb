@@ -91,7 +91,8 @@ module Cinch
           ".sundry [artist]",
           ".vapp",
           ".kcon [city]",
-          ".beam [user]"
+          ".beam [user]",
+          ".ow [user] [country_abbrev]"
         ]
       end
 
