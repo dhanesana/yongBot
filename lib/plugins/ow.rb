@@ -18,7 +18,7 @@ module Cinch
           country = 'us'
         end
         battlenet_id = input.first
-        encoded_id = battlenet_id.split("#").join("-")
+        encoded_id = URI.encode(battlenet_id.split("#").join("-"))
         request = Unirest.get("https://owapi.net/api/v3/u/#{encoded_id}/stats")
         return m.reply "player or country not found" if request.body["#{country}"].nil?
         return m.reply "this player hasnt ranked" if request.body["#{country}"]['stats']['competitive']['overall_stats'].nil?
