@@ -77,7 +77,7 @@ module Cinch
                   return m.reply 'name before url' if (entry_array.first =~ URI::regexp).nil? == false
                   search = conn.exec("SELECT * FROM gn WHERE link='#{conn.escape_string(conn.escape_string(entry_array[1]))}'")
                   return m.reply 'url already exists in database bru' if search.ntuples > 0
-                  conn.exec("INSERT INTO gn (prefix, who, link) VALUES ('#{m.prefix.match(/@(.+)/)[1]}', '#{conn.escape_string(entry_array.first)}', #{conn.escape_string(entry_array[1])}');")
+                  conn.exec("INSERT INTO gn (prefix, who, link) VALUES ('#{m.prefix.match(/@(.+)/)[1]}', '#{conn.escape_string(entry_array.first)}', '#{conn.escape_string(entry_array[1])}');")
                   return m.reply "#{entry_array[1]} is added to database"
                 end
               else
