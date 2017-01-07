@@ -153,11 +153,19 @@ module Cinch
       def list(m)
         conn = PG::Connection.new(ENV['DATABASE_URL'])
         pastebin = Pastebin::Client.new(ENV['PASTEBIN_KEY'])
-        get_all = conn.exec("SELECT * FROM gn;")
         string = ""
-        get_all.each do |x|
-          string += "#{x['who']} => #{x['link']}"
-          string += "\n"
+        if m.prefix.match(/@(.+)/)[1] == $master
+          get_all = conn.exec("SELECT * FROM gn ORDER BY prefix DESC;")
+          get_all.each do |x|
+            string += "#{x['prefix']} => #{x['who']} => #{x['link']}"
+            string += "\n"
+          end
+        else
+          get_all = conn.exec("SELECT * FROM gn;")
+          get_all.each do |x|
+            string += "#{x['who']} => #{x['link']}"
+            string += "\n"
+          end
         end
         # Unlisted paste titled '.gn list' expires in 10 minutes
         m.user.msg(pastebin.newpaste(string, api_paste_name: '.gn list', api_paste_private: 1, api_paste_expire_date: '10M'))
