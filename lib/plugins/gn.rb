@@ -12,12 +12,13 @@ module Cinch
       match /(delgn) (.+)/, method: :del
       match /(who) (.+)/, method: :who
       match /(gnban) (.+)/, method: :ban_status
-      match /(gn) (list)/, method: :list
+      match /(gn) (list)$/, method: :list
       match /(help gn)$/, method: :help
       match /(help who)$/, method: :help_who
       match /(help addgn)$/, method: :help_add
       match /(help delgn)$/, method: :help_del
       match /(help gnban)$/, method: :help_ban
+      match /(help gn list)$/, method: :help_list
 
       def initialize(*args)
         super
@@ -180,6 +181,10 @@ module Cinch
       def help_ban(m)
         m.reply 'master or op can ban or unban users by prefix'
         m.reply '.gnban user/BANNEDUSER'
+      end
+
+      def help_list(m)
+        m.reply 'returns pastebin url of saved gn urls'
       end
 
     end
