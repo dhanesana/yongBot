@@ -159,7 +159,8 @@ module Cinch
           string += "#{x['who']} => #{x['link']}"
           string += "\n"
         end
-        m.user.msg(pastebin.newpaste(string))
+        # Unlisted paste titled '.gn list' expires in 1 hour
+        m.user.msg(pastebin.newpaste(string, api_paste_name: '.gn list', api_paste_private: 1, api_paste_expire_date: '1H'))
         m.reply "check ur pms for list of saved gn urls"
       end
 
