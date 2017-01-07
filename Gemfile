@@ -14,6 +14,7 @@ gem 'cinch-identify'
 gem 'unidecoder'
 gem 'wolfram-alpha'
 gem 'fuzzy_match'
+gem 'pastebin-api'
 
 gem 'pg'
 gem 'heroku-api'

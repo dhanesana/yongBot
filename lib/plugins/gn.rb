@@ -1,5 +1,6 @@
 require 'pg'
 require 'open-uri'
+require 'pastebin-api'
 
 module Cinch
   module Plugins
@@ -11,6 +12,7 @@ module Cinch
       match /(delgn) (.+)/, method: :del
       match /(who) (.+)/, method: :who
       match /(gnban) (.+)/, method: :ban_status
+      match /(gn) (list)/, method: :list
       match /(help gn)$/, method: :help
       match /(help who)$/, method: :help_who
       match /(help addgn)$/, method: :help_add
@@ -145,6 +147,17 @@ module Cinch
         else
           m.reply 'https://youtu.be/OBWpzvJGTz4'
         end
+      end
+
+      def list(m)
+        pastebin = Pastebin::Client.new(ENV['PASTEBIN_KEY'])
+        get_all = conn.exec("SELECT * FROM gn;")
+        get_all.each do |x|
+          string += "#{x['who']} => #{x['link']}"
+          string += "\n"
+        end
+        m.user.msg(pastebin.newpaste(string))
+        m.reply "check ur pms for list of saved gn urls"
       end
 
       def help(m)
