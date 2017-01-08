@@ -26,7 +26,7 @@ GEM
     httparty (0.11.0)
       multi_json (~> 1.0)
       multi_xml (>= 0.5.2)
-    json (1.8.3)
+    json (2.0.2)
     mechanize (2.7.4)
       domain_name (~> 0.5, >= 0.5.1)
       http-cookie (~> 1.0)
@@ -89,7 +89,7 @@ DEPENDENCIES
   wolfram-alpha
 
 RUBY VERSION
-   ruby 2.3.0p0
+   ruby 2.4.0p0
 
 BUNDLED WITH
    1.13.2
