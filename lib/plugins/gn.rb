@@ -124,7 +124,7 @@ module Cinch
       end
 
       def ban_status(m, prefix, gnban, user_prefix)
-        return m.reply "https://youtu.be/OBWpzvJGTz4" if user_prefix != $master
+        return m.reply "https://youtu.be/OBWpzvJGTz4" if user_prefix == $master
         ops = Channel(m.channel.name).ops.map { |x| x.nick }
         if m.prefix.match(/@(.+)/)[1] == $master
           ban_unban(m, user_prefix)
