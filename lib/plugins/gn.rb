@@ -12,6 +12,7 @@ module Cinch
       match /(delgn) (.+)/, method: :del
       match /(who) (.+)/, method: :who
       match /(gnban) (.+)/, method: :ban_status
+      match /(gnban) (list)$/, method: :ban_list
       match /(gn) (list)$/, method: :list
       match /(help gn)$/, method: :help
       match /(help who)$/, method: :help_who
@@ -144,6 +145,24 @@ module Cinch
           conn.exec("INSERT INTO gnbanned (prefix) VALUES ('#{conn.escape_string(user_prefix)}');")
           return User(m.user.nick).notice("#{conn.escape_string(user_prefix)} is banned from adding gn urls")
         end
+      end
+
+      def ban_list(m)
+        conn = PG::Connection.new(ENV['DATABASE_URL'])
+        pastebin = Pastebin::Client.new(ENV['PASTEBIN_KEY'])
+        string = ""
+        if m.prefix.match(/@(.+)/)[1] == $master
+          get_all = conn.exec("SELECT * FROM gnbanned;")
+          get_all.each do |x|
+            string += "#{x['prefix']}"
+            string += "\n"
+          end
+        else
+          m.reply 'https://youtu.be/OBWpzvJGTz4'
+        end
+        # Unlisted paste titled '.gnban list' expires in 10 minutes
+        m.user.msg(pastebin.newpaste(string, api_paste_name: '.gnban list', api_paste_private: 1, api_paste_expire_date: '10M'))
+        m.reply "check ur pms for list of gnbanned prefixes"
       end
 
       def list(m)
