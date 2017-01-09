@@ -15,6 +15,7 @@ module Cinch
         p text[0].to_i
         lineup = []
         page.css('tr.ntce td.subjt').each do |subject|
+          lineup << subject.text if subject.text[0] == '0'
           lineup << subject.text if subject.text[0].to_i > 0
         end
         m.reply "[#{lineup.reverse.join('], [')}] 12:00 ~ 14:00KST"
