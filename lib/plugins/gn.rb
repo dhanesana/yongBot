@@ -71,18 +71,10 @@ module Cinch
             if entry_array[1].include? 'imgur'
               if entry_array[1].include? 'http'
                 if entry_array[1].include? 'https'
-                  return m.reply 'name before url' if (entry_array.first =~ URI::regexp).nil? == false
-                  search = conn.exec("SELECT * FROM gn WHERE link='#{conn.escape_string(conn.escape_string(entry_array[1]))}'")
-                  return m.reply 'url already exists in database bru' if search.ntuples > 0
-                  conn.exec("INSERT INTO gn (prefix, who, link) VALUES ('#{m.prefix.match(/@(.+)/)[1]}', '#{conn.escape_string(entry_array.first)}', '#{conn.escape_string(entry_array[1])}');")
-                  return m.reply "#{entry_array[1]} is added to database"
+                  add_url(m, conn, entry_array)
                 else
                   entry_array[1].sub!('http','https')
-                  return m.reply 'name before url' if (entry_array.first =~ URI::regexp).nil? == false
-                  search = conn.exec("SELECT * FROM gn WHERE link='#{conn.escape_string(conn.escape_string(entry_array[1]))}'")
-                  return m.reply 'url already exists in database bru' if search.ntuples > 0
-                  conn.exec("INSERT INTO gn (prefix, who, link) VALUES ('#{m.prefix.match(/@(.+)/)[1]}', '#{conn.escape_string(entry_array.first)}', '#{conn.escape_string(entry_array[1])}');")
-                  return m.reply "#{entry_array[1]} is added to database"
+                  add_url(m, conn, entry_array)
                 end
               else
                 return m.reply "url must contain https://"
@@ -94,25 +86,33 @@ module Cinch
         end
       end
 
+      def add_url(m, conn, entry_array)
+        return m.reply 'name before url' if (entry_array.first =~ URI::regexp).nil? == false
+        search = conn.exec("SELECT * FROM gn WHERE link='#{conn.escape_string(conn.escape_string(entry_array[1]))}'")
+        return m.reply 'url already exists in database bru' if search.ntuples > 0
+        conn.exec("INSERT INTO gn (prefix, who, link) VALUES ('#{m.prefix.match(/@(.+)/)[1]}', '#{conn.escape_string(entry_array.first)}', '#{conn.escape_string(entry_array[1])}');")
+        return m.reply "#{entry_array[1]} is added to database"
+      end
+
       def del(m, prefix, delgn, url)
         ops = Channel(m.channel.name).ops.map { |x| x.nick }
         conn = PG::Connection.new(ENV['DATABASE_URL'])
         search = conn.exec("SELECT * FROM gn WHERE link='#{conn.escape_string(url)}';")
+        return m.reply "url doesn't exist in database bru" if search.ntuples < 1
         if m.prefix.match(/@(.+)/)[1] == $master
-          return m.reply "url doesn't exist in database bru" if search.ntuples < 1
-          conn.exec("DELETE FROM gn WHERE link='#{conn.escape_string(url)}';")
-          return User(m.user.nick).notice("#{url} is removed from database")
+          del_url(m, conn, url)
         elsif m.prefix.match(/@(.+)/)[1] == search.field_values('prefix').first
-          return m.reply "url doesn't exist in database bru" if search.ntuples < 1
-          conn.exec("DELETE FROM gn WHERE link='#{conn.escape_string(url)}';")
-          return User(m.user.nick).notice("#{url} is removed from database")
+          del_url(m, conn, url)
         elsif ops.include? m.user.nick
-          return m.reply "url doesn't exist in database bru" if search.ntuples < 1
-          conn.exec("DELETE FROM gn WHERE link='#{conn.escape_string(url)}';")
-          return User(m.user.nick).notice("#{url} is removed from database")
+          del_url(m, conn, url)
         else
           m.reply 'https://youtu.be/OBWpzvJGTz4'
         end
+      end
+
+      def del_url(m, conn, url)
+        conn.exec("DELETE FROM gn WHERE link='#{conn.escape_string(url)}';")
+        User(m.user.nick).notice("#{url} is removed from database")
       end
 
       def who(m, prefix, who, url)
@@ -123,31 +123,26 @@ module Cinch
       end
 
       def ban_status(m, prefix, gnban, user_prefix)
-        return m.reply "https://youtu.be/OBWpzvJGTz4" if user_prefix == $master
+        return m.reply "https://youtu.be/OBWpzvJGTz4" if user_prefix != $master
         ops = Channel(m.channel.name).ops.map { |x| x.nick }
         if m.prefix.match(/@(.+)/)[1] == $master
-          conn = PG::Connection.new(ENV['DATABASE_URL'])
-          search = conn.exec("SELECT * FROM gnbanned WHERE prefix='#{conn.escape_string(user_prefix)}';")
-          if search.ntuples > 0
-            conn.exec("DELETE FROM gnbanned WHERE prefix='#{conn.escape_string(user_prefix)}';")
-            return User(m.user.nick).notice("#{user_prefix} is UNbanned from adding gn urls")
-          else
-            conn.exec("INSERT INTO gnbanned (prefix) VALUES ('#{conn.escape_string(user_prefix)}');")
-            return User(m.user.nick).notice("#{user_prefix} is banned from adding gn urls")
-          end
-        end
-        if ops.include? m.user.nick
-          conn = PG::Connection.new(ENV['DATABASE_URL'])
-          search = conn.exec("SELECT * FROM gnbanned WHERE prefix='#{conn.escape_string(user_prefix)}';")
-          if search.ntuples > 0
-            conn.exec("DELETE FROM gnbanned WHERE prefix='#{conn.escape_string(user_prefix)}';")
-            return User(m.user.nick).notice("#{conn.escape_string(user_prefix)} is UNbanned from adding gn urls")
-          else
-            conn.exec("INSERT INTO gnbanned (prefix) VALUES ('#{conn.escape_string(user_prefix)}');")
-            return User(m.user.nick).notice("#{conn.escape_string(user_prefix)} is banned from adding gn urls")
-          end
+          ban_unban(m, user_prefix)
+        elsif ops.include? m.user.nick
+          ban_unban(m, user_prefix)
         else
           m.reply 'https://youtu.be/OBWpzvJGTz4'
+        end
+      end
+
+      def ban_unban(m, user_prefix)
+        conn = PG::Connection.new(ENV['DATABASE_URL'])
+        search = conn.exec("SELECT * FROM gnbanned WHERE prefix='#{conn.escape_string(user_prefix)}';")
+        if search.ntuples > 0
+          conn.exec("DELETE FROM gnbanned WHERE prefix='#{conn.escape_string(user_prefix)}';")
+          return User(m.user.nick).notice("#{conn.escape_string(user_prefix)} is UNbanned from adding gn urls")
+        else
+          conn.exec("INSERT INTO gnbanned (prefix) VALUES ('#{conn.escape_string(user_prefix)}');")
+          return User(m.user.nick).notice("#{conn.escape_string(user_prefix)} is banned from adding gn urls")
         end
       end
 
