@@ -56,6 +56,7 @@ module Cinch
       end
 
       def add(m, prefix, addgn, url)
+        return m.reply 'registered users only bru' if m.prefix.match(/@(.+)/)[1].include? 'Snoonet'
         conn = PG::Connection.new(ENV['DATABASE_URL'])
         search = conn.exec("SELECT * FROM gnbanned WHERE prefix='#{m.prefix.match(/@(.+)/)[1]}'")
         if search.ntuples > 0
