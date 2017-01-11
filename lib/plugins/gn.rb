@@ -113,7 +113,7 @@ module Cinch
 
       def del_url(m, conn, url)
         conn.exec("DELETE FROM gn WHERE link='#{conn.escape_string(url)}';")
-        User(m.user.nick).notice("#{url} is removed from database")
+        m.reply "#{url} is removed from database"
       end
 
       def who(m, prefix, who, url)
