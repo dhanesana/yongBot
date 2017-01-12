@@ -43,16 +43,13 @@ module Cinch
       end
 
       def execute(m)
-        if @gn_pairs.keys.include? m.prefix.match(/@(.+)/)[1]
-          m.reply "u get wat u deserve: #{@gn_pairs[m.prefix.match(/@(.+)/)[1]]}"
-        else
-          conn = PG::Connection.new(ENV['DATABASE_URL'])
-          entries = conn.exec("SELECT * FROM gn")
-          @gn_pairs[m.prefix.match(/@(.+)/)[1]] = entries.field_values('link').sample
-          m.reply @gn_pairs[m.prefix.match(/@(.+)/)[1]]
-          Timer(3600, options = { shots: 1 }) do |x|
-            @gn_pairs.delete(m.prefix.match(/@(.+)/)[1])
-          end
+        return m.reply "u get wat u deserve: #{@gn_pairs[m.prefix.match(/@(.+)/)[1]]}" if @gn_pairs.keys.include? m.prefix.match(/@(.+)/)[1]
+        conn = PG::Connection.new(ENV['DATABASE_URL'])
+        entries = conn.exec("SELECT * FROM gn")
+        @gn_pairs[m.prefix.match(/@(.+)/)[1]] = entries.field_values('link').sample
+        m.reply @gn_pairs[m.prefix.match(/@(.+)/)[1]]
+        Timer(3600, options = { shots: 1 }) do |x|
+          @gn_pairs.delete(m.prefix.match(/@(.+)/)[1])
         end
       end
 
@@ -60,31 +57,15 @@ module Cinch
         return m.reply 'registered users only bru' if m.prefix.match(/@(.+)/)[1].include? 'Snoonet'
         conn = PG::Connection.new(ENV['DATABASE_URL'])
         search = conn.exec("SELECT * FROM gnbanned WHERE prefix='#{m.prefix.match(/@(.+)/)[1]}'")
-        if search.ntuples > 0
-          return m.reply 'ur banned from adding images bru'
-        else
-          entry_array = url.split(' ')
-          if entry_array.size > 2
-            return m.reply "no spaces in name or url. only space between name and url bru"
-          elsif entry_array.size < 2
-            return m.reply "missing name or url"
-          else
-            if entry_array[1].include? 'imgur'
-              if entry_array[1].include? 'http'
-                if entry_array[1].include? 'https'
-                  add_url(m, conn, entry_array)
-                else
-                  entry_array[1].sub!('http','https')
-                  add_url(m, conn, entry_array)
-                end
-              else
-                return m.reply "url must contain https://"
-              end
-            else
-              return m.reply 'url must be hosted on imgur'
-            end
-          end
-        end
+        return m.reply 'ur banned from adding images bru' if search.ntuples > 0
+        entry_array = url.split(' ')
+        return m.reply "no spaces in name or url. only space between name and url bru" if entry_array.size > 2
+        return m.reply "missing name or url" if entry_array.size < 2
+        return m.reply 'url must be hosted on imgur' unless entry_array[1].include? 'imgur'
+        return m.reply 'url must contain https://' unless entry_array[1].include? 'http'
+        return add_url(m, conn, entry_array) if entry_array[1].include? 'https'
+        entry_array[1].sub!('http','https')
+        add_url(m, conn, entry_array)
       end
 
       def add_url(m, conn, entry_array)
@@ -100,15 +81,10 @@ module Cinch
         conn = PG::Connection.new(ENV['DATABASE_URL'])
         search = conn.exec("SELECT * FROM gn WHERE link='#{conn.escape_string(url)}';")
         return m.reply "url doesn't exist in database bru" if search.ntuples < 1
-        if m.prefix.match(/@(.+)/)[1] == $master
-          del_url(m, conn, url)
-        elsif m.prefix.match(/@(.+)/)[1] == search.field_values('prefix').first
-          del_url(m, conn, url)
-        elsif ops.include? m.user.nick
-          del_url(m, conn, url)
-        else
-          m.reply 'https://youtu.be/OBWpzvJGTz4'
-        end
+        return del_url(m, conn, url) if m.prefix.match(/@(.+)/)[1] == $master
+        return del_url(m, conn, url) if m.prefix.match(/@(.+)/)[1] == search.field_values('prefix').first
+        return del_url(m, conn, url) if ops.include? m.user.nick
+        m.reply 'https://youtu.be/OBWpzvJGTz4'
       end
 
       def del_url(m, conn, url)
@@ -127,13 +103,9 @@ module Cinch
         return if user_prefix == 'list'
         return m.reply "https://youtu.be/OBWpzvJGTz4" if user_prefix == $master
         ops = Channel(m.channel.name).ops.map { |x| x.nick }
-        if m.prefix.match(/@(.+)/)[1] == $master
-          ban_unban(m, user_prefix)
-        elsif ops.include? m.user.nick
-          ban_unban(m, user_prefix)
-        else
-          m.reply 'https://youtu.be/OBWpzvJGTz4'
-        end
+        return ban_unban(m, user_prefix) if m.prefix.match(/@(.+)/)[1] == $master
+        return ban_unban(m, user_prefix) if ops.include? m.user.nick
+        m.reply 'https://youtu.be/OBWpzvJGTz4'
       end
 
       def ban_unban(m, user_prefix)
