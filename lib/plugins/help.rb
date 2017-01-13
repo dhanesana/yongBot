@@ -14,6 +14,7 @@ module Cinch
           ".rollu",
           ".woll",
           ".gn",
+          ".addgn",
           ".bingul",
           ".yongpop",
           ".omg",
