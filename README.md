@@ -28,6 +28,7 @@ Create a .env file within the root directory, and populate with the following va
 | ENV Variable       | Value
 | -------------      |:-----:
 | APP_NAME           | *Heroku App Name*
+| BEAM_USERS         | [Beam](https://beam.pro/) Users (comma-seperated, no spaces)
 | SERVER             | *IRC Server (ex. irc.snoonet.org)*
 | CHANNELS           | *IRC #Channels (with hash, comma-seperated, no spaces)*
 | NICKS              | *Bot IRC Nickname*
@@ -50,6 +51,7 @@ Create a .env file within the root directory, and populate with the following va
 | MASHAPE_KEY        | [Mashape API Key](http://docs.mashape.com/api-keys)
 | NUTRITIONX_ID      | [Nutritionix AppID](https://www.nutritionix.com/api)
 | NUTRITION_KEY      | [Nutritionix API Key](https://www.nutritionix.com/api)
+| PASTEBIN_KEY       | [Pastebin API Key](https://pastebin.com/api)
 | RAPGENIUS          | [Genius Access Token](http://genius.com/api-clients)
 | REKOGNITION_KEY    | [ReKognition API Key](https://rekognition.com/developer/start)
 | REKOGNITION_SECRET | [ReKognition API Secret](https://rekognition.com/developer/start)
@@ -58,7 +60,7 @@ Create a .env file within the root directory, and populate with the following va
 | TIMEZONE           | [TimeZoneDB API Key](http://timezonedb.com/)
 | TUMBLR_KEY         | [Tumblr API Key](https://www.tumblr.com/docs/en/api/v2)
 | TWITCH_ID          | [Register](https://www.twitch.tv/settings/connections)  for Twitch Client-ID
-| TWITCH_CHANNELS    | *IRC #Channels for Twitch plugin announcements (with hash, comma-seperated, no spaces)*
+| TWITCH_CHANNELS    | *IRC #Channels for Twitch and Beam plugin announcements (with hash, comma-seperated, no spaces)*
 | TWITCH_USERS       | [Twitch.tv](http://www.twitch.tv/) Users (comma-seperated, no spaces)
 | VIKI               | [Viki AppID](http://dev.viki.com/)
 | WA_ID              | [Wolfram Alpha AppID](http://products.wolframalpha.com/api/)
