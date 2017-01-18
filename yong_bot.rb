@@ -12,6 +12,7 @@ yong_bot = Cinch::Bot.new do
     c.realname = "yongBot v1.0"
     c.user = "yongBot"
     c.plugins.prefix = /^(\.)/
+    c.modes = ENV['USER_MODES'].split(',')
 
     c.plugins.plugins = [
       Cinch::Plugins::Identify,
