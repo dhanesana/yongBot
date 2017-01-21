@@ -1,5 +1,6 @@
 require 'unirest'
 require 'open-uri'
+require 'pg'
 
 module Cinch
   module Plugins
