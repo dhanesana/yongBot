@@ -7,7 +7,7 @@ module Cinch
     class Beam
       include Cinch::Plugin
 
-      timer 300, method: :check_live
+      timer 120, method: :check_live
       match /(beam)$/
       match /(beam) (.+)/, method: :check_user
       match /(help beam)$/, method: :help

@@ -7,7 +7,7 @@ module Cinch
     class Twitch
       include Cinch::Plugin
 
-      timer 300, method: :check_live
+      timer 120, method: :check_live
       match /(twitch)$/
       match /(twitch) (.+)/, method: :check_user
       match /(help twitch)$/, method: :help
