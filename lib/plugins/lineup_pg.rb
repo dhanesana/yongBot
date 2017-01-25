@@ -71,12 +71,13 @@ module Cinch
       def update_lineup(m, prefix, update_lineup, new_lineup)
         if is_admin?(m) || is_approved?(m)
           conn = PG::Connection.new(ENV['DATABASE_URL'])
-          lineup_db = conn.exec("SELECT current FROM lineup")
+          lineup_db = conn.exec("SELECT current FROM lineup;")
           if new_lineup.to_s.size > 0
             conn.exec(
-              "update lineup set current = '#{conn.escape_string(new_lineup)}' where current = '#{conn.escape_string(lineup_db[0]['current'])}'"
+              "update lineup set current = '#{conn.escape_string(new_lineup)}' where current = '#{conn.escape_string(lineup_db[0]['current'])}';"
             )
-            @lineup = "#{lineup_db[0]['current']}"
+            get_lineup = conn.exec("SELECT current FROM lineup;")
+            @lineup = "#{get_lineup[0]['current']};"
             m.reply "donezo"
           else
             m.reply "can't be blank bru"
