@@ -28,7 +28,6 @@ module Cinch
         user.prefix.match(/@(.+)/)[1] == $master
       end
 
-
       def thyme(m)
         m.reply Time.now.strftime("%Y-%m-%d %H:%M %Z")
       end
