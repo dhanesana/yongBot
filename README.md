@@ -79,7 +79,7 @@ $ heroku create [App Name]
 ```
 
 If the app name is taken, pick a new one and make sure to update your .env file accordingly.
-Push your .env configuration to heroku using the following rake command:
+Using the preconfigured [dotenv-heroku](https://github.com/sideshowcoder/dotenv-heroku) gem, push your .env configuration to heroku using the following rake command (or manually through heroku app settings):
 
 ```
 $ rake config:push
