@@ -1,6 +1,7 @@
 require 'cinch'
 require 'cinch/plugins/identify'
 require_relative 'bin/plugins'
+require_relative 'bin/extensions'
 
 $master = "#{ENV['MASTER']}"
 
