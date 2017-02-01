@@ -24,46 +24,41 @@ module Cinch
         @unauthorized = "https://youtu.be/OBWpzvJGTz4"
       end
 
-      def is_admin?(user)
-        user.prefix.match(/@(.+)/)[1] == $master
-      end
-
       def thyme(m)
         m.reply Time.now.strftime("%Y-%m-%d %H:%M %Z")
       end
 
       def join(m, prefix, join, channel)
-        return @bot.join(channel) if is_admin?(m)
+        return @bot.join(channel) if m.is_admin?
         m.reply @unauthorized
       end
 
       def part(m)
-        return @bot.part(m.channel.name) if is_admin?(m)
+        return @bot.part(m.channel.name) if m.is_admin?
         m.reply @unauthorized
       end
 
       def part_specified(m, prefix, part, channel)
-        return @bot.part(channel) if is_admin?(m)
+        return @bot.part(channel) if m.is_admin?
         m.reply @unauthorized
       end
 
       def set_nick(m, prefix, setnick, new_nick)
-        return @bot.nick = new_nick if is_admin?(m)
+        return @bot.nick = new_nick if m.is_admin?
         m.reply @unauthorized
       end
 
       def ping(m)
         return m.reply "too many ppls bru" if Channel(m.channel.name).users.size > 30
-        ops = Channel(m.channel.name).ops.map { |x| x.nick }
         users = []
-        if is_admin?(m)
+        if m.is_admin?
           Channel(m.channel.name).users.each do |user|
             users << user.first.nick
           end
           users.delete(@bot.nick)
           return m.reply users.join(' ')
         end
-        if ops.include? m.user.nick
+        if m.is_op?
           Channel(m.channel.name).users.each do |user|
             users << user.first.nick
           end
@@ -75,7 +70,7 @@ module Cinch
       end
 
       def echo(m, prefix, echo, words)
-        if is_admin?(m)
+        if m.is_admin?
           channels = @bot.channels.map { |x| x.name }
           if m.channel.nil?
             if words[0] == '#'
@@ -105,12 +100,12 @@ module Cinch
       end
 
       def notice(m)
-        return User(m.user.nick).notice('I NOTICE U') if is_admin?(m)
+        return User(m.user.nick).notice('I NOTICE U') if m.is_admin?
         m.reply @unauthorized
       end
 
       def notice_nick(m, prefix, notice, nick_msg)
-        if is_admin?(m)
+        if m.is_admin?
           nick = nick_msg.split(' ').first
           msg = nick_msg.split(' ')[1..-1].join(' ')
           msg = 'I NOTICE U' if nick_msg.split(' ').size == 1
