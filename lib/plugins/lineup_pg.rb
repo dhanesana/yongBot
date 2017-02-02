@@ -49,16 +49,13 @@ module Cinch
         m.reply @lineup
       end
 
-      def is_admin?(user)
-        user.prefix.match(/@(.+)/)[1] == $master
-      end
-
-      def is_approved?(user)
-        @approved.include?(user.prefix.match(/@(.+)/)[1].downcase)
+      def is_approved?(m)
+        return true if m.is_op?
+        @approved.include?(m.user.host.downcase)
       end
 
       def notice_nick(m, prefix, notice, nick_msg)
-        if is_admin?(m)
+        if m.is_admin?
           nick = nick_msg.split(' ').first
           msg = nick_msg.split(' ')[1..-1].join(' ')
           msg = 'I NOTICE U' if nick_msg.split(' ').size == 1
@@ -69,7 +66,7 @@ module Cinch
       end
 
       def update_lineup(m, prefix, update_lineup, new_lineup)
-        if is_admin?(m) || is_approved?(m)
+        if m.is_admin? || is_approved?(m)
           conn = PG::Connection.new(ENV['DATABASE_URL'])
           lineup_db = conn.exec("SELECT current FROM lineup;")
           if new_lineup.to_s.size > 0
@@ -88,7 +85,7 @@ module Cinch
       end
 
       def list_approved(m)
-        if is_admin?(m)
+        if m.is_admin?
           message = "#{m.user.nick} #{@approved.join(', ')}"
           notice_nick(m, '.', 'notice', message)
           m.reply "check ur notices bru"
@@ -98,7 +95,7 @@ module Cinch
       end
 
       def add_approved(m, prefix, add_approved, user)
-        if is_admin?(m)
+        if m.is_admin?
           conn = PG::Connection.new(ENV['DATABASE_URL'])
           conn.exec("INSERT INTO approved (username) VALUES ('#{user}');")
           pg_users = conn.exec("SELECT * FROM approved")
@@ -113,7 +110,7 @@ module Cinch
       end
 
       def delete_approved(m, prefix, delete_approved, user)
-        if is_admin?(m)
+        if m.is_admin?
           conn = PG::Connection.new(ENV['DATABASE_URL'])
           conn.exec("DELETE FROM approved WHERE username = '#{user}'")
           pg_users = conn.exec("SELECT * FROM approved")
