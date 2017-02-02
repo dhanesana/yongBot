@@ -11,7 +11,7 @@ module Cinch
       match /(addgn) (.+)/, method: :add
       match /(delgn) (.+)/, method: :del
       match /(who) (.+)/, method: :who
-      match /(gnban) (.+)/, method: :ban_status
+      match /(gnban) (.+)/, method: :ban_unban
       match /(gnban) (list)$/, method: :ban_list
       match /(gn) (list)$/, method: :list
       match /(help gn)$/, method: :help
@@ -43,20 +43,20 @@ module Cinch
       end
 
       def execute(m)
-        return m.reply "u get wat u deserve: #{@gn_pairs[m.prefix.match(/@(.+)/)[1]]}" if @gn_pairs.keys.include? m.prefix.match(/@(.+)/)[1]
+        return m.reply "u get wat u deserve: #{@gn_pairs[m.user.host]}" if @gn_pairs.keys.include? m.user.host
         conn = PG::Connection.new(ENV['DATABASE_URL'])
         entries = conn.exec("SELECT * FROM gn")
-        @gn_pairs[m.prefix.match(/@(.+)/)[1]] = entries.field_values('link').sample
-        m.reply @gn_pairs[m.prefix.match(/@(.+)/)[1]]
+        @gn_pairs[m.user.host] = entries.field_values('link').sample
+        m.reply @gn_pairs[m.user.host]
         Timer(3600, options = { shots: 1 }) do |x|
-          @gn_pairs.delete(m.prefix.match(/@(.+)/)[1])
+          @gn_pairs.delete(m.user.host)
         end
       end
 
       def add(m, prefix, addgn, url)
-        return m.reply 'registered users only bru' if m.prefix.match(/@(.+)/)[1].include? 'Snoonet'
+        return m.reply 'registered users only bru' if m.user.host.include? 'Snoonet'
         conn = PG::Connection.new(ENV['DATABASE_URL'])
-        search = conn.exec("SELECT * FROM gnbanned WHERE prefix='#{m.prefix.match(/@(.+)/)[1]}'")
+        search = conn.exec("SELECT * FROM gnbanned WHERE prefix='#{m.user.host}'")
         return m.reply 'ur banned from adding images bru' if search.ntuples > 0
         entry_array = url.split(' ')
         return m.reply "no spaces in name or url. only space between name and url bru" if entry_array.size > 2
@@ -72,18 +72,17 @@ module Cinch
         return m.reply 'name before url' if (entry_array.first =~ URI::regexp).nil? == false
         search = conn.exec("SELECT * FROM gn WHERE link='#{conn.escape_string(conn.escape_string(entry_array[1]))}'")
         return m.reply 'url already exists in database bru' if search.ntuples > 0
-        conn.exec("INSERT INTO gn (prefix, who, link) VALUES ('#{m.prefix.match(/@(.+)/)[1]}', '#{conn.escape_string(entry_array.first)}', '#{conn.escape_string(entry_array[1])}');")
+        conn.exec("INSERT INTO gn (prefix, who, link) VALUES ('#{m.user.host}', '#{conn.escape_string(entry_array.first)}', '#{conn.escape_string(entry_array[1])}');")
         return m.reply "#{entry_array[1]} is added to database"
       end
 
       def del(m, prefix, delgn, url)
-        ops = Channel(m.channel.name).ops.map { |x| x.nick }
         conn = PG::Connection.new(ENV['DATABASE_URL'])
         search = conn.exec("SELECT * FROM gn WHERE link='#{conn.escape_string(url)}';")
         return m.reply "url doesn't exist in database bru" if search.ntuples < 1
-        return del_url(m, conn, url) if m.prefix.match(/@(.+)/)[1] == $master
-        return del_url(m, conn, url) if m.prefix.match(/@(.+)/)[1] == search.field_values('prefix').first
-        return del_url(m, conn, url) if ops.include? m.user.nick
+        return del_url(m, conn, url) if m.is_admin?
+        return del_url(m, conn, url) if m.is_op?
+        return del_url(m, conn, url) if m.user.host == search.field_values('prefix').first
         m.reply 'https://youtu.be/OBWpzvJGTz4'
       end
 
@@ -99,16 +98,16 @@ module Cinch
         m.reply "#{search.field_values('who').first}"
       end
 
-      def ban_status(m, prefix, gnban, user_prefix)
+      def ban_unban(m, prefix, gnban, user_prefix)
         return if user_prefix == 'list'
+        # can't ban $master
         return m.reply "https://youtu.be/OBWpzvJGTz4" if user_prefix == $master
-        ops = Channel(m.channel.name).ops.map { |x| x.nick }
-        return ban_unban(m, user_prefix) if m.prefix.match(/@(.+)/)[1] == $master
-        return ban_unban(m, user_prefix) if ops.include? m.user.nick
+        return ban_toggle(m, user_prefix) if m.is_admin?
+        return ban_toggle(m, user_prefix) if m.is_op?
         m.reply 'https://youtu.be/OBWpzvJGTz4'
       end
 
-      def ban_unban(m, user_prefix)
+      def ban_toggle(m, user_prefix)
         conn = PG::Connection.new(ENV['DATABASE_URL'])
         search = conn.exec("SELECT * FROM gnbanned WHERE prefix='#{conn.escape_string(user_prefix)}';")
         if search.ntuples > 0
@@ -124,7 +123,7 @@ module Cinch
         conn = PG::Connection.new(ENV['DATABASE_URL'])
         pastebin = Pastebin::Client.new(ENV['PASTEBIN_KEY'])
         string = ""
-        if m.prefix.match(/@(.+)/)[1] == $master
+        if m.is_admin?
           get_all = conn.exec("SELECT * FROM gnbanned;")
           get_all.each do |x|
             string += "#{x['prefix']}"
@@ -142,7 +141,7 @@ module Cinch
         conn = PG::Connection.new(ENV['DATABASE_URL'])
         pastebin = Pastebin::Client.new(ENV['PASTEBIN_KEY'])
         string = ""
-        if m.prefix.match(/@(.+)/)[1] == $master
+        if m.is_admin?
           get_all = conn.exec("SELECT * FROM gn ORDER BY prefix DESC;")
           get_all.each do |x|
             string += "#{x['prefix']} => #{x['who']} => #{x['link']}"
