@@ -41,7 +41,7 @@ module Cinch
 
       def vote(m, prefix, vote, choice)
         # get user address
-        user_address = m.prefix.match(/@(.+)/)[1]
+        user_address = m.user.host
         channel = m.channel.name
         choice_array = choice.split(/[[:space:]]/)
         selection = choice_array.join(' ').downcase
