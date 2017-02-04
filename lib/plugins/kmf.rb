@@ -41,9 +41,10 @@ module Cinch
           end
         end
         year = (Time.now.utc + Time.zone_offset('PDT')).strftime("%Y")
-        agent.get("https://ticket.koreatimes.com/ticket_#{year}/ticket.php?event_id=EV021")
+        event_num = (year.to_i - 2000 + 5).to_s
+        event_string = event_num.size > 2 ? event_num : '0' + event_num
+        agent.get("https://ticket.koreatimes.com/ticket_#{year}/ticket.php?event_id=EV#{event_string}")
         count = 0
-        # p agent.page.parser.class
         agent.page.parser.css('table#Table_01').first.css('tr td').each do |td|
           count += 1 if td.text.split(/[[:space:]]/).join(' ').downcase != section
           break if td.text.split(/[[:space:]]/).join(' ').downcase == section
