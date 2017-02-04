@@ -28,14 +28,14 @@ module Cinch
       def with_sect(m, prefix, kmf, sect)
         input_array = sect.split(/[[:space:]]/)
         input = input_array.join(' ').downcase
-        section = "  #{input}".downcase
+        section = "#{input}".downcase
         agent = Mechanize.new
-        agent.get("https://ticket.koreatimes.com/member/login.html") do |page|
+        agent.get("https://ticket.koreatimes.com/member/login.php") do |page|
           # LOGIN
-          login_page = page.form_with(:action => '/member/member_login_process.html?bURL=') do |form|
-            username_field = form.field_with(:name => "login_id")
+          login_page = page.form_with(:action => '/member/user_exe.php') do |form|
+            username_field = form.field_with(:name => "user_id")
             username_field.value = ENV['KMF_LOGIN']
-            password_field = form.field_with(:name => "login_password")
+            password_field = form.field_with(:name => "pwd")
             password_field.value = ENV['KMF_PW']
             form.submit
           end
