@@ -49,8 +49,9 @@ module Cinch
           count += 1 if td.text.split(/[[:space:]]/).join(' ').downcase != section
           break if td.text.split(/[[:space:]]/).join(' ').downcase == section
         end
-        return m.reply "invalid section bru" if count % 8 > 0
+        # return m.reply "invalid section bru" if count % 8 > 0
         row = (count / 8) + 5
+        return m.reply "invalid section bru" if agent.page.parser.css('td font')[row].nil?
         m.reply agent.page.parser.css('td font')[row].text
       end
 
