@@ -11,33 +11,19 @@ module Cinch
       match /(help agb)$/, method: :help
 
       def execute(m)
-        page = Nokogiri::HTML(open('http://www.agbnielsen.co.kr/_hannet/agb/f_rating/rating_01a.asp'))
-        date = page.css('span.t_year').text
-        return m.reply "#{date}: No Data Available" if page.css('div#boardlist td').size < 4
-        station = page.css('div#boardlist td')[3].text
-        title = page.css('div#boardlist td')[5].text
-        title.slice! '<td>'
-        title.slice! '</td>'
-        m.reply "#{date}AGB Nielson Rank 1: #{station} - #{title}"
+        with_num(m, '.', 'agb', 1)
       end
 
       def with_num(m, prefix, agb, num)
         return m.reply 'invalid num bru' if num.to_i < 1
         return m.reply 'less than 21 bru' if num.to_i > 20
-        page = Nokogiri::HTML(open('http://www.agbnielsen.co.kr/_hannet/agb/f_rating/rating_01a.asp'))
-        date = page.css('span.t_year').text
-        return m.reply "#{date}: No Data Available" if page.css('div#boardlist td').size < 4
-        station = page.css('div#boardlist td')[3].text if num.to_i == 1
-        title = page.css('div#boardlist td')[5].text if num.to_i == 1
-        title.slice! '<td>' if num.to_i == 1
-        title.slice! '</td>' if num.to_i == 1
-        return m.reply "#{date}AGB Nielson Rank #{num}: #{station} - #{title}" if num.to_i == 1
-        x = (num.to_i - 1) * 12
-        station = page.css('div#boardlist td')[3 + x].text
-        title = page.css('div#boardlist td')[5 + x].text
-        title.slice! '<td>'
-        title.slice! '</td>'
-        m.reply "#{date}AGB Nielson Rank #{num}: #{station} - #{title}"
+        rank = num.to_i
+        page = Nokogiri::HTML(open('http://www.nielsenkorea.co.kr/tv_terrestrial_day.asp?menu=Tit_1&sub_menu=1_1&area=00'))
+        date = page.css('td.ranking_date').text.strip
+        station = page.css('table.ranking_tb tr td.tb_txt_center')[rank * 2 - 1].text.strip
+        title = page.css('table.ranking_tb tr td.tb_txt')[rank * 2 - 2].text.strip
+        rating = page.css('table.ranking_tb tr td.tb_txt')[rank * 2 - 1].css('td.percent').text.strip
+        m.reply "#{date} AGB Nielson Rank #{rank}: #{station} - #{title}, Rating: #{rating}"
       end
 
       def help(m)
