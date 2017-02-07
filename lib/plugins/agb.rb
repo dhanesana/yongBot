@@ -23,6 +23,7 @@ module Cinch
         station = page.css('table.ranking_tb tr td.tb_txt_center')[rank * 2 - 1].text.strip
         title = page.css('table.ranking_tb tr td.tb_txt')[rank * 2 - 2].text.strip
         rating = page.css('table.ranking_tb tr td.tb_txt')[rank * 2 - 1].css('td.percent').text.strip
+        rating = page.css('table.ranking_tb tr td.tb_txt')[rank  * 2 - 1].css('td.percent_g').text.strip if rank > 10
         m.reply "#{date} AGB Nielson Rank #{rank}: #{station} - #{title}, Rating: #{rating}"
       end
 
