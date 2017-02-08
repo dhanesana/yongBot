@@ -37,79 +37,74 @@ module Cinch
           puts '*' * 50
           puts "Table creation failed: #{pg_error.message}"
         end
+        top_urls = conn.exec("SELECT url FROM top;")
+        top_scores = conn.exec("SELECT score FROM top;")
+        low_urls = conn.exec("SELECT url FROM low;")
+        low_scores = conn.exec("SELECT score FROM low;")
+        @scores = {
+          top: [top_urls[0]['urls'], top_scores[0]['score']],
+          low: [low_urls[0]['urls'], low_scores[0]['score']]
+        }
       end
 
       def top(m)
-        conn_scores = PG::Connection.new(ENV['DATABASE_URL'])
-        urls = conn_scores.exec("SELECT url FROM top")
-        scores = conn_scores.exec("SELECT score FROM top")
-        m.reply "#{urls[0]['url']} Beauty: #{scores[0]['score']}/100"
+        m.reply "#{@scores[:top][0]} Beauty: #{@scores[:top][1]}/100"
       end
 
       def low(m)
-        conn_scores = PG::Connection.new(ENV['DATABASE_URL'])
-        urls = conn_scores.exec("SELECT url FROM low")
-        scores = conn_scores.exec("SELECT score FROM low")
-        m.reply "#{urls[0]['url']} Beauty: #{scores[0]['score']}/100"
+        m.reply "#{@scores[:low][0]} Beauty: #{@scores[:low][1]}/100"
       end
 
       def execute(m, prefix, face, url)
         link = URI.encode(url)
-        if @users.keys.include? m.prefix.match(/@(.+)/)[1]
-          if @users[m.prefix.match(/@(.+)/)[1]] > 2
+        return get_scores(m, link) if m.is_admin?
+        if @users.keys.include? m.user.host
+          if @users[m.user.host] > 2
             return m.reply 'ur doing that too much bru'
           else
-            @users[m.prefix.match(/@(.+)/)[1]] += 1
+            @users[m.user.host] += 1
             get_scores(m, link)
           end
         else
-          @users[m.prefix.match(/@(.+)/)[1]] = 1
+          @users[m.user.host] = 1
           Timer(180, options = { shots: 1 }) do |x|
-            @users.delete(m.prefix.match(/@(.+)/)[1])
+            @users.delete(m.user.host)
           end
           get_scores(m, link)
         end
       end
 
       def random(m)
-        if @users.keys.include? m.prefix.match(/@(.+)/)[1]
-          if @users[m.prefix.match(/@(.+)/)[1]] > 2
+        if @users.keys.include? m.user.host
+          if @users[m.user.host] > 2
             return m.reply 'ur doing that too much bru'
           else
-            @users[m.prefix.match(/@(.+)/)[1]] += 1
-            kpics = HTTParty.get("http://www.reddit.com/r/kpics/new.json")
-            posts = []
-            kpics['data']['children'].each do |post|
-              posts << post['data']['url'] unless post['data']['domain'] == 'gfycat.com' || post['data']['domain'] == 'instagram.com'
-              posts << post['data']['preview']['images'].first['source']['url'] if post['data']['domain'] == 'instagram.com'
-            end
-            posts.delete_if { |post| post.include? 'gifv' }
-            posts.delete_if { |post| post.include? '/a/' }
-            posts.delete_if { |post| post.include? 'webm' }
-            posts.delete_if { |post| post.include? 'gif' }
-            link = posts.sample
-            m.reply "r/kpics #{link}"
-            get_scores(m, link)
+            @users[m.user.host] += 1
+            get_kpic(m)
           end
         else
-          @users[m.prefix.match(/@(.+)/)[1]] = 1
-          kpics = HTTParty.get("http://www.reddit.com/r/kpics/new.json")
-          posts = []
-          kpics['data']['children'].each do |post|
-            posts << post['data']['url'] unless post['data']['domain'] == 'gfycat.com' || post['data']['domain'] == 'instagram.com'
-            posts << post['data']['preview']['images'].first['source']['url'] if post['data']['domain'] == 'instagram.com'
-          end
-          posts.delete_if { |post| post.include? 'gifv' }
-          posts.delete_if { |post| post.include? '/a/' }
-          posts.delete_if { |post| post.include? 'webm' }
-          posts.delete_if { |post| post.include? 'gif' }
-          link = posts.sample
-          m.reply "r/kpics #{link}"
+          @users[m.user.host] = 1
           Timer(180, options = { shots: 1 }) do |x|
-            @users.delete(m.prefix.match(/@(.+)/)[1])
+            @users.delete(m.user.host)
           end
-          get_scores(m, link)
+          get_kpic(m)
         end
+      end
+
+      def get_kpic(m)
+        kpics = HTTParty.get("http://www.reddit.com/r/kpics/new.json")
+        posts = []
+        kpics['data']['children'].each do |post|
+          posts << post['data']['url'] unless post['data']['domain'] == 'gfycat.com' || post['data']['domain'] == 'instagram.com'
+          posts << post['data']['preview']['images'].first['source']['url'] if post['data']['domain'] == 'instagram.com'
+        end
+        posts.delete_if { |post| post.include? 'gifv' }
+        posts.delete_if { |post| post.include? '/a/' }
+        posts.delete_if { |post| post.include? 'webm' }
+        posts.delete_if { |post| post.include? 'gif' }
+        link = posts.sample
+        m.reply "r/kpics #{link}"
+        get_scores(m, link)
       end
 
       def get_scores(m, link)
@@ -121,46 +116,30 @@ module Cinch
             "Accept" => "application/json"
           }
         return m.reply 'no face detected bru' if response.body['face_detection'] == []
-
         race = ''
         response.body['face_detection'].first['race'].each_key { |key| race += key }
-
         age = response.body['face_detection'].first['age'].to_i
         beauty = (response.body['face_detection'].first['beauty'] * 100).round(3)
-        gender = response.body['face_detection'].first['sex']
-        sex = 'Male' if gender >= 0.5
-        sex = 'Female' if gender < 0.5
-        status = 'ill3gal'
-        status = 'legal' if age > 17
-
-        hash = { link => beauty }
-        scores_db = PG::Connection.new(ENV['DATABASE_URL'])
-        top_urls = scores_db.exec("SELECT url from top")
-        top_scores = scores_db.exec("SELECT score from top")
-        high_score = top_scores[0]['score'].to_f
-        low_urls = scores_db.exec("SELECT url from low")
-        low_scores = scores_db.exec("SELECT score from low")
-        low_score = low_scores[0]['score'].to_f
-        if beauty > high_score && sex == 'Female'
-          scores_db.exec(
-            "update top set score = #{beauty} where score = #{high_score}"
-          )
-          scores_db.exec(
-            "update top set url = '#{link}' where url = '#{top_urls[0]['url']}'"
-          )
-          m.reply "ding ding ding new high score"
+        sex = 'Male'
+        sex = 'Female' if response.body['face_detection'].first['sex'] < 0.5
+        if beauty > @scores[:top][1].to_f && sex == 'Female'
+          update_db(m, 'top', beauty, link)
         end
-        if beauty < low_score && sex == 'Female'
-          scores_db.exec(
-            "update low set score = #{beauty} where score = #{low_score}"
-          )
-          scores_db.exec(
-            "update low set url = '#{link}' where url = '#{low_urls[0]['url']}'"
-          )
-          m.reply "dun dun dun new low score..."
+        if beauty < @scores[:low][1].to_f && sex == 'Female'
+          update_db(m, 'low', beauty, link)
         end
+        m.reply "#{race.capitalize} #{sex} | Age: #{age} | Beauty: #{beauty}/100"
+      end
 
-        m.reply "#{race.capitalize} #{sex} | Age: #{age} | Status: #{status} | Beauty: #{beauty}/100"
+      def update_db(m, table, beauty, link)
+        conn = PG::Connection.new(ENV['DATABASE_URL'])
+        conn.exec(
+          "UPDATE #{table} SET score = #{beauty} WHERE score = #{@scores[table.to_sym][1]};"
+        )
+        conn.exec(
+          "UPDATE #{table} SET url = '#{conn.escape(link)}' WHERE url = '#{@scores[table.to_sym][0]}';"
+        )
+        m.reply "ding ding ding new #{table} score"
       end
 
       def help(m)
