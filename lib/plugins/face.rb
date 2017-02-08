@@ -42,8 +42,8 @@ module Cinch
         low_urls = conn.exec("SELECT url FROM low;")
         low_scores = conn.exec("SELECT score FROM low;")
         @scores = {
-          top: [top_urls[0]['urls'], top_scores[0]['score']],
-          low: [low_urls[0]['urls'], low_scores[0]['score']]
+          top: [top_urls[0]['url'], top_scores[0]['score']],
+          low: [low_urls[0]['url'], low_scores[0]['score']]
         }
       end
 
