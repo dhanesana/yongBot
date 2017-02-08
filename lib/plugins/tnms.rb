@@ -11,10 +11,7 @@ module Cinch
       match /(help tnms)$/, method: :help
 
       def execute(m)
-        page = Nokogiri::HTML(open('http://www.tnms.tv/rating/default.asp'))
-        station = page.css('tr.margin2')[0].css('td')[2].text
-        title = page.css('tr.margin2')[0].css('td')[1].text[0...-3]
-        m.reply "TNmS Rank 1: #{station} - #{title}"
+        with_num(m, '.', 'tnms', 1)
       end
 
       def with_num(m, prefix, tnms, num)
@@ -22,13 +19,14 @@ module Cinch
         return m.reply 'less than 21 bru' if num.to_i > 20
         rank = num.to_i - 1
         page = Nokogiri::HTML(open('http://www.tnms.tv/rating/default.asp'))
-        station = page.css('tr.margin2')[rank].css('td')[2].text
-        title = page.css('tr.margin2')[rank].css('td')[1].text[0...-3]
-        m.reply "TNmS Rank #{num}: #{station} - #{title}"
+        station = page.css('tr.margin2')[rank].css('td')[2].text.strip
+        title = page.css('tr.margin2')[rank].css('td')[1].text.strip
+        rating = page.css('tr.margin2')[rank].css('td')[3].text.gsub(/\A\p{Space}*/, '')
+        m.reply "TNmS Rank #{num}: #{station} - #{title}, Rating: #{rating}"
       end
 
       def help(m)
-        m.reply 'returns tv show at specified daily tnms rank'
+        m.reply 'returns tv show at specified daily TNmS rank'
       end
 
     end
