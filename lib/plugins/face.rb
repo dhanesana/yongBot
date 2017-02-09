@@ -9,6 +9,7 @@ module Cinch
       include Cinch::Plugin
 
       match /(face) (.+)/
+      match /(drop face)$/, method: :drop
       match /(face)$/, method: :random
       match /(face top)$/, method: :top
       match /(face high)$/, method: :top
@@ -23,6 +24,10 @@ module Cinch
       def initialize(*args)
         super
         @users = Hash.new
+        create_table
+      end
+
+      def create_table
         conn = PG::Connection.new(ENV['DATABASE_URL'])
         begin
           res = conn.exec_params("create table top (url varchar, score decimal);")
@@ -37,6 +42,10 @@ module Cinch
           puts '*' * 50
           puts "Table creation failed: #{pg_error.message}"
         end
+        scores_hash(conn)
+      end
+
+      def scores_hash(conn)
         top_urls = conn.exec("SELECT url FROM top;")
         top_scores = conn.exec("SELECT score FROM top;")
         low_urls = conn.exec("SELECT url FROM low;")
@@ -45,6 +54,18 @@ module Cinch
           top: [top_urls[0]['url'], top_scores[0]['score']],
           low: [low_urls[0]['url'], low_scores[0]['score']]
         }
+      end
+
+      def drop(m)
+        if m.is_admin?
+          conn = PG::Connection.new(ENV['DATABASE_URL'])
+          conn.exec("DROP TABLE top;")
+          conn.exec("DROP TABLE low;")
+          m.reply 'donezo'
+          create_table
+        else
+          return m.reply "https://youtu.be/OBWpzvJGTz4"
+        end
       end
 
       def top(m)
@@ -139,6 +160,7 @@ module Cinch
         conn.exec(
           "UPDATE #{table} SET url = '#{conn.escape(link)}' WHERE url = '#{@scores[table.to_sym][0]}';"
         )
+        scores_hash(conn)
         m.reply "ding ding ding new #{table} score"
       end
 
