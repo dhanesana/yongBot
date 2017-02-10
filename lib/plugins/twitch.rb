@@ -55,7 +55,7 @@ module Cinch
         end
         banned_users = conn.exec("SELECT * FROM twitchbanned;")
         @banned = []
-        twitch_streamers.each do |row|
+        banned_users.each do |row|
           @banned << row['prefix'].downcase
         end
       end
@@ -81,7 +81,7 @@ module Cinch
         end
         banned_users = conn.exec("SELECT * FROM twitchbanned;")
         @banned = []
-        twitch_streamers.each do |row|
+        banned_users.each do |row|
           @banned << row['prefix'].downcase
         end
       end
