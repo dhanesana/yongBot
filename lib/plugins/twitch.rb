@@ -79,6 +79,11 @@ module Cinch
           conn.exec("INSERT INTO twitchbanned (prefix) VALUES ('#{conn.escape_string(user_prefix)}');")
           return User(m.user.nick).notice("#{conn.escape_string(user_prefix)} is banned from adding gn urls")
         end
+        banned_users = conn.exec("SELECT * FROM twitchbanned;")
+        @banned = []
+        twitch_streamers.each do |row|
+          @banned << row['prefix'].downcase
+        end
       end
 
       def ban_list(m)
