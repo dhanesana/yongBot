@@ -131,6 +131,11 @@ module Cinch
 
       def del_streamer_db(m, conn, streamer)
         conn.exec("DELETE FROM twitch WHERE streamer='#{conn.escape(streamer)}';")
+        twitch_streamers = conn.exec("SELECT * FROM twitch;")
+        @streamers = []
+        twitch_streamers.each do |row|
+          @streamers << row['streamer'].downcase
+        end
         m.reply "#{streamer} is removed from database"
       end
 
