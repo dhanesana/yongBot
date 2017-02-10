@@ -206,6 +206,7 @@ module Cinch
       end
 
       def check_user(m, prefix, check_user, user)
+        return if user == 'list'
         return m.reply 'registered users only bru' if m.user.host.include? 'Snoonet'
         return m.reply @unauthorized if @banned.include? m.user.host
         query = user.split(/[[:space:]]/).join(' ')
