@@ -11,10 +11,11 @@ module Cinch
       timer 120, method: :check_live
       match /(twitch)$/
       match /(twitch) (.+)/, method: :check_user
-      match /(twitchban) (.+)/, method: :ban_unban
-      match /(twitchban) (list)$/, method: :ban_list
+      match /(twitch) (list)$/, method: :list
       match /(addtwitch) (.+)/, method: :add_streamer
       match /(deltwitch) (.+)/, method: :del_streamer
+      match /(twitchban) (.+)/, method: :ban_unban
+      match /(twitchban) (list)$/, method: :ban_list
       match /(help twitch)$/, method: :help
 
       def initialize(*args)
@@ -105,7 +106,7 @@ module Cinch
       end
 
       def add_streamer(m, prefix, addtwitch, streamer)
-        return m.reply @unauthorized if m.user.host.include? 'Snoonet'
+        return m.reply 'registered users only bru' if m.user.host.include? 'Snoonet'
         return m.reply @unauthorized if @banned.include? m.user.host
         return m.reply "#{streamer} already in db" if @streamers.include? streamer
         conn = PG::Connection.new(ENV['DATABASE_URL'])
@@ -119,7 +120,7 @@ module Cinch
       end
 
       def del_streamer(m, prefix, deltwitch, streamer)
-        return m.reply @unauthorized if m.user.host.include? 'Snoonet'
+        return m.reply 'registered users only bru' if m.user.host.include? 'Snoonet'
         conn = PG::Connection.new(ENV['DATABASE_URL'])
         search = conn.exec("SELECT * FROM twitch WHERE streamer='#{conn.escape(streamer)}';")
         return m.reply "streamer doesn't exist in database bru" if search.ntuples < 1
@@ -137,6 +138,30 @@ module Cinch
           @streamers << row['streamer'].downcase
         end
         m.reply "#{streamer} is removed from database"
+      end
+
+      def list(m)
+        return m.reply 'registered users only bru' if m.user.host.include? 'Snoonet'
+        return m.reply @unauthorized if @banned.include? m.user.host
+        conn = PG::Connection.new(ENV['DATABASE_URL'])
+        pastebin = Pastebin::Client.new(ENV['PASTEBIN_KEY'])
+        string = ""
+        if m.is_admin?
+          get_all = conn.exec("SELECT * FROM twitch ORDER BY prefix DESC;")
+          get_all.each do |x|
+            string += "'#{x['prefix']}' => 'https://www.twitch.tv/#{x['streamer']}'"
+            string += "\n"
+          end
+        else
+          get_all = conn.exec("SELECT * FROM twitch;")
+          get_all.each do |x|
+            string += "https://www.twitch.tv/#{x['streamer']}"
+            string += "\n"
+          end
+        end
+        # Unlisted paste titled '.gn list' expires in 10 minutes
+        m.user.msg(pastebin.newpaste(string, api_paste_name: '.twitch list', api_paste_private: 1, api_paste_expire_date: '10M'))
+        m.reply "check ur pms for list of saved twitch users"
       end
 
       def execute(m)
@@ -181,6 +206,8 @@ module Cinch
       end
 
       def check_user(m, prefix, check_user, user)
+        return m.reply 'registered users only bru' if m.user.host.include? 'Snoonet'
+        return m.reply @unauthorized if @banned.include? m.user.host
         query = user.split(/[[:space:]]/).join(' ')
         user_get = Unirest.get "https://api.twitch.tv/kraken/streams/#{URI.encode(query)}",
           headers: { "Accept" => "application/json" },
