@@ -62,7 +62,6 @@ Create a .env file within the root directory, and populate with the following va
 | TUMBLR_KEY         | [Tumblr API Key](https://www.tumblr.com/docs/en/api/v2)
 | TWITCH_ID          | [Register](https://www.twitch.tv/settings/connections)  for Twitch Client-ID
 | TWITCH_CHANNELS    | *IRC #Channels for Twitch and Beam plugin announcements (with hash, comma-seperated, no spaces)*
-| TWITCH_USERS       | [Twitch.tv](http://www.twitch.tv/) Users (comma-seperated, no spaces)
 | VIKI               | [Viki AppID](http://dev.viki.com/)
 | WA_ID              | [Wolfram Alpha AppID](http://products.wolframalpha.com/api/)
 | WEATHER_KEY        | [OpenWeatherMap API Key](http://openweathermap.org/appid#get)
