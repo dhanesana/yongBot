@@ -21,7 +21,6 @@ module Cinch
         Timer(180, options = { shots: 1 }) do |x|
           @bot.nick = ENV['NICKS'].split(',').first
         end
-        @unauthorized = "https://youtu.be/OBWpzvJGTz4"
       end
 
       def thyme(m)
@@ -30,22 +29,22 @@ module Cinch
 
       def join(m, prefix, join, channel)
         return @bot.join(channel) if m.is_admin?
-        m.reply @unauthorized
+        m.is_unauthorized
       end
 
       def part(m)
         return @bot.part(m.channel.name) if m.is_admin?
-        m.reply @unauthorized
+        m.is_unauthorized
       end
 
       def part_specified(m, prefix, part, channel)
         return @bot.part(channel) if m.is_admin?
-        m.reply @unauthorized
+        m.is_unauthorized
       end
 
       def set_nick(m, prefix, setnick, new_nick)
         return @bot.nick = new_nick if m.is_admin?
-        m.reply @unauthorized
+        m.is_unauthorized
       end
 
       def ping(m)
@@ -95,13 +94,13 @@ module Cinch
           return Channel(channel).send sentence if channels.include? channel
           m.reply 'no external msgs bru'
         else
-          m.reply @unauthorized
+          m.is_unauthorized
         end
       end
 
       def notice(m)
         return User(m.user.nick).notice('I NOTICE U') if m.is_admin?
-        m.reply @unauthorized
+        m.is_unauthorized
       end
 
       def notice_nick(m, prefix, notice, nick_msg)
@@ -111,7 +110,7 @@ module Cinch
           msg = 'I NOTICE U' if nick_msg.split(' ').size == 1
           User(nick).notice(msg)
         else
-          m.reply @unauthorized
+          m.is_unauthorized
         end
       end
 

@@ -12,5 +12,9 @@ module Cinch
       ops.include? self.user.host
     end
 
+    def is_unauthorized
+      self.reply "https://youtu.be/OBWpzvJGTz4"
+    end
+
   end
 end

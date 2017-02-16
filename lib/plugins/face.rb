@@ -64,7 +64,7 @@ module Cinch
           m.reply 'donezo'
           create_table
         else
-          return m.reply "https://youtu.be/OBWpzvJGTz4"
+          return m.is_unauthorized
         end
       end
 

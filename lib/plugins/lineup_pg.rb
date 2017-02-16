@@ -28,7 +28,6 @@ module Cinch
         lineup_db = conn.exec("SELECT current FROM lineup")
         @lineup = "#{lineup_db[0]['current']}"
         # approved db
-        @unauthorized = "https://youtu.be/OBWpzvJGTz4"
         begin
           res = conn.exec_params("CREATE TABLE approved (username varchar);")
           conn.exec(
@@ -61,7 +60,7 @@ module Cinch
           msg = 'I NOTICE U' if nick_msg.split(' ').size == 1
           User(nick).notice(msg)
         else
-          m.reply @unauthorized
+          m.is_unauthorized
         end
       end
 
@@ -80,7 +79,7 @@ module Cinch
             m.reply "can't be blank bru"
           end
         else
-          m.reply @unauthorized
+          m.is_unauthorized
         end
       end
 
@@ -90,7 +89,7 @@ module Cinch
           notice_nick(m, '.', 'notice', message)
           m.reply "check ur notices bru"
         else
-          m.reply @unauthorized
+          m.is_unauthorized
         end
       end
 
@@ -105,7 +104,7 @@ module Cinch
           end
           m.reply "donezo"
         else
-          m.reply @unauthorized
+          m.is_unauthorized
         end
       end
 
@@ -120,7 +119,7 @@ module Cinch
           end
           m.reply "donezo"
         else
-          m.reply @unauthorized
+          m.is_unauthorized
         end
       end
 

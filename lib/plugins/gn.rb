@@ -83,7 +83,7 @@ module Cinch
         return del_url(m, conn, url) if m.is_admin?
         return del_url(m, conn, url) if m.is_op?
         return del_url(m, conn, url) if m.user.host == search.field_values('prefix').first
-        m.reply 'https://youtu.be/OBWpzvJGTz4'
+        m.is_unauthorized
       end
 
       def del_url(m, conn, url)
@@ -101,10 +101,10 @@ module Cinch
       def ban_unban(m, prefix, gnban, user_prefix)
         return if user_prefix == 'list'
         # can't ban $master
-        return m.reply "https://youtu.be/OBWpzvJGTz4" if user_prefix == $master
+        return m.is_unauthorized if user_prefix == $master
         return ban_toggle(m, user_prefix) if m.is_admin?
         return ban_toggle(m, user_prefix) if m.is_op?
-        m.reply 'https://youtu.be/OBWpzvJGTz4'
+        m.is_unauthorized
       end
 
       def ban_toggle(m, user_prefix)
@@ -130,7 +130,7 @@ module Cinch
             string += "\n"
           end
         else
-          m.reply 'https://youtu.be/OBWpzvJGTz4'
+          m.is_unauthorized
         end
         # Unlisted paste titled '.gnban list' expires in 10 minutes
         m.user.msg(pastebin.newpaste(string, api_paste_name: '.gnban list', api_paste_private: 1, api_paste_expire_date: '10M'))

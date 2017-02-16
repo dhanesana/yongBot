@@ -21,7 +21,6 @@ module Cinch
       def initialize(*args)
         super
         @online = []
-        @unauthorized = "https://youtu.be/OBWpzvJGTz4"
         conn = PG::Connection.new(ENV['DATABASE_URL'])
         banned_table(conn)
         create_table(conn)
@@ -64,10 +63,10 @@ module Cinch
       def ban_unban(m, prefix, gnban, user_prefix)
         return if user_prefix == 'list'
         # can't ban $master
-        return m.reply @unauthorized if user_prefix == $master
+        return m.is_unauthorized if user_prefix == $master
         return ban_toggle(m, user_prefix) if m.is_admin?
         return ban_toggle(m, user_prefix) if m.is_op?
-        m.reply @unauthorized
+        m.is_unauthorized
       end
 
       def ban_toggle(m, user_prefix)
@@ -98,7 +97,7 @@ module Cinch
             string += "\n"
           end
         else
-          m.reply @unauthorized
+          m.is_unauthorized
         end
         # Unlisted paste titled '.twitchban list' expires in 10 minutes
         m.user.msg(pastebin.newpaste(string, api_paste_name: '.twitchban list', api_paste_private: 1, api_paste_expire_date: '10M'))
@@ -107,7 +106,7 @@ module Cinch
 
       def add_streamer(m, prefix, addtwitch, streamer)
         return m.reply 'registered users only bru' if m.user.host.include? 'Snoonet'
-        return m.reply @unauthorized if @banned.include? m.user.host
+        return m.is_unauthorized if @banned.include? m.user.host
         return m.reply "#{streamer} already in db" if @streamers.include? streamer
         conn = PG::Connection.new(ENV['DATABASE_URL'])
         conn.exec("INSERT INTO twitch (prefix, streamer) VALUES ('#{m.user.host}', '#{conn.escape(streamer)}');")
@@ -127,7 +126,7 @@ module Cinch
         return del_streamer_db(m, conn, streamer) if m.is_admin?
         return del_streamer_db(m, conn, streamer) if m.is_op?
         return del_streamer_db(m, conn, streamer) if m.user.host == search.field_values('prefix').first
-        m.reply @unauthorized
+        m.isunauthorized
       end
 
       def del_streamer_db(m, conn, streamer)
@@ -142,7 +141,7 @@ module Cinch
 
       def list(m)
         return m.reply 'registered users only bru' if m.user.host.include? 'Snoonet'
-        return m.reply @unauthorized if @banned.include? m.user.host
+        return m.is_unauthorized if @banned.include? m.user.host
         conn = PG::Connection.new(ENV['DATABASE_URL'])
         pastebin = Pastebin::Client.new(ENV['PASTEBIN_KEY'])
         string = ""
@@ -208,7 +207,7 @@ module Cinch
       def check_user(m, prefix, check_user, user)
         return if user == 'list'
         return m.reply 'registered users only bru' if m.user.host.include? 'Snoonet'
-        return m.reply @unauthorized if @banned.include? m.user.host
+        return m.is_unauthorized if @banned.include? m.user.host
         query = user.split(/[[:space:]]/).join(' ')
         user_get = Unirest.get "https://api.twitch.tv/kraken/streams/#{URI.encode(query)}",
           headers: { "Accept" => "application/json" },
