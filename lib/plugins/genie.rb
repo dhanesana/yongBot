@@ -11,12 +11,7 @@ module Cinch
       match /(help genie)$/, method: :help
 
       def execute(m)
-        page = Nokogiri::HTML(open("http://www.genie.co.kr/chart/f_top_100.asp"))
-        title  = page.css('span.music_area a.title')[1].text
-        artist = page.css('span.music_area a.artist')[1].text
-        date   = page.css('div.chart-date input#curDateComma').first.values.last
-        hour   = page.css('div.chart-date input#strHH').first.values.last
-        m.reply "Genie Rank 1: #{artist} - #{title} | #{date} #{hour}:00KST"
+        with_num(m, '.', 'genie', 1)
       end
 
       def with_num(m, prefix, genie, num)

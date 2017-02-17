@@ -11,10 +11,7 @@ module Cinch
       match /(help naver)$/, method: :help
 
       def execute(m)
-        page = Nokogiri::HTML(open("http://www.naver.com/"))
-        text = page.css('ol#realrank li a')[0].children.first.text
-        url = page.css('ol#realrank a')[0].first.last
-        m.reply "Naver Trending [1]: #{text} #{url}"
+        with_num(m, '.', 'naver', 1)
       end
 
       def with_num(m, prefix, naver, num)

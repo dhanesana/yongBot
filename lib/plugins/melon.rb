@@ -8,16 +8,16 @@ module Cinch
       include Cinch::Plugin
 
       match /(melon)$/
-      match /(melon) (.+)/, method: :with_entry
+      match /(melon) (.+)/, method: :with_num
       match /(melon trend)$/, method: :trend
       match /(melon trend) (.+)/, method: :trend_num
       match /(help melon)$/, method: :help
 
       def execute(m)
-        with_entry(m, '.', 'melon', '1')
+        with_num(m, '.', 'melon', '1')
       end
 
-      def with_entry(m, prefix, melon, entry)
+      def with_num(m, prefix, melon, entry)
         return if entry.include? 'trend'
         return m.reply '1-100 only bru' if entry.to_i > 100
         return m.reply '1-100 only bru' if entry == '0'

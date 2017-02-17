@@ -10,20 +10,7 @@ module Cinch
       match /(help olleh)$/, method: :help
 
       def execute(m)
-        agent = Mechanize.new
-        referer_url = 'http://www.ollehmusic.com/'
-        page = agent.get(
-          "http://www.ollehmusic.com/Ranking/f_RealTimeRankingList.asp",
-          nil,
-          referer_url
-        )
-        num = 1
-        title  = page.parser.css('a.titletxt')[num].text
-        artist = page.parser.css('p.artist a')[num - 1].text
-        date   = page.parser.css('div.time_1').first.text
-        time   = page.parser.css('div.cur_time p.current').text
-        time.slice!(-1)
-        m.reply "Olleh Rank 1: #{artist} - #{title} | #{date} #{time}:00KST"
+        with_num(m, '.', 'olleh', 1)
       end
 
       def with_num(m, prefix, olleh, num)

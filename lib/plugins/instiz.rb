@@ -8,23 +8,16 @@ module Cinch
 
       match /(instiz)$/
       match /(ichart)$/
-      match /(instiz) (.+)/, method: :with_entry
-      match /(ichart) (.+)/, method: :with_entry
+      match /(instiz) (.+)/, method: :with_num
+      match /(ichart) (.+)/, method: :with_num
       match /(help instiz)$/, method: :help
       match /(help ichart)$/, method: :help
 
       def execute(m)
-        agent = Mechanize.new
-        referer_url = 'http://ichart.instiz.net/'
-        page = agent.get(
-            'http://www.instiz.net/iframe_ichart_score.htm',
-            nil, referer_url)
-        one_song = page.at('div.ichart_score_song1').text
-        one_artist = page.at('div.ichart_score_artist1').text
-        m.reply "iChart Rank 1: #{one_song} by #{one_artist}"
+        with_num(m, '.', 'instiz', 1)
       end
 
-      def with_entry(m, prefix, instiz, entry)
+      def with_num(m, prefix, instiz, entry)
         return m.reply '1-38 only bru' if entry.to_i > 38
         return m.reply '1-38 only bru' if entry == '0'
         return m.reply '1-38 only bru' if entry.to_i < 0

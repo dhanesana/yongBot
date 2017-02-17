@@ -11,13 +11,7 @@ module Cinch
       match /(help mwave)$/, method: :help
 
       def execute(m)
-        link = open("http://mwave.interest.me/mcountdown/vote/mcdChart.json").read
-        result = JSON.parse(link)
-        rank   = result['top3McountdownCharts'][0]['RANKING']
-        song   = result['top3McountdownCharts'][0]['SONG_NM']
-        artist = result['top3McountdownCharts'][0]['artistInfos'].first['ARTIST_NM']
-        date   = result['mcountdownChartPrevNextDate']['votePeriod']
-        m.reply "Mwave Rank #{rank}: #{artist} - #{song} | #{date}"
+        with_num(m, '.', 'mwave', 1)
       end
 
       def with_num(m, prefix, mwave, num)

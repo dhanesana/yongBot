@@ -11,11 +11,7 @@ module Cinch
       match /(help gaon)$/, method: :help
 
       def execute(m)
-        page = Nokogiri::HTML(open('http://gaonchart.co.kr/main/section/chart/online.gaon?nationGbn=T&serviceGbn=ALL'))
-        title = page.css('td.subject')[0].css('p').first.text
-        artist = page.css('td.subject')[0].css('p')[1].text
-        artist = artist.slice(0..(artist.index('|') - 1))
-        m.reply "Gaon Rank 1: #{title} by #{artist}"
+        with_num(m, '.', 'gaon', 1)
       end
 
       def with_num(m, prefix, gaon, num)
