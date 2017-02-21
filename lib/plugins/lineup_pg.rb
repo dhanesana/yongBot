@@ -73,7 +73,7 @@ module Cinch
               "update lineup set current = '#{conn.escape_string(new_lineup)}' where current = '#{conn.escape_string(lineup_db[0]['current'])}';"
             )
             get_lineup = conn.exec("SELECT current FROM lineup;")
-            @lineup = "#{get_lineup[0]['current']};"
+            @lineup = "#{get_lineup[0]['current']}"
             m.reply "donezo"
           else
             m.reply "can't be blank bru"
