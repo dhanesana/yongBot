@@ -29,7 +29,6 @@ yong_bot = Cinch::Bot.new do
       Cinch::Plugins::Yongpop,
       Cinch::Plugins::Omg,
       Cinch::Plugins::Lovelyz,
-      Cinch::Plugins::Ig,
       Cinch::Plugins::Kmodel,
       Cinch::Plugins::Sub,
       Cinch::Plugins::Tumblr,

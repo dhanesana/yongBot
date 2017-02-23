@@ -19,7 +19,6 @@ module Cinch
           ".yongpop",
           ".omg",
           ".lovelyz",
-          ".ig [tag]",
           ".kmodel",
           ".sub [subreddit]",
           ".tumblr [user]",
