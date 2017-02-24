@@ -15,15 +15,15 @@ module Cinch
         get_userpost(m, '.', 'ig', query)
       end
 
-      def get_post(m, prefix, ig, hashtag)
-        nodes = RubyInstagramScraper.get_tag_media_nodes(hashtag)
+      def get_post(m, prefix, ig, tag)
+        nodes = RubyInstagramScraper.get_tag_media_nodes(URI.encode(tag))
         return m.reply 'no posts found bru' if nodes == []
         m.reply "https://www.instagram.com/p/#{nodes.first['code']}/"
       end
 
-      def get_userpost(m, prefix, ig, user)
+      def get_userpost(m, prefix, ig, usr)
         begin
-          nodes = RubyInstagramScraper.get_user_media_nodes(user)
+          nodes = RubyInstagramScraper.get_user_media_nodes(URI.encode(usr))
           return m.reply 'no posts found bru' if nodes == []
           m.reply "https://www.instagram.com/p/#{nodes.first['code']}/"
         rescue
