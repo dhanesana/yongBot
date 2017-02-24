@@ -2,18 +2,18 @@ GEM
   remote: https://rubygems.org/
   specs:
     addressable (2.3.8)
-    cinch (2.3.1)
+    cinch (2.3.3)
     cinch-identify (1.7.0)
       cinch (~> 2.0)
-    domain_name (0.5.20160310)
+    domain_name (0.5.20170223)
       unf (>= 0.0.5, < 1.0.0)
     dotenv-heroku (0.0.1)
       rake
-    excon (0.48.0)
+    excon (0.55.0)
     fuzzy_match (2.1.0)
     genius (0.1.1)
       httparty (~> 0.11.0)
-    hashie (2.1.2)
+    hashie (3.5.4)
     heroku-api (0.4.2)
       excon (~> 0.45)
       multi_json (~> 1.8)
@@ -21,39 +21,40 @@ GEM
       httparty (>= 0.7.3)
       mimemagic
       multipart-post
-    http-cookie (1.0.2)
+    http-cookie (1.0.3)
       domain_name (~> 0.5)
     httparty (0.11.0)
       multi_json (~> 1.0)
       multi_xml (>= 0.5.2)
-    json (2.0.2)
-    mechanize (2.7.4)
+    json (1.8.6)
+    mechanize (2.7.5)
       domain_name (~> 0.5, >= 0.5.1)
       http-cookie (~> 1.0)
-      mime-types (>= 1.17.2, < 3)
+      mime-types (>= 1.17.2)
       net-http-digest_auth (~> 1.1, >= 1.1.1)
       net-http-persistent (~> 2.5, >= 2.5.2)
       nokogiri (~> 1.6)
       ntlm-http (~> 0.1, >= 0.1.1)
       webrobots (>= 0.0.9, < 0.2)
     mime-types (1.25.1)
-    mimemagic (0.3.1)
-    mini_portile2 (2.0.0)
-    multi_json (1.11.2)
-    multi_xml (0.5.5)
+    mimemagic (0.3.2)
+    mini_portile2 (2.1.0)
+    multi_json (1.12.1)
+    multi_xml (0.6.0)
     multipart-post (2.0.0)
-    net-http-digest_auth (1.4)
+    net-http-digest_auth (1.4.1)
     net-http-persistent (2.9.4)
-    nokogiri (1.6.7.2)
-      mini_portile2 (~> 2.0.0.rc2)
+    nokogiri (1.7.0.1)
+      mini_portile2 (~> 2.1.0)
     ntlm-http (0.1.1)
     pastebin-api (1.0.5)
-    pg (0.18.4)
-    rake (11.1.1)
+    pg (0.19.0)
+    rake (12.0.0)
     rest-client (1.6.9)
       mime-types (~> 1.16)
-    soundcloud (0.3.2)
-      hashie (~> 2.0)
+    ruby-instagram-scraper (0.1.7)
+    soundcloud (0.3.4)
+      hashie
       httmultiparty (~> 0.3.0)
     unf (0.1.4)
       unf_ext
@@ -83,6 +84,7 @@ DEPENDENCIES
   nokogiri
   pastebin-api
   pg
+  ruby-instagram-scraper
   soundcloud
   unidecoder
   unirest
@@ -92,4 +94,4 @@ RUBY VERSION
    ruby 2.4.0p0
 
 BUNDLED WITH
-   1.13.2
+   1.13.7
