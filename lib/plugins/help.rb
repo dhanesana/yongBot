@@ -91,7 +91,8 @@ module Cinch
           ".vapp",
           ".kcon [city]",
           ".beam [user]",
-          ".ow [user] [country_abbrev]"
+          ".ow [user] [country_abbrev]",
+          ".ig [user or #hashtag]"
         ]
       end
 
