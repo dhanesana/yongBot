@@ -15,6 +15,7 @@ gem 'unidecoder'
 gem 'wolfram-alpha'
 gem 'fuzzy_match'
 gem 'pastebin-api'
+gem 'ruby-instagram-scraper'
 
 gem 'pg'
 gem 'heroku-api'
