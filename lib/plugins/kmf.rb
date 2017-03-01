@@ -9,8 +9,11 @@ module Cinch
       include Cinch::Plugin
 
       match /(kmf)$/
+      match /(ktmf)$/
       match /(kmf) (.+)/, method: :with_sect
+      match /(ktmf) (.+)/, method: :with_sect
       match /(help kmf)$/, method: :help
+      match /(help ktmf)$/, method: :help
 
       def execute(m)
         page = Nokogiri::HTML(open('http://ktmf.koreatimes.com/?page_id=867'))
