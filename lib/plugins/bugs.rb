@@ -19,9 +19,8 @@ module Cinch
         return m.reply 'less than 11 bru' if num.to_i > 10
         page = Nokogiri::HTML(open("http://www.bugs.co.kr/"))
         date_time = page.css('time').first.text + "KST"
-        num = 1
-        title = page.css('div.chartContainer p.title')[num - 1].text.strip
-        artist = page.css('div.chartContainer p.artist')[num - 1].text.strip
+        title = page.css('div.chartContainer p.title')[num.to_i - 1].text.strip
+        artist = page.css('div.chartContainer p.artist')[num.to_i - 1].text.strip
         m.reply "Bugs Rank #{num}: #{artist} - #{title} | #{date_time}"
       end
 
