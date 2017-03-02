@@ -92,7 +92,8 @@ module Cinch
           ".kcon [city]",
           ".beam [user]",
           ".ow [user] [country_abbrev]",
-          ".ig [user or #hashtag]"
+          ".ig [user or #hashtag]",
+          ".bugs [num]"
         ]
       end
 
