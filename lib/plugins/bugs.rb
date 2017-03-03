@@ -16,16 +16,17 @@ module Cinch
 
       def with_num(m, prefix, bugs, num)
         return m.reply 'invalid num bru' if num.to_i < 1
-        return m.reply 'less than 11 bru' if num.to_i > 10
-        page = Nokogiri::HTML(open("http://www.bugs.co.kr/"))
-        date_time = page.css('time').first.text + "KST"
-        title = page.css('div.chartContainer p.title')[num.to_i - 1].text.strip
-        artist = page.css('div.chartContainer p.artist')[num.to_i - 1].text.strip
-        m.reply "Bugs Rank #{num}: #{artist} - #{title} | #{date_time}"
+        return m.reply 'less than 11 bru' if num.to_i > 100
+        page = Nokogiri::HTML(open("http://music.bugs.co.kr/chart/track/realtime/total"))
+        date = page.css('time').first.children.first.text.strip
+        time = page.css('time em').first.text
+        title = page.css('div#CHARTrealtime p.title')[num.to_i - 1].text.strip
+        artist = page.css('div#CHARTrealtime p.artist')[num.to_i - 1].text.strip
+        m.reply "Bugs Rank #{num}: #{artist} - #{title} | #{date} #{time}KST"
       end
 
       def help(m)
-        m.reply 'returns current song at specified bugs rank'
+        m.reply 'returns current song at specified bugs realtime rank'
       end
 
     end
