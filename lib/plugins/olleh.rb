@@ -16,12 +16,16 @@ module Cinch
 
       def with_num(m, prefix, olleh, num)
         return m.reply 'invalid num bru' if num.to_i < 1
-        return m.reply 'less than 11 bru' if num.to_i > 50
-        page = Nokogiri::HTML(open("https://www.ollehmusic.com/Ranking/f_RealTimeRankingList.asp"))
+        return m.reply 'less than 101 bru' if num.to_i > 100
+        chart_url = "https://www.ollehmusic.com/Ranking/f_RealTimeRankingList.asp"
+        chart_url += "?pageno=2" if num.to_i > 50
+        subtrahend = 1
+        subtrahend += 50 if num.to_i > 50
+        page = Nokogiri::HTML(open(chart_url))
         date = page.css('div.cur_date div.time_1').first.text.strip
         time = page.css('div.cur_time').first.text.strip
-        artist = page.css('table.realtimechart p.artist a')[num - 1].text
-        title = page.css('table.realtimechart p.title a.titletxt')[num - 1].text
+        artist = page.css('table.realtimechart p.artist a')[num - subtrahend].text
+        title = page.css('table.realtimechart p.title a.titletxt')[num - subtrahend].text
         m.reply "Olleh Rank #{num}: #{artist} - #{title} | #{date} #{time}KST"
       end
 
