@@ -1,4 +1,3 @@
-require 'nokogiri'
 require 'unirest'
 
 module Cinch
