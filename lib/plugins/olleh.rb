@@ -24,8 +24,8 @@ module Cinch
         page = Nokogiri::HTML(open(chart_url))
         date = page.css('div.cur_date div.time_1').first.text.strip
         time = page.css('div.cur_time').first.text.strip
-        artist = page.css('table.realtimechart p.artist a')[num - subtrahend].text
-        title = page.css('table.realtimechart p.title a.titletxt')[num - subtrahend].text
+        artist = page.css('table.realtimechart p.artist a')[num.to_i - subtrahend].text
+        title = page.css('table.realtimechart p.title a.titletxt')[num.to_i - subtrahend].text
         m.reply "Olleh Rank #{num}: #{artist} - #{title} | #{date} #{time}KST"
       end
 
