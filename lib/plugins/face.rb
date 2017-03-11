@@ -131,6 +131,7 @@ module Cinch
       def get_scores(m, link)
         url = URI.encode(link)
         response = Unirest.post "http://rekognition.com/func/api/?api_key=#{ENV['REKOGNITION_KEY']}&api_secret=#{ENV['REKOGNITION_SECRET']}&jobs=face_aggressive_part_gender_age_emotion_beauty_race_recognize&urls=#{url}"
+        return m.reply "Status Code: #{response.code}" if response.code != 200
         return m.reply 'no face detected bru' if response.body['face_detection'] == []
         race = ''
         response.body['face_detection'].first['race'].each_key { |key| race += key }
