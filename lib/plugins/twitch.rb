@@ -74,10 +74,10 @@ module Cinch
         search = conn.exec("SELECT * FROM twitchbanned WHERE prefix='#{conn.escape_string(user_prefix)}';")
         if search.ntuples > 0
           conn.exec("DELETE FROM twitchbanned WHERE prefix='#{conn.escape_string(user_prefix)}';")
-          return User(m.user.nick).notice("#{conn.escape_string(user_prefix)} is UNbanned from adding gn urls")
+          return User(m.user.nick).notice("#{conn.escape_string(user_prefix)} is UNbanned from adding twitch users")
         else
           conn.exec("INSERT INTO twitchbanned (prefix) VALUES ('#{conn.escape_string(user_prefix)}');")
-          return User(m.user.nick).notice("#{conn.escape_string(user_prefix)} is banned from adding gn urls")
+          return User(m.user.nick).notice("#{conn.escape_string(user_prefix)} is banned from adding twitch users")
         end
         banned_users = conn.exec("SELECT * FROM twitchbanned;")
         @banned = []
