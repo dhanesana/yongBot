@@ -224,6 +224,7 @@ module Cinch
 
       def help(m)
         m.reply "checks every 5 minutes if specified twitch broadcasts are live."
+        m.reply "type .addtwitch [user] to add and .deltwitch [user] to delete from twitch db"
         m.reply "type .twitch [user] to check status of specific twitch user"
       end
 

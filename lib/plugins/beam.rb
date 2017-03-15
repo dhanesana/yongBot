@@ -215,6 +215,7 @@ module Cinch
 
       def help(m)
         m.reply "checks every 5 minutes if specified beam broadcasts are live."
+        m.reply "type .addbeam [user] to add and .delbeam [user] to delete from beam db"
         m.reply "type .beam [user] to check status of specific beam user"
       end
 
