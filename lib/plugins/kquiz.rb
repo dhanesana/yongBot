@@ -27,7 +27,7 @@ module Cinch
           word_count = noun_get.css('span.crux').size - 1
           eng_word = URI.encode(noun_get.css('span.crux')[rand(0..word_count)].text)
           response = Unirest.get("https://www.googleapis.com/language/translate/v2?key=#{ENV['GOOGLE']}&q=#{eng_word}&target=ko")
-          kor_word = response.body['data']['translations'].first['translatedText']
+          kor_word = response.body['data']['translations'].first['translatedText'].strip
           @all_games[channel] = [eng_word, kor_word]
           m.reply "30 seconds to guess! Word is #{kor_word}!"
           game_start(m, kor_word)
@@ -53,14 +53,14 @@ module Cinch
       def guess(m)
         channel = m.channel.name
         words_only = m.message.gsub(/[^0-9a-z ]/i, '')
-        user_guess = words_only.split(/[[:space:]]/).join(' ')
+        user_guess = words_only.split(/[[:space:]]/).join(' ').strip
         if @all_games.keys.include? channel
           if @all_games[channel][@eng].downcase == user_guess.downcase
             m.reply "ding ding ding! word is '#{@all_games[channel][@eng]}'. good job #{m.user.nick}"
             @all_games.delete(channel)
           else
             response = Unirest.get("https://www.googleapis.com/language/translate/v2?key=#{ENV['GOOGLE']}&q=#{URI.encode(user_guess)}&target=ko")
-            kor_word = response.body['data']['translations'].first['translatedText']
+            kor_word = response.body['data']['translations'].first['translatedText'].strip
             if kor_word == @all_games[channel][@kor]
               return m.reply "yes... but '#{user_guess}' isn't quite the word i'm looking for"
             end
