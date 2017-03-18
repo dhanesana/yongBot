@@ -44,7 +44,7 @@ module Cinch
         user_address = m.user.host
         channel = m.channel.name
         choice_array = choice.split(/[[:space:]]/)
-        selection = choice_array.join(' ').downcase
+        selection = choice_array.join(' ').downcase.strip
         if @all_games.keys.include? channel
           game = @all_games[channel]
           game.values.each { |v| return m.reply "u alrdy voted #{m.user.nick.downcase}!" if v.include? user_address }
