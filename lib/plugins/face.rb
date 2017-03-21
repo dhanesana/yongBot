@@ -77,6 +77,10 @@ module Cinch
       end
 
       def execute(m, prefix, face, url)
+        return if url == 'top'
+        return if url == 'high'
+        return if url == 'bottom'
+        return if url == 'low'
         link = URI.encode(url)
         return get_scores(m, link) if m.is_admin?
         if @users.keys.include? m.user.host
