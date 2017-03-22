@@ -13,14 +13,7 @@ module Cinch
         url = URI.encode(link)
         response = Unirest.get("https://apius.faceplusplus.com/v2/detection/detect?url=#{url}&api_secret=#{ENV['FACEPLUS_SECRET']}&api_key=#{ENV['FACEPLUS_KEY']}&attribute=glass,gender,age,race,smiling")
         # Error Code Handling
-        return m.reply '432: image failed to download bru' if response.code == 432
-        return m.reply '433: image file too large bru' if response.code == 433
-        return m.reply '434: image error bru' if response.code == 434
-        return m.reply '403: quota exceeded bru' if response.code == 403
-        return m.reply '500: error but not ur fault bru' if response.code == 500
-        return m.reply '403: auth error bru' if response.code == 403
-        return m.reply '502: server too busy bru' if response.code == 502
-        return m.reply 'no face detected bru' if response.body['face'] == []
+        return m.reply "Status Code: #{response.code}" if response.code != 200
         age = response.body['face'].first['attribute']['age']['value']
         range = response.body['face'].first['attribute']['age']['range']
         gender = response.body['face'].first['attribute']['gender']['value']
@@ -47,12 +40,7 @@ module Cinch
         url = URI.encode(link)
         response = Unirest.get("https://apius.faceplusplus.com/v2/detection/detect?url=#{url}&api_secret=#{ENV['FACEPLUS_SECRET']}&api_key=#{ENV['FACEPLUS_KEY']}&attribute=glass,gender,age,race,smiling")
         # Error Code Handling
-        return m.reply '432: image failed to download bru' if response.code == 432
-        return m.reply '433: image file too large bru' if response.code == 433
-        return m.reply '434: image error bru' if response.code == 434
-        return m.reply '403: quota exceeded bru' if response.code == 403
-        return m.reply '500: error but not ur fault bru' if response.code == 500
-        return m.reply '403: auth error bru' if response.code == 403
+        return m.reply "Status Code: #{response.code}" if response.code != 200
         age = response.body['face'].first['attribute']['age']['value']
         range = response.body['face'].first['attribute']['age']['range']
         gender = response.body['face'].first['attribute']['gender']['value']
