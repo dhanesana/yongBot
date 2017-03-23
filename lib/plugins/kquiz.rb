@@ -23,9 +23,8 @@ module Cinch
         if @all_games.keys.include? channel
           m.reply "There's already a game for word: #{@all_games[channel][@kor]}"
         else
-          noun_get = Nokogiri::HTML(open("https://www.randomlists.com/nouns"))
-          word_count = noun_get.css('span.crux').size - 1
-          eng_word = URI.encode(noun_get.css('span.crux')[rand(0..word_count)].text)
+          noun_get = Nokogiri::HTML(open("http://www.desiquintans.com/noungenerator?count=1"))
+          eng_word = noun_get.css('li').text.strip
           response = Unirest.get("https://www.googleapis.com/language/translate/v2?key=#{ENV['GOOGLE']}&q=#{eng_word}&target=ko")
           kor_word = response.body['data']['translations'].first['translatedText'].strip
           @all_games[channel] = [eng_word, kor_word]
@@ -69,7 +68,7 @@ module Cinch
       end
 
       def help(m)
-        m.reply 'quizzes u on a korean noun. if u cheat, ur cheating urself bru'
+        m.reply 'quizzes u on a korean noun. if u cheat, ur cheating urself'
       end
 
     end
