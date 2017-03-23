@@ -9,7 +9,7 @@ module Cinch
       match /(faceplus)$/, method: :random
       match /(help faceplus)$/, method: :help
 
-      def execute(m, prefix, face, link)
+      def execute(m, prefix, faceplus, link)
         url = URI.encode(link)
         response = Unirest.get("https://apius.faceplusplus.com/v2/detection/detect?url=#{url}&api_secret=#{ENV['FACEPLUS_SECRET']}&api_key=#{ENV['FACEPLUS_KEY']}&attribute=glass,gender,age,race,smiling")
         # Error Code Handling
@@ -37,18 +37,7 @@ module Cinch
         posts.delete_if { |post| post.include? 'gif' }
         link = posts.sample
         m.reply "r/kpics #{link}"
-        url = URI.encode(link)
-        response = Unirest.get("https://apius.faceplusplus.com/v2/detection/detect?url=#{url}&api_secret=#{ENV['FACEPLUS_SECRET']}&api_key=#{ENV['FACEPLUS_KEY']}&attribute=glass,gender,age,race,smiling")
-        # Error Code Handling
-        return m.reply "Status Code: #{response.code}" if response.code != 200
-        age = response.body['face'].first['attribute']['age']['value']
-        range = response.body['face'].first['attribute']['age']['range']
-        gender = response.body['face'].first['attribute']['gender']['value']
-        race = response.body['face'].first['attribute']['race']['value']
-        smiling_percent = response.body['face'].first['attribute']['smiling']['value'].round(2)
-        glasses = response.body['face'].first['attribute']['glass']['value']
-        glasses = "Sunglasses" if response.body['face'].first['attribute']['glass']['value'] == "Dark"
-        m.reply "#{race} #{gender} | Age: #{age} ± #{range} | #{smiling_percent}% Smiling | Glasses: #{glasses}"
+        execute(m, '.', 'faceplus', link)
       end
 
       def help(m)
