@@ -8,6 +8,7 @@ module Cinch
       include Cinch::Plugin
 
       match /(kquiz)$/
+      match /(kquiz) (.+)/, method: :with_num
       listen_to :channel, :method => :guess
       match /(help kquiz)$/, method: :help
 
@@ -19,6 +20,13 @@ module Cinch
       end
 
       def execute(m)
+        with_num(m, '.', 'with_num', 30)
+      end
+
+      def with_num(m, prefix, with_num, num)
+        return m.reply 'invalid num bru' if num.to_i < 1
+        return m.reply 'less than 120 sec bru' if num.to_i > 120
+        return m.reply 'at least 30 sec bru' if num.to_i < 30
         channel = m.channel.name
         if @all_games.keys.include? channel
           m.reply "There's already a game for word: #{@all_games[channel][@kor]}"
@@ -28,16 +36,18 @@ module Cinch
           response = Unirest.get("https://www.googleapis.com/language/translate/v2?key=#{ENV['GOOGLE']}&q=#{eng_word}&target=ko")
           kor_word = response.body['data']['translations'].first['translatedText'].strip
           @all_games[channel] = [eng_word, kor_word]
-          m.reply "30 seconds to guess! Word is #{kor_word}!"
-          game_start(m, kor_word)
+          m.reply "#{num.to_i} seconds to guess! Word is #{kor_word}!"
+          game_start(m, kor_word, num.to_i)
         end
       end
 
-      def game_start(m, kor_word)
-        Timer(15, options = { shots: 1 }) do |x|
-          m.reply '15 seconds remaining!' if @all_games[channel][@kor] == kor_word
+      def game_start(m, kor_word, num)
+        if num.to_i > 20
+          Timer(15, options = { shots: 1 }) do |x|
+            m.reply '15 seconds remaining!' if @all_games[channel][@kor] == kor_word
+          end
         end
-        Timer(30, options = { shots: 1 }) do |x|
+        Timer(num.to_i, options = { shots: 1 }) do |x|
           channel = m.channel.name
           # if @all_games.keys.include? channel
           if @all_games[channel][@kor] == kor_word
