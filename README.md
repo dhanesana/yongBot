@@ -21,7 +21,7 @@ yongBot has numerous gem and API dependencies. API keys must be obtained externa
 
 #### Configuration
 
-Create a .env file within the root directory, and populate with the following variables and values ([syntax](https://github.com/bkeepers/dotenv)):
+Create a .env file within the yongBot directory, and populate with the following variables and values ([syntax](https://github.com/bkeepers/dotenv)):
 
 **_Note: Review the terms and conditions of each API before registering._**
 
@@ -71,7 +71,7 @@ Usage
 
 ### Deploying to [Heroku](https://www.heroku.com/)
 
-Run the following commands from within the root directory to create your Heroku app:
+Run the following commands from within the yongBot directory to create your Heroku app:
 
 ```
 $ heroku create [App Name]
