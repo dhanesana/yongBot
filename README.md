@@ -127,12 +127,14 @@ For more information on specific commands, enter the following IRC messsage:
 
 The following commands may only be used by the *MASTER* user:
 
-| Master Command        | Description
-| --------------        |:-----------:
+| Master Command         | Description
+| --------------         |:-----------:
 | .join [#channel]       | Bot joins specified #channel
 | .part [#channel]       | Bot leaves specified #channel
-| .setnick [nickname]   | Updates bot nickname
-| .ping                 | Replies with the nick of every user in #channel
+| .setnick [nickname]    | Updates bot nickname
+| .ping                  | Replies with the nick of every user in #channel
 | .echo [#channel] [msg] | Outputs a message to specified #channel
-| .notice               | Replies via notice
-| .notice [nick] [msg]  | Sends a notice to specified user
+| .notice                | Replies via notice
+| .notice [nick] [msg]   | Sends a notice to specified user
+| .twitchban [prefix]    | Toggles ban of specified user prefix (Twitch)
+| .beamban [prefix]      | Toggles ban of specified user prefix (Beam)
