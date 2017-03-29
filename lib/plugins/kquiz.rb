@@ -62,18 +62,29 @@ module Cinch
       def guess(m)
         channel = m.channel.name
         words_only = m.message.gsub(/[^0-9a-z ]/i, '')
+        guess_words = []
         user_guess = words_only.split(/[[:space:]]/).join(' ').strip
-        if @all_games.keys.include? channel
-          if @all_games[channel][@eng].downcase == user_guess.downcase
-            m.reply "ding ding ding! word is '#{@all_games[channel][@eng]}'. good job #{m.user.nick}"
-            @all_games.delete(channel)
-          else
-            response = Unirest.get("https://www.googleapis.com/language/translate/v2?key=#{ENV['GOOGLE']}&q=#{URI.encode(user_guess)}&target=ko")
-            kor_word = response.body['data']['translations'].first['translatedText'].strip
-            if kor_word == @all_games[channel][@kor]
-              return m.reply "yes... but '#{user_guess}' isn't quite the word i'm looking for"
+        guess_words << user_guess
+        # Get plural of user_guess
+        page = Nokogiri::HTML(open("http://www.wordhippo.com/what-is/the-plural-of/#{user_guess}.html"))
+        if page.css('div.relatedwords b').first != nil
+          guess_words << page.css('div.relatedwords b').first.text.strip
+        end
+        # Check word and plural
+        count = 0
+        guess_words.each do |word|
+          if @all_games.keys.include? channel
+            if @all_games[channel][@eng].downcase == word.downcase
+              m.reply "ding ding ding! word is '#{@all_games[channel][@eng]}'. good job #{m.user.nick}"
+              return @all_games.delete(channel)
             end
           end
+        end
+        # Check synonyms
+        response = Unirest.get("https://www.googleapis.com/language/translate/v2?key=#{ENV['GOOGLE']}&q=#{URI.encode(user_guess)}&target=ko")
+        kor_word = response.body['data']['translations'].first['translatedText'].strip
+        if kor_word == @all_games[channel][@kor]
+          m.reply "yes... but '#{user_guess}' isn't quite the word i'm looking for"
         end
       end
 
