@@ -14,15 +14,12 @@ module Cinch
       match /(twitch) (list)$/, method: :list
       match /(addtwitch) (.+)/, method: :add_streamer
       match /(deltwitch) (.+)/, method: :del_streamer
-      match /(twitchban) (.+)/, method: :ban_unban
-      match /(twitchban) (list)$/, method: :ban_list
       match /(help twitch)$/, method: :help
 
       def initialize(*args)
         super
         @online = []
         conn = PG::Connection.new(ENV['DATABASE_URL'])
-        banned_table(conn)
         create_table(conn)
       end
 
@@ -44,69 +41,9 @@ module Cinch
         end
       end
 
-      def banned_table(conn)
-        # banned users db
-        begin
-          res = conn.exec_params("CREATE TABLE twitchbanned (prefix varchar);")
-          conn.exec("INSERT INTO twitchbanned (prefix) VALUES ('user/testban');")
-        rescue PG::Error => pg_error
-          puts '*' * 50
-          puts "Table creation failed: #{pg_error.message}"
-        end
-        banned_users = conn.exec("SELECT * FROM twitchbanned;")
-        @banned = []
-        banned_users.each do |row|
-          @banned << row['prefix'].downcase
-        end
-      end
-
-      def ban_unban(m, prefix, gnban, user_prefix)
-        return if user_prefix == 'list'
-        # can't ban $master
-        return m.is_unauthorized if user_prefix == $master
-        return ban_toggle(m, user_prefix) if m.is_admin?
-        return ban_toggle(m, user_prefix) if m.is_op?
-        m.is_unauthorized
-      end
-
-      def ban_toggle(m, user_prefix)
-        conn = PG::Connection.new(ENV['DATABASE_URL'])
-        search = conn.exec("SELECT * FROM twitchbanned WHERE prefix='#{conn.escape_string(user_prefix)}';")
-        if search.ntuples > 0
-          conn.exec("DELETE FROM twitchbanned WHERE prefix='#{conn.escape_string(user_prefix)}';")
-          return User(m.user.nick).notice("#{conn.escape_string(user_prefix)} is UNbanned from adding twitch users")
-        else
-          conn.exec("INSERT INTO twitchbanned (prefix) VALUES ('#{conn.escape_string(user_prefix)}');")
-          return User(m.user.nick).notice("#{conn.escape_string(user_prefix)} is banned from adding twitch users")
-        end
-        banned_users = conn.exec("SELECT * FROM twitchbanned;")
-        @banned = []
-        banned_users.each do |row|
-          @banned << row['prefix'].downcase
-        end
-      end
-
-      def ban_list(m)
-        conn = PG::Connection.new(ENV['DATABASE_URL'])
-        pastebin = Pastebin::Client.new(ENV['PASTEBIN_KEY'])
-        string = ""
-        if m.is_admin?
-          get_all = conn.exec("SELECT * FROM twitchbanned;")
-          get_all.each do |x|
-            string += "#{x['prefix']}"
-            string += "\n"
-          end
-        else
-          m.is_unauthorized
-        end
-        # Unlisted paste titled '.twitchban list' expires in 10 minutes
-        m.user.msg(pastebin.newpaste(string, api_paste_name: '.twitchban list', api_paste_private: 1, api_paste_expire_date: '10M'))
-        m.reply "check ur pms for list of twitchbanned prefixes"
-      end
-
       def add_streamer(m, prefix, addtwitch, streamer)
         return m.reply 'registered users only bru' if m.user.host.include? 'Snoonet'
-        return m.is_unauthorized if @banned.include? m.user.host
+        return m.is_unauthorized if $banned.include? m.user.host
         return m.reply "#{streamer} already in db" if @streamers.include? streamer
         conn = PG::Connection.new(ENV['DATABASE_URL'])
         conn.exec("INSERT INTO twitch (prefix, streamer) VALUES ('#{m.user.host}', '#{conn.escape(streamer)}');")
@@ -141,7 +78,7 @@ module Cinch
 
       def list(m)
         return m.reply 'registered users only bru' if m.user.host.include? 'Snoonet'
-        return m.is_unauthorized if @banned.include? m.user.host
+        return m.is_unauthorized if $banned.include? m.user.host
         conn = PG::Connection.new(ENV['DATABASE_URL'])
         pastebin = Pastebin::Client.new(ENV['PASTEBIN_KEY'])
         string = ""
@@ -207,7 +144,7 @@ module Cinch
       def check_user(m, prefix, check_user, user)
         return if user == 'list'
         return m.reply 'registered users only bru' if m.user.host.include? 'Snoonet'
-        return m.is_unauthorized if @banned.include? m.user.host
+        return m.is_unauthorized if $banned.include? m.user.host
         query = user.split(/[[:space:]]/).join(' ')
         user_get = Unirest.get "https://api.twitch.tv/kraken/streams/#{URI.encode(query)}",
           headers: { "Accept" => "application/json" },

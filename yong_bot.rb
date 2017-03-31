@@ -4,6 +4,7 @@ require_relative 'bin/plugins'
 require_relative 'bin/extensions'
 
 $master = "#{ENV['MASTER']}"
+$banned = []
 
 yong_bot = Cinch::Bot.new do
   configure do |c|
