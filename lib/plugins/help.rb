@@ -89,7 +89,8 @@ module Cinch
           ".beam [user]",
           ".ow [user] [country_abbrev]",
           ".ig [user or #hashtag]",
-          ".bugs [num]"
+          ".bugs [num]",
+          ".world [num]"
         ]
       end
 
