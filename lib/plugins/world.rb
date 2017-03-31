@@ -18,8 +18,8 @@ module Cinch
         return m.reply 'invalid num bru' if num.to_i < 1
         return m.reply 'less than 16 bru' if num.to_i > 15
         page = Nokogiri::HTML(open("http://www.billboard.com/charts/world-albums"))
-        title = page.css('.chart-row__song')[num - 1].text.strip
-        artist = page.css('.chart-row__artist')[num - 1].text.strip
+        title = page.css('.chart-row__song')[num.to_i - 1].text.strip
+        artist = page.css('.chart-row__artist')[num.to_i - 1].text.strip
         date = page.css('time').first.text.strip
         m.reply "Billboard World Albums Rank #{num}: #{title} by #{artist} | Week of #{date}"
       end
