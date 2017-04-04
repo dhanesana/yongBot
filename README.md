@@ -136,5 +136,4 @@ The following commands may only be used by the *MASTER* user:
 | .echo [#channel] [msg] | Outputs a message to specified #channel
 | .notice                | Replies via notice
 | .notice [nick] [msg]   | Sends a notice to specified user
-| .twitchban [prefix]    | Toggles ban of specified user prefix (Twitch)
-| .beamban [prefix]      | Toggles ban of specified user prefix (Beam)
+| .ban [prefix]          | Toggles ban of specified user prefix (Twitch & Beam)
