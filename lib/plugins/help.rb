@@ -89,7 +89,8 @@ module Cinch
           ".ow [user] [country_abbrev]",
           ".ig [user or #hashtag]",
           ".bugs [num]",
-          ".world [num]"
+          ".world [num]",
+          ".itunes [num]"
         ]
       end
 
