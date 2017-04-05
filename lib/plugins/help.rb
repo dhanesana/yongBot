@@ -32,7 +32,6 @@ module Cinch
           ".dispatch",
           ".face [img_url]",
           ".faceplus [img_url]",
-          ".vine",
           ".ign [title]",
           ".steam [user]",
           ".sc [keywords]",

@@ -42,7 +42,6 @@ yong_bot = Cinch::Bot.new do
       Cinch::Plugins::Eat,
       Cinch::Plugins::Dispatch,
       Cinch::Plugins::Face,
-      Cinch::Plugins::Vine,
       Cinch::Plugins::Ign,
       Cinch::Plugins::Steam,
       Cinch::Plugins::Sc,
