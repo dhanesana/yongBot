@@ -65,12 +65,12 @@ module Cinch
         guess_words = []
         user_guess = words_only.split(/[[:space:]]/).join(' ').strip
         guess_words << user_guess
-        # Get plural of user_guess
-        page = Nokogiri::HTML(open("http://www.wordhippo.com/what-is/the-plural-of/#{user_guess}.html"))
+        # Get singular of user_guess
+        page = Nokogiri::HTML(open("http://www.wordhippo.com/what-is/the-singular-of/#{user_guess}.html"))
         if page.css('div.relatedwords b').first != nil
           guess_words << page.css('div.relatedwords b').first.text.strip
         end
-        # Check word and plural
+        # Check word and singular form
         count = 0
         guess_words.each do |word|
           if @all_games.keys.include? channel
