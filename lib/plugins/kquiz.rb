@@ -60,6 +60,7 @@ module Cinch
       end
 
       def guess(m)
+        return unless @all_games.keys.include? m.channel.name
         channel = m.channel.name
         words_only = m.message.gsub(/[^0-9a-z ]/i, '')
         guess_words = []
