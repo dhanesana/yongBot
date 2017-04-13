@@ -24,26 +24,29 @@ module Cinch
         return m.reply 'invalid num bru' if entry.to_i < 0
         link = open("http://www.melon.com/chart/index.htm.json").read
         result = JSON.parse(link)
-        if !/\A\d+\z/.match(entry)
-          all_songs = Hash.new
-          all_titles = Array.new
-          result['songList'].each do |song|
-            all_titles << song['songName'].downcase
-            all_songs[song['curRank']] = song['songName'].downcase
-          end
-            match = FuzzyMatch.new(all_titles).find(entry.downcase)
-            match_rank = all_songs.key(match).to_i
-            rank = result['songList'][match_rank - 1]['curRank']
-            artist = result['songList'][match_rank - 1]['artistNameBasket']
-            title = result['songList'][match_rank - 1]['songName']
-            return m.reply "Melon Rank #{rank}: #{artist} - #{title}"
+        if !/\A\d+\z/.match(entry) # if entry is not a number
+          with_entry(m, result, entry)
         else
           rank = result['songList'][entry.to_i - 1]['curRank']
           artist = result['songList'][entry.to_i - 1]['artistNameBasket']
           title = result['songList'][entry.to_i - 1]['songName']
           return m.reply "Melon Rank #{rank}: #{artist} - #{title}"
         end
-        m.reply 'no results in top 100 bru'
+      end
+
+      def with_entry(m, result, entry)
+        all_songs = Hash.new
+        all_titles = Array.new
+        result['songList'].each do |song|
+          all_titles << song['songName'].downcase
+          all_songs[song['curRank']] = song['songName'].downcase
+        end
+        match = FuzzyMatch.new(all_titles).find(entry.downcase)
+        match_rank = all_songs.key(match).to_i
+        rank = result['songList'][match_rank - 1]['curRank']
+        artist = result['songList'][match_rank - 1]['artistNameBasket']
+        title = result['songList'][match_rank - 1]['songName']
+        m.reply "Melon Rank #{rank}: #{artist} - #{title}"
       end
 
       def trend(m)
