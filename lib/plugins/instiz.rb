@@ -30,29 +30,33 @@ module Cinch
         one_artist = page.at('div.ichart_score_artist1').text
         return m.reply "iChart Rank 1: #{one_song} by #{one_artist}" if entry.to_i == 1
         if !/\A\d+\z/.match(entry)
-          all_songs = Hash.new
-          all_titles = Array.new
-          all_titles << one_song.downcase
-          all_songs[1] = one_song
-          counter = 2
-          page.parser.css('div.ichart_score2_song1').each do |song|
-            all_titles << song.text.downcase
-            all_songs[counter] = song.text.downcase
-            counter += 1
-          end
-          match = FuzzyMatch.new(all_titles).find(entry.downcase)
-          return m.reply "iChart Rank 1: #{one_song} by #{one_artist}" if match == one_song.downcase
-          return m.reply "no song found bru" if match.nil?
-          match_rank = all_songs.key(match).to_i
-          title = page.parser.css('div.ichart_score2_song1')[match_rank - 2].text
-          artist = page.parser.css('div.ichart_score2_artist1')[match_rank - 2].text
-          return m.reply "iChart Rank #{match_rank}: #{title} by #{artist}"
+          with_entry(m, page, one_song, one_artist, entry)
         else
           rank = entry.to_i - 2
           title = page.parser.css('div.ichart_score2_song1')[rank].text
           artist = page.parser.css('div.ichart_score2_artist1')[rank].text
-          return m.reply "iChart Rank #{entry.to_i}: #{title} by #{artist}"
+          m.reply "iChart Rank #{entry.to_i}: #{title} by #{artist}"
         end
+      end
+
+      def with_entry(m, page, one_song, one_artist, entry)
+        all_songs = Hash.new
+        all_titles = Array.new
+        all_titles << one_song.downcase
+        all_songs[1] = one_song
+        counter = 2
+        page.parser.css('div.ichart_score2_song1').each do |song|
+          all_titles << song.text.downcase
+          all_songs[counter] = song.text.downcase
+          counter += 1
+        end
+        match = FuzzyMatch.new(all_titles).find(entry.downcase)
+        return m.reply "iChart Rank 1: #{one_song} by #{one_artist}" if match == one_song.downcase
+        return m.reply "no song found bru" if match.nil?
+        match_rank = all_songs.key(match).to_i
+        title = page.parser.css('div.ichart_score2_song1')[match_rank - 2].text
+        artist = page.parser.css('div.ichart_score2_artist1')[match_rank - 2].text
+        m.reply "iChart Rank #{match_rank}: #{title} by #{artist}"
       end
 
       def help(m)
