@@ -11,33 +11,47 @@ module Cinch
       match /(sundry) (.+)/, method: :with_artist
       match /(help sundry)$/, method: :help
 
-      def with_artist(m, prefix, sundry, name)
-        input_array = name.split(/[[:space:]]/)
+      def with_artist(m, prefix, sundry, query)
+        input_array = query.split(/[[:space:]]/)
         artist = input_array.join(' ').downcase
-        page = Nokogiri::HTML(open("https://kpopinfo114.wordpress.com/female_artist_profiles/"))
-        idol_hash = Hash.new
-        page.css('div.entry-content p').each do |row|
-          next if row.text == " "
-          row_text = row.text
-          if row_text.include? '<'
-            sliced_text = row_text.slice(0..(row_text.index('<') - 2))
-            if row.css('a').first.values[1].to_s.include? "http"
-              idol_hash[sliced_text] = row.css('a').first.values[1]
+        female_page = Nokogiri::HTML(open("https://kpopinfo114.wordpress.com/female_artist_profiles/"))
+        rookie_page = Nokogiri::HTML(open("https://kpopinfo114.wordpress.com/2014-rookie-group-debuts/"))
+        @artist_pages = [female_page, rookie_page]
+        @artist_hash = Hash.new
+        get_artists(m, @artist_pages)
+      end
+
+      def get_artists(m, pages)
+        pages.each do |page|
+          page.css('div.entry-content p').each do |row|
+            next if row.text == " "
+            next if row.css('a') == []
+            next if row.css('a').first == nil
+            row_text = row.text
+            if row_text.include? '<'
+              sliced_text = row_text.slice(0..(row_text.index('<') - 2))
+              if row.css('a').first.values[1].to_s.include? "http"
+                @artist_hash[sliced_text] = row.css('a').first.values[1]
+              else
+                @artist_hash[sliced_text] = row.css('a').first.values[0]
+              end
             else
-              idol_hash[sliced_text] = row.css('a').first.values[0]
-            end
-          else
-            idol_hash[row_text] = row.css('a').first.values[1]
-            if row.css('a').first.values[1].to_s.include? "http"
-              idol_hash[row_text] = row.css('a').first.values[1]
-            else
-              idol_hash[row_text] = row.css('a').first.values[0]
+              @artist_hash[row_text] = row.css('a').first.values[1]
+              if row.css('a').first.values[1].to_s.include? "http"
+                @artist_hash[row_text] = row.css('a').first.values[1]
+              else
+                @artist_hash[row_text] = row.css('a').first.values[0]
+              end
             end
           end
         end
-        match = FuzzyMatch.new(idol_hash).find(artist)
-        artist = match.first
-        artist_link = match[1]
+        find_match(m)
+      end
+
+      def find_match(m)
+        artist_match = FuzzyMatch.new(@artist_hash).find(artist)
+        artist = artist_match.first
+        artist_link = artist_match[1]
         artist_page = Nokogiri::HTML(open(artist_link))
         debut = artist_page.css('div.entry-content ul').first.css('li').first.text
         debut.slice!('Debut (Y.M.D): ')
@@ -50,7 +64,7 @@ module Cinch
         artist_page.css('div.entry-content li').each do |row|
           members << row.text if row.text.include? "Real Name"
         end
-        members.map { |name| name.slice!('Name (Real Name): ') }
+        members.map { |m_name| m_name.slice!('Name (Real Name): ') }
         if debut.include? '–'
           debut.gsub!('–','??')
           debut.gsub!('.','-')
@@ -60,6 +74,7 @@ module Cinch
           m.reply "#{artist} => Debut #{debut_date.strftime("%Y-%m-%d")} :: Member(s) => #{members.join(', ')}#{img_url}"
         end
       end
+
 
       def help(m)
         m.reply 'searches for debut and member info for specified kpop sundry artist/group'
