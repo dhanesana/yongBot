@@ -13,7 +13,7 @@ module Cinch
 
       def with_artist(m, prefix, sundry, query)
         input_array = query.split(/[[:space:]]/)
-        artist = input_array.join(' ').downcase
+        @user_query = input_array.join(' ').downcase
         female_page = Nokogiri::HTML(open("https://kpopinfo114.wordpress.com/female_artist_profiles/"))
         rookie_page = Nokogiri::HTML(open("https://kpopinfo114.wordpress.com/2014-rookie-group-debuts/"))
         @artist_pages = [female_page, rookie_page]
@@ -49,7 +49,7 @@ module Cinch
       end
 
       def find_match(m)
-        artist_match = FuzzyMatch.new(@artist_hash).find(artist)
+        artist_match = FuzzyMatch.new(@artist_hash).find(@user_query)
         artist = artist_match.first
         artist_link = artist_match[1]
         artist_page = Nokogiri::HTML(open(artist_link))
