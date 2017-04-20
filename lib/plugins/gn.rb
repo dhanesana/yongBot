@@ -33,14 +33,21 @@ module Cinch
           puts '*' * 50
           puts "Table creation failed: #{pg_error.message}"
         end
+        gn_hash(conn)
+      end
+
+      def gn_hash(conn)
+        @gn_db = {}
+        get_all = conn.exec("SELECT * FROM gn;")
+        get_all.each do |x|
+          @gn_db[x['link']] = [x['who'], x['prefix']]
+        end
       end
 
       def execute(m)
         return m.is_unauthorized if $banned.include? m.user.host
         return m.reply "u get wat u deserve: #{@gn_pairs[m.user.host]}" if @gn_pairs.keys.include? m.user.host
-        conn = PG::Connection.new(ENV['DATABASE_URL'])
-        entries = conn.exec("SELECT * FROM gn")
-        @gn_pairs[m.user.host] = entries.field_values('link').sample
+        @gn_pairs[m.user.host] = @gn_db.keys.sample
         m.reply @gn_pairs[m.user.host]
         Timer(3600, options = { shots: 1 }) do |x|
           @gn_pairs.delete(m.user.host)
@@ -55,59 +62,54 @@ module Cinch
         return m.reply "missing name or url" if entry_array.size < 2
         return m.reply 'url must be hosted on imgur' unless entry_array[1].include? 'imgur'
         return m.reply 'url must contain https://' unless entry_array[1].include? 'http'
-        return add_url(m, conn, entry_array) if entry_array[1].include? 'https'
+        return add_url(m, entry_array) if entry_array[1].include? 'https'
         entry_array[1].sub!('http','https')
-        add_url(m, conn, entry_array)
+        add_url(m, entry_array)
       end
 
-      def add_url(m, conn, entry_array)
+      def add_url(m, entry_array)
         return m.reply 'name before url' if (entry_array.first =~ URI::regexp).nil? == false
-        search = conn.exec("SELECT * FROM gn WHERE link='#{conn.escape_string(conn.escape_string(entry_array[1]))}'")
-        return m.reply 'url already exists in database bru' if search.ntuples > 0
+        return 'url already exists in database bru' if @gn_db.keys.include? entry_array[1]
+        conn = PG::Connection.new(ENV['DATABASE_URL'])
         conn.exec("INSERT INTO gn (prefix, who, link) VALUES ('#{m.user.host}', '#{conn.escape_string(entry_array.first)}', '#{conn.escape_string(entry_array[1])}');")
-        return m.reply "#{entry_array[1]} is added to database"
+        gn_hash(conn)
+        m.reply "#{entry_array[1]} is added to database"
       end
 
       def del(m, prefix, delgn, url)
         return m.is_unauthorized if $banned.include? m.user.host
-        conn = PG::Connection.new(ENV['DATABASE_URL'])
-        search = conn.exec("SELECT * FROM gn WHERE link='#{conn.escape_string(url)}';")
-        return m.reply "url doesn't exist in database bru" if search.ntuples < 1
-        return del_url(m, conn, url) if m.is_admin?
-        return del_url(m, conn, url) if m.is_op?
-        return del_url(m, conn, url) if m.user.host == search.field_values('prefix').first
+        return "url doesn't exist in database bru" if @gn_db[conn.escape(url)].nil?
+        return del_url(m, url) if m.is_admin?
+        return del_url(m, url) if m.is_op?
+        return del_url(m, url) if @gn_db[conn.escape(url)][1] == m.user.host
         m.is_unauthorized
       end
 
-      def del_url(m, conn, url)
+      def del_url(m, url)
+        conn = PG::Connection.new(ENV['DATABASE_URL'])
         conn.exec("DELETE FROM gn WHERE link='#{conn.escape_string(url)}';")
+        gn_hash(conn)
         m.reply "#{url} is removed from database"
       end
 
       def who(m, prefix, who, url)
         return m.is_unauthorized if $banned.include? m.user.host
-        conn = PG::Connection.new(ENV['DATABASE_URL'])
-        search = conn.exec("SELECT * FROM gn WHERE link='#{conn.escape_string(url)}';")
-        return m.reply "link not found bru" if search.field_values('who').first.nil?
-        m.reply "#{search.field_values('who').first}"
+        return m.reply "link not found bru" if @gn_db[conn.escape_string(url)].nil?
+        m.reply "#{@gn_db[conn.escape_string(url)].first}"
       end
 
       def list(m)
         return m.is_unauthorized if $banned.include? m.user.host
-        conn = PG::Connection.new(ENV['DATABASE_URL'])
         pastebin = Pastebin::Client.new(ENV['PASTEBIN_KEY'])
         string = ""
         if m.is_admin?
-          get_all = conn.exec("SELECT * FROM gn ORDER BY prefix DESC;")
-          get_all.each do |x|
-            string += "#{x['prefix']} => #{x['who']} => #{x['link']}"
+          @gn_db.each do |k, v|
+            string += "#{v[1]} => #{v[0]} => #{k}"
             string += "\n"
           end
         else
-          get_all = conn.exec("SELECT * FROM gn;")
-          get_all.each do |x|
-            string += "#{x['who']} => #{x['link']}"
-            string += "\n"
+          @gn_db.each do |k, v|
+            string += "#{v[0]} => #{k}"
           end
         end
         # Unlisted paste titled '.gn list' expires in 10 minutes
