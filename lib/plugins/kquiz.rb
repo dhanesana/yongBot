@@ -32,7 +32,8 @@ module Cinch
           m.reply "There's already a game for word: #{@all_games[channel][@kor]}"
         else
           noun_get = Nokogiri::HTML(open("http://www.desiquintans.com/noungenerator?count=1"))
-          eng_word = noun_get.css('li').text.strip
+          eng_word = noun_get.css('ol').text.strip
+          return m.reply 'HTML UPDATE! pls inform botmaster thx' if eng_word.size < 1
           response = Unirest.get("https://www.googleapis.com/language/translate/v2?key=#{ENV['GOOGLE']}&q=#{eng_word}&target=ko")
           kor_word = response.body['data']['translations'].first['translatedText'].strip
           @all_games[channel] = [eng_word, kor_word]
