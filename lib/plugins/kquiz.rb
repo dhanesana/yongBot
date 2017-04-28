@@ -44,14 +44,13 @@ module Cinch
       end
 
       def game_start(m, kor_word, num)
+        channel = m.channel.name
         if num.to_i > 20
           Timer(15, options = { shots: 1 }) do |x|
             m.reply '15 seconds remaining!' if @all_games[channel][@kor] == kor_word
           end
         end
         Timer(num.to_i, options = { shots: 1 }) do |x|
-          channel = m.channel.name
-          # if @all_games.keys.include? channel
           if @all_games[channel][@kor] == kor_word
             eng_word = @all_games[channel][@eng]
             kor_word = @all_games[channel][@kor]
