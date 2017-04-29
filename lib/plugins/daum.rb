@@ -16,10 +16,12 @@ module Cinch
 
       def with_num(m, prefix, daum, num)
         return m.reply 'invalid num bru' if num.to_i < 1
+        return m.reply 'less than 11 bru' if num.to_i > 10
         page = Nokogiri::HTML(open('http://www.daum.net/'))
-        text = page.css('ol#realTimeSearchWord div div a')[num.to_i].text.delete!("\n") # NAME
-        url = page.css('ol#realTimeSearchWord a')[num.to_i].first[1] # URL
-        m.reply "Daum Trending [#{num}]: #{text} #{url}"
+        result = page.css('.hot_issue a.link_issue')[num.to_i]
+        term = result.text.strip
+        url = result.first[1]
+        m.reply "Daum Trending [#{num}]: #{term} #{url}"
       end
 
       def help(m)
