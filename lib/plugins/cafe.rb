@@ -15,17 +15,14 @@ module Cinch
         cafe_hash = {}
         return m.reply 'no results bru' if response.body['channel']['result'] == '0'
         response.body['channel']['item'].each do |cafe|
-          if cafe_hash[cafe['cafeUrl']].nil?
-            cafe_hash[cafe['cafeUrl']] = 1
-          else
-            cafe_hash[cafe['cafeUrl']] += 1
-          end
+          cafe_hash[cafe['cafeUrl']] += 1
+          cafe_hash[cafe['cafeUrl']] = 1 if cafe_hash[cafe['cafeUrl']].nil?
+          m.reply cafe_hash.max_by { |k,v| v }.first.strip
         end
-        m.reply cafe_hash.max_by {|k,v| v}.first
       end
 
       def help(m)
-        m.reply 'searches daumcafe posts and returns cafe url for most frequent '
+        m.reply 'searches daumcafe posts and returns cafe url for cafe most posted in'
       end
 
     end
