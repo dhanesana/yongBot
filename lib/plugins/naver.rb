@@ -16,14 +16,15 @@ module Cinch
 
       def with_num(m, prefix, naver, num)
         return m.reply 'invalid num bru' if num.to_i < 1
-        page = Nokogiri::HTML(open("http://www.naver.com/"))
-        text = page.css('ol#realrank li a')[num.to_i - 1].children.first.text
-        url = page.css('ol#realrank a')[num.to_i - 1].first.last
-        m.reply "Naver Trending [#{num}]: #{text} #{url}"
+        return m.reply 'less than 21 bru' if num.to_i > 20
+        page = Nokogiri::HTML(open('http://datalab.naver.com/keyword/realtimeList.naver?where=main'))
+        term = page.css('div.keyword_rank')[4].css('span.title')[num.to_i - 1].text
+        date_time = page.css('div.keyword_rank')[4].css('strong.v2').first.text
+        m.reply "Naver Trending #{num.to_i}: #{term} https://search.naver.com/search.naver?query=#{term} | #{date_time}"
       end
 
       def help(m)
-        m.reply 'returns trending naver search result at specified rank'
+        m.reply 'returns trending naver search term at specified rank'
       end
 
     end
