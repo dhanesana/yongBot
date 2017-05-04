@@ -55,7 +55,7 @@ module Cinch
             eng_word = @all_games[channel][@eng]
             kor_word = @all_games[channel][@kor]
             @all_games.delete(channel)
-            m.reply "Times up! #{kor_word} => #{eng_word}"
+            m.reply "Time's up! #{kor_word} => #{eng_word}"
           end
         end
       end
