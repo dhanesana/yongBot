@@ -61,6 +61,7 @@ module Cinch
       end
 
       def guess(m)
+        return if $banned.include? m.user.host
         return unless @all_games.keys.include? m.channel.name
         channel = m.channel.name
         words_only = m.message.gsub(/[^0-9a-z ]/i, '')
