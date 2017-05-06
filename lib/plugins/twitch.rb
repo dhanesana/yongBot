@@ -101,6 +101,7 @@ module Cinch
       end
 
       def execute(m)
+        return m.is_unauthorized if $banned.include? m.user.host
         counter = 0
         @streamers.each do |user|
           user_get = Unirest.get "https://api.twitch.tv/kraken/streams/#{URI.encode(user)}",
