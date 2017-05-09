@@ -90,7 +90,8 @@ module Cinch
           ".ig [user or #hashtag]",
           ".bugs [num]",
           ".world [num]",
-          ".itunes [num]"
+          ".itunes [num]",
+          ".dp [news/reviews]"
         ]
       end
 
