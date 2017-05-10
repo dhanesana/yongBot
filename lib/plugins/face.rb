@@ -9,7 +9,6 @@ module Cinch
       include Cinch::Plugin
 
       match /(face) (.+)/
-      match /(drop face)$/, method: :drop
       match /(face)$/, method: :random
       match /(face top)$/, method: :top
       match /(face high)$/, method: :top
@@ -54,18 +53,6 @@ module Cinch
           top: [top_urls[0]['url'], top_scores[0]['score']],
           low: [low_urls[0]['url'], low_scores[0]['score']]
         }
-      end
-
-      def drop(m)
-        if m.is_admin?
-          conn = PG::Connection.new(ENV['DATABASE_URL'])
-          conn.exec("DROP TABLE top;")
-          conn.exec("DROP TABLE low;")
-          m.reply 'donezo'
-          create_table
-        else
-          return m.is_unauthorized
-        end
       end
 
       def top(m)
