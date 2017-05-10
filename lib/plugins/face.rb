@@ -64,6 +64,7 @@ module Cinch
       end
 
       def execute(m, prefix, face, url)
+        return if $banned.include? m.user.host
         return if url == 'top'
         return if url == 'high'
         return if url == 'bottom'
@@ -87,6 +88,7 @@ module Cinch
       end
 
       def random(m)
+        return if $banned.include? m.user.host
         if @users.keys.include? m.user.host
           if @users[m.user.host] > 2
             return m.reply 'ur doing that too much bru'
