@@ -44,7 +44,7 @@ GEM
     multipart-post (2.0.0)
     net-http-digest_auth (1.4.1)
     net-http-persistent (2.9.4)
-    nokogiri (1.7.1)
+    nokogiri (1.7.2)
       mini_portile2 (~> 2.1.0)
     ntlm-http (0.1.1)
     pastebin-api (1.0.5)
@@ -65,8 +65,6 @@ GEM
       json (~> 1.8.1)
       rest-client (~> 1.6.7)
     webrobots (0.1.2)
-    wolfram-alpha (0.3.1)
-      nokogiri
 
 PLATFORMS
   ruby
@@ -88,10 +86,9 @@ DEPENDENCIES
   soundcloud
   unidecoder
   unirest
-  wolfram-alpha
 
 RUBY VERSION
    ruby 2.4.0p0
 
 BUNDLED WITH
-   1.13.7
+   1.14.6

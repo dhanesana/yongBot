@@ -1,4 +1,5 @@
-require 'wolfram-alpha'
+require 'nokogiri'
+require 'open-uri'
 
 module Cinch
   module Plugins
@@ -11,20 +12,10 @@ module Cinch
       def execute(m, prefix, wa, text)
         input_array = text.split(/[[:space:]]/)
         query = input_array.join(' ').downcase
-        options = { "format" => "plaintext" }
-        client = WolframAlpha::Client.new "#{ENV['WA_ID']}", options
-        response = client.query(query)
-        return m.reply "bad query bru" if response["Input"].nil?
-        input = response["Input"]
-        result = response.find { |pod| pod.title == "Result" }
-        interp = input.subpods[0].plaintext
-        interp.delete!("\n")
-        answer = result.subpods[0].plaintext
-        answer.delete!("\n")
-        if answer.size > 200
-          answer.slice! 200..-1
-          answer += "..."
-        end
+        response = Nokogiri::XML(open("http://api.wolframalpha.com/v2/query?appid=#{ENV['WA_ID']}&input=#{URI.encode(query)}"))
+        return m.reply "bad query bru" if response.search('subpod').first.nil?
+        interp = response.search('subpod').first.text.strip.gsub("\n", " ")
+        answer = response.search('subpod')[1].text.strip.gsub("\n", " ")
         m.reply "#{interp} => #{answer}"
       end
 
