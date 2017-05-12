@@ -35,19 +35,21 @@ module Cinch
           noun_get = Nokogiri::HTML(open("http://www.desiquintans.com/noungenerator?count=1"))
           eng_word = noun_get.css('ol').text.strip
           return m.reply 'HTML UPDATE! pls inform botmaster thx' if eng_word.size < 1
+          dict_get = Nokogiri::HTML(open("http://google-dictionary.so8848.com/meaning?word=#{eng_word}"))
+          meaning = dict_get.css('div.std').first.css('li').first.children.first.text.strip
           response = Unirest.get("https://www.googleapis.com/language/translate/v2?key=#{ENV['GOOGLE']}&q=#{eng_word}&target=ko")
           kor_word = response.body['data']['translations'].first['translatedText'].strip
           @all_games[channel] = [eng_word, kor_word]
           m.reply "#{num.to_i} seconds to guess! Word is #{kor_word}!"
-          game_start(m, kor_word, num.to_i)
+          game_start(m, kor_word, meaning, num.to_i)
         end
       end
 
-      def game_start(m, kor_word, num)
+      def game_start(m, kor_word, meaning, num)
         channel = m.channel.name
         if num.to_i > 20
           Timer(15, options = { shots: 1 }) do |x|
-            m.reply '15 seconds remaining!' if @all_games[channel][@kor] == kor_word
+            m.reply "15 seconds remaining! Hint: #{meaning}" if @all_games[channel][@kor] == kor_word
           end
         end
         Timer(num.to_i, options = { shots: 1 }) do |x|
