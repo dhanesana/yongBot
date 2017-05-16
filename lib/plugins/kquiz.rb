@@ -1,6 +1,7 @@
 require 'nokogiri'
 require 'unirest'
 require 'open-uri'
+require 'json'
 
 module Cinch
   module Plugins
@@ -35,8 +36,19 @@ module Cinch
           noun_get = Nokogiri::HTML(open("http://www.desiquintans.com/noungenerator?count=1"))
           eng_word = noun_get.css('ol').text.strip
           return m.reply 'HTML UPDATE! pls inform botmaster thx' if eng_word.size < 1
-          dict_get = Nokogiri::HTML(open("http://google-dictionary.so8848.com/meaning?word=#{eng_word}"))
-          meaning = dict_get.css('div.std').first.css('li').first.children.first.text.strip
+          # Use Pearson API to get word definition/meaning
+          dict_api = open("https://api.pearson.com/v2/dictionaries/ldoce5/entries?headword=#{eng_word}&apikey=#{ENV['PEARSON_ID']}").read
+          dict_result = JSON.parse(dict_api)
+          meaning = ""
+          count = 0
+          dict_result['results'].each do |x|
+            next if count > 0
+            if x['part_of_speech'] == 'noun'
+              count += 1
+              meaning += x['senses'].first['definition'].first
+            end
+          end
+          # Get Korean translated word
           response = Unirest.get("https://www.googleapis.com/language/translate/v2?key=#{ENV['GOOGLE']}&q=#{eng_word}&target=ko")
           kor_word = response.body['data']['translations'].first['translatedText'].strip
           @all_games[channel] = [eng_word, kor_word]
