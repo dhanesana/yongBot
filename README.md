@@ -53,6 +53,7 @@ Create a .env file within the yongBot directory, and populate with the following
 | NUTRITIONX_ID      | [Nutritionix AppID](https://www.nutritionix.com/api)
 | NUTRITION_KEY      | [Nutritionix API Key](https://www.nutritionix.com/api)
 | PASTEBIN_KEY       | [Pastebin API Key](https://pastebin.com/api)
+| PEARSON_ID         | [Pearson API Key](http://developer.pearson.com/content-apis/get-started)
 | RAPGENIUS          | [Genius Access Token](http://genius.com/api-clients)
 | REKOGNITION_KEY    | [ReKognition API Key](https://rekognition.com/developer/start)
 | REKOGNITION_SECRET | [ReKognition API Secret](https://rekognition.com/developer/start)
