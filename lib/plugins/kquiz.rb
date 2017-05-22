@@ -36,17 +36,13 @@ module Cinch
           noun_get = Nokogiri::HTML(open("http://www.desiquintans.com/noungenerator?count=1"))
           eng_word = noun_get.css('ol').text.strip
           return m.reply 'HTML UPDATE! pls inform botmaster thx' if eng_word.size < 1
-          # Use Pearson API to get word definition/meaning
-          dict_api = open("https://api.pearson.com/v2/dictionaries/ldoce5/entries?headword=#{eng_word}&apikey=#{ENV['PEARSON_ID']}").read
-          dict_result = JSON.parse(dict_api)
+          # Use Merriam Webster dictionary API for hint
           meaning = ""
-          count = 0
-          dict_result['results'].each do |x|
-            next if count > 0
-            if x['part_of_speech'] == 'noun'
-              count += 1
-              meaning += x['senses'].first['definition'].first
-            end
+          dict_api = Nokogiri::HTML(open("http://www.dictionaryapi.com/api/v1/references/collegiate/xml/#{eng_word}?key=#{ENV['DICT_KEY']}"))
+          if dict_api.xpath("//dt").first.nil?
+            meaning += "Definition not found."
+          else
+            meaning += dict_api.xpath("//dt").first.text[1..-1].capitalize
           end
           # Get Korean translated word
           response = Unirest.get("https://www.googleapis.com/language/translate/v2?key=#{ENV['GOOGLE']}&q=#{eng_word}&target=ko")
