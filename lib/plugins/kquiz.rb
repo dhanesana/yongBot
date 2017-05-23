@@ -48,7 +48,7 @@ module Cinch
           response = Unirest.get("https://www.googleapis.com/language/translate/v2?key=#{ENV['GOOGLE']}&q=#{eng_word}&target=ko")
           kor_word = response.body['data']['translations'].first['translatedText'].strip
           @all_games[channel] = [eng_word, kor_word]
-          m.reply "#{num.to_i} seconds to guess! Word is #{kor_word}!"
+          m.reply "#{num.to_i} seconds to guess#{'(answer includes a hyphen)' if eng_word.include? '-'}! Word is #{kor_word}!"
           game_start(m, kor_word, meaning, num.to_i)
         end
       end
