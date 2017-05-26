@@ -61,7 +61,7 @@ Create a .env file within the yongBot directory, and populate with the following
 | STEAM_KEY          | [Steam API Key](http://steamcommunity.com/dev)
 | TIMEZONE           | [TimeZoneDB API Key](http://timezonedb.com/)
 | TUMBLR_KEY         | [Tumblr API Key](https://www.tumblr.com/docs/en/api/v2)
-| TWITCH_ID          | [Register](https://www.twitch.tv/settings/connections)  for Twitch Client-ID
+| TWITCH_ID          | [Twitch Client-ID](https://www.twitch.tv/settings/connections)
 | TWITCH_CHANNELS    | *IRC #Channels for Twitch and Beam plugin announcements (with hash, comma-seperated, no spaces)*
 | VIKI               | [Viki AppID](http://dev.viki.com/)
 | WA_ID              | [Wolfram Alpha AppID](http://products.wolframalpha.com/api/)
