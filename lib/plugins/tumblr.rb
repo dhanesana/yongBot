@@ -14,6 +14,7 @@ module Cinch
         response = HTTParty.get("http://api.tumblr.com/v2/blog/#{URI.encode(query)}.tumblr.com/posts/photo?api_key=#{ENV['TUMBLR_KEY']}")
         return m.reply "no photo posts for tumblr user #{user}" if response['response']['posts'].size < 1
         post = []
+        return m.reply "Status: #{response['meta']['status']}" unless response['meta']['status'] == 200
         response['response']['posts'].first['photos'].each do |pic|
           post << pic['original_size']['url']
         end
