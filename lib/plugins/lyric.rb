@@ -24,7 +24,7 @@ module Cinch
       end
 
       def help(m)
-        m.reply 'returns song that includes the specified lyric'
+        m.reply 'returns song that includes the specified lyric (via Genius knowledge base)'
       end
 
     end
