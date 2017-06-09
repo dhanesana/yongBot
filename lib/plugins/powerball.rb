@@ -24,7 +24,8 @@ module Cinch
       def jackpot(m)
         page = Nokogiri::HTML(open('http://www.powerball.com/pb_home.asp'))
         jackpot = page.css('strong')[6].text
-        m.reply "Current Estimated Powerball Jackpot: #{jackpot}"
+        cash_val = page.css('font')[10].text
+        m.reply "Current Estimated Powerball Jackpot: #{jackpot} (#{cash_val})"
       end
 
       def quickpick(m)
