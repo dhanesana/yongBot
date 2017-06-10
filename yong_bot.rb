@@ -26,7 +26,6 @@ yong_bot = Cinch::Bot.new do
       Cinch::Plugins::Rollu,
       Cinch::Plugins::Woll,
       Cinch::Plugins::Gn,
-      Cinch::Plugins::Bingul,
       Cinch::Plugins::Sub,
       Cinch::Plugins::Tumblr,
       Cinch::Plugins::Flickr,
