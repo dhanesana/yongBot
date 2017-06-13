@@ -84,7 +84,6 @@ module Cinch
           ".kmf",
           ".sundry [artist]",
           ".vapp",
-          ".kcon [city]",
           ".beam [user]",
           ".ow [user] [country_abbrev]",
           ".ig [user or #hashtag]",

@@ -90,7 +90,6 @@ yong_bot = Cinch::Bot.new do
       Cinch::Plugins::Kmf,
       Cinch::Plugins::Sundry,
       Cinch::Plugins::Vapp,
-      Cinch::Plugins::Kcon,
       Cinch::Plugins::Beam,
       Cinch::Plugins::Ow,
       Cinch::Plugins::Ig,
