@@ -10,14 +10,14 @@ module Cinch
       match /(help soundk)$/, method: :help
 
       def execute(m)
-        page = Nokogiri::HTML(open('http://www.arirang.co.kr/Radio/Radio_MessageBoard.asp?PROG_CODE=RADR0147&MENU_CODE=101865&code=Be6'))
+        page = Nokogiri::HTML(open('http://www.arirang.com/Radio/Radio_Announce.asp?PROG_CODE=RADR0147&MENU_CODE=101562&code=Be4'))
         lineup = []
-        i = 0
-        while i < page.css('tr.ntce td.subjt').size
-          lineup << page.css('tr.ntce td.subjt')[i].text unless page.css('tr.ntce td.subjt')[i].text[0].to_i == 0
-          i += 1
+        page.css('table.annlistTbl').first.css('td').each do |td|
+          next if td.text[0].to_i == 0
+          lineup << td.text if td.text.include? '/'
         end
-        m.reply "[#{lineup.join('], [')}] 20:00 ~ 22:00KST"
+        air_time = page.css('div.airtime p').first.text + 'KST'
+        m.reply "[#{lineup.join('], [')}] #{air_time}"
       end
 
       def help(m)
