@@ -10,14 +10,14 @@ module Cinch
       match /(help superkpop)$/, method: :help
 
       def execute(m)
-        page = Nokogiri::HTML(open("http://www.arirang.com/Radio/Radio_MessageBoard.asp?PROG_CODE=RADR0155&MENU_CODE=102122&code=Be6"))
-        response = ""
-        page.css('tr.ntce td.subjt').each do |subject|
-          break if subject.text.include? "Winner"
-          response += "[#{subject.text}] "
+        page = Nokogiri::HTML(open("http://www.arirang.com/Radio/Radio_Announce.asp?PROG_CODE=RADR0155&MENU_CODE=101733&code=Be4"))
+        lineup = []
+        page.css('table.annlistTbl').first.css('td').each do |td|
+          next unless td.text.include? '('
+          lineup << td.text
         end
-        airtime = page.css('div.airtime p').first.text + "KST"
-        m.reply response += airtime
+        air_time = page.css('div.airtime p').first.text + 'KST'
+        m.reply "[#{lineup.join('], [')}] #{air_time}"
       end
 
       def help(m)
