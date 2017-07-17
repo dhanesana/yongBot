@@ -13,6 +13,7 @@ module Cinch
         page = Nokogiri::HTML(open("http://www.arirang.com/Radio/Radio_Announce.asp?PROG_CODE=RADR0143&MENU_CODE=101536&code=Be4"))
         lineup = []
         page.css('table.annlistTbl').first.css('td').each do |td|
+          next if td.text.include? 'PLAY MY STAR' # No guest appearance
           next unless td.text.include? '('
           lineup << td.text
         end
