@@ -18,7 +18,7 @@ module Cinch
           lineup << td.text
         end
         air_time = page.css('div.airtime p').first.text + 'KST'
-        m.reply "[#{lineup.join('], [')}] #{air_time}"
+        m.reply "[#{lineup.reverse.join('], [')}] #{air_time}"
       end
 
       def help(m)
