@@ -90,7 +90,8 @@ module Cinch
           ".bugs [num]",
           ".world [num]",
           ".itunes [num]",
-          ".dp [news/reviews]"
+          ".dp [news/reviews]",
+          ".kb"
         ]
       end
 
