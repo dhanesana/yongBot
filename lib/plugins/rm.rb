@@ -59,7 +59,7 @@ module Cinch
             end
           end
         end
-        m.reply lineup.join(", ") + " 18:25KST"
+        m.reply lineup.join(", ")
       end
 
       def help(m)
