@@ -9,11 +9,11 @@ GEM
       unf (>= 0.0.5, < 1.0.0)
     dotenv-heroku (0.0.1)
       rake
-    excon (0.55.0)
+    excon (0.57.1)
     fuzzy_match (2.1.0)
     genius (0.1.1)
       httparty (~> 0.11.0)
-    hashie (3.5.5)
+    hashie (3.5.6)
     heroku-api (0.4.2)
       excon (~> 0.45)
       multi_json (~> 1.8)
@@ -38,17 +38,17 @@ GEM
       webrobots (>= 0.0.9, < 0.2)
     mime-types (1.25.1)
     mimemagic (0.3.2)
-    mini_portile2 (2.1.0)
+    mini_portile2 (2.2.0)
     multi_json (1.12.1)
     multi_xml (0.6.0)
     multipart-post (2.0.0)
     net-http-digest_auth (1.4.1)
     net-http-persistent (2.9.4)
-    nokogiri (1.7.2)
-      mini_portile2 (~> 2.1.0)
+    nokogiri (1.8.0)
+      mini_portile2 (~> 2.2.0)
     ntlm-http (0.1.1)
     pastebin-api (1.0.5)
-    pg (0.20.0)
+    pg (0.21.0)
     rake (12.0.0)
     rest-client (1.6.9)
       mime-types (~> 1.16)
@@ -88,7 +88,7 @@ DEPENDENCIES
   unirest
 
 RUBY VERSION
-   ruby 2.4.0p0
+   ruby 2.4.1p111
 
 BUNDLED WITH
-   1.14.6
+   1.15.1
