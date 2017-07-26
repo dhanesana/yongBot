@@ -11,9 +11,9 @@ module Cinch
 
       def execute(m)
         page = Nokogiri::HTML(open('http://www.arirang.co.kr/Tv2/Tv_PlusHomepage_Full.asp?PROG_CODE=TVCR0688&MENU_CODE=101717&sys_lang=Eng'))
-        date = page.css('div.ahtml_h2').text
+        sched_time = page.css('p.ment').first.text.strip
         guest = page.css('div.ahtml_h1').text
-        m.reply "After School Club - #{guest} | #{date}"
+        m.reply "After School Club - #{guest} | #{sched_time}"
       end
 
       def help(m)
