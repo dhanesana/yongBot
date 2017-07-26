@@ -96,11 +96,6 @@ module Cinch
       end
 
       def execute(m)
-        # num = @plugins.size.even? ? @plugins.size / 2 : (@plugins.size / 2) + 1
-        # split_array = @plugins.each_slice(num).to_a
-        # m.reply "=> #{split_array[0].join(', ')}"
-        # m.reply "#{split_array[1].join(', ')}"
-        # m.reply ".help [command] for more info (ie '.help sub')"
         m.user.msg(@plugins.join(', '))
         m.reply "check ur pms for list of commands bru"
       end
