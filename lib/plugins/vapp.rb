@@ -16,11 +16,19 @@ module Cinch
         return m.reply 'no live vapp streams bru' if page.css('li.on').size < 2
         live = {}
         page.css('li.on').each do |artist|
-          next if artist.css('em.title').text == ''
-          live[artist.css('em.title').text] = "http://www.vlive.tv#{artist.css('a').first['href']}"
+          next if artist.css('em.title').text.strip == ''
+          live[artist.css('em.title').text.strip] = "http://www.vlive.tv#{artist.css('a').first['href']}"
         end
-        live.to_a.each do |pair|
-          m.reply "#{pair[0]} => #{pair[1]}"
+        if live.to_a.size < 4
+          live.to_a.each do |pair|
+            m.reply "#{pair[0]} => #{pair[1]}"
+          end
+        else
+          response = ""
+          live.to_a.each do |pair|
+            response += "[#{pair[0]} => #{pair[1]}], "
+          end
+          m.reply response.chomp(', ')
         end
       end
 
