@@ -19,7 +19,7 @@ module Cinch
           next if row.css('td')[2].nil?
           if row.css('td')[0].text.include? month
             if row.css('td')[0].text.include? year
-              date = row.css('td')[0].text
+              date = row.css('td')[0].text.strip
               # Slice broadcast date and omit filming date
               date = date.slice(0..(date.index("\n") - 1)) if date.include? "\n"
               guests = []
@@ -38,9 +38,12 @@ module Cinch
                   counter += 1 if person.text == " ("
                   next if counter == 1
                   next if person.text == " ("
+                  next if person.text == ""
                   next if person.text == "),"
                   next if person.text == ")"
-                  guests << person.text
+                  guests[-1] += person.text if person.text[0] == "'"
+                  next if person.text[0] == "'"
+                  guests << person.text.chomp(',').strip
                 end
                 # if the guest is a group
                 if person.children.size > 2
@@ -49,13 +52,29 @@ module Cinch
                     next if child.text == ","
                     next if child.text == "\n"
                     next if child.text.include? "\n"
+                    groups[-1] += child.text.strip if child.text.strip == '('
+                    groups[-1] += child.text.strip if child.text.strip == ')'
+                    groups[-1] += "#{child.text.strip} " if child.text.strip == ','
+                    next if child.text.strip == "("
+                    next if child.text.strip == ")"
+                    next if child.text.strip == ","
                     group_name = child.text
-                    group_name[-1] = ""
-                    groups << group_name
+                    group_name.chomp!(',')
+                    groups << group_name.strip
                   end
                 end
               end
-              lineup << "[#{date} => #{guests.join(', ')}#{groups.join(', ')}]"
+              # if a guest has a description within parenthesis
+              guests.each do |guest|
+                if guest[-1] == "("
+                  init_index = guests.index(guest)
+                  guests[init_index + 1].insert(0, guest)
+                  guests[init_index + 1].insert(0, "(")
+                  guests[init_index + 1].chomp!(',')
+                  guests.delete_at(init_index)
+                end
+              end
+              lineup << "[#{date} => #{guests.join(', ')}#{groups.join}]"
             end
           end
         end
