@@ -14,7 +14,12 @@ module Cinch
         utc = Time.now.utc
         today_pdt = utc + Time.zone_offset('PDT')
         today = today_pdt.strftime("%Y%m%d")
-        feed = open("http://data.nba.com/5s/json/cms/noseason/scoreboard/#{today}/games.json").read
+        begin
+          url = "http://data.nba.com/5s/json/cms/noseason/scoreboard/#{today}/games.json"
+          feed = open(url).read
+        rescue
+          return m.reply "error: check http://data.nba.com/5s/json/cms/noseason/scoreboard/#{today}/games.json"
+        end
         result = JSON.parse(feed)
         return m.reply "no games today bru" if result['sports_content']['games'] == ""
         num_of_games = result['sports_content']['games']['game'].size
