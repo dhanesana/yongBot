@@ -11,17 +11,16 @@ module Cinch
 
       def execute(m, prefix, faceplus, link)
         url = URI.encode(link)
-        response = Unirest.get("https://apius.faceplusplus.com/v2/detection/detect?url=#{url}&api_secret=#{ENV['FACEPLUS_SECRET']}&api_key=#{ENV['FACEPLUS_KEY']}&attribute=glass,gender,age,race,smiling")
-        # Error Code Handling
+        response = Unirest.post("https://api-us.faceplusplus.com/facepp/v3/detect?image_url=#{url}&api_key=#{ENV['FACEPLUS_KEY']}&api_secret=#{ENV['FACEPLUS_SECRET']}&return_attributes=gender,age,ethnicity,emotion")
         return m.reply "Status Code: #{response.code}" if response.code != 200
-        age = response.body['face'].first['attribute']['age']['value']
-        range = response.body['face'].first['attribute']['age']['range']
-        gender = response.body['face'].first['attribute']['gender']['value']
-        race = response.body['face'].first['attribute']['race']['value']
-        smiling_percent = response.body['face'].first['attribute']['smiling']['value'].round(2)
-        glasses = response.body['face'].first['attribute']['glass']['value']
-        glasses = "Sunglasses" if response.body['face'].first['attribute']['glass']['value'] == "Dark"
-        m.reply "#{race} #{gender} | Age: #{age} ± #{range} | #{smiling_percent}% Smiling | Glasses: #{glasses}"
+        emotion = 'Emotion: '
+        response.body['faces'].first['attributes']['emotion'].each do |emo|
+          emotion += "#{emo[0]} => #{emo[1]}%, " if emo[1] > 9
+        end
+        gender = response.body['faces'].first['attributes']['gender']['value']
+        age = response.body['faces'].first['attributes']['age']['value']
+        race = response.body['faces'].first['attributes']['ethnicity']['value']
+        m.reply "#{m.user.nick}: [#{race} #{gender}, Age: #{age}, #{emotion.chomp(', ')}]"
       end
 
       def random(m)
@@ -41,7 +40,7 @@ module Cinch
       end
 
       def help(m)
-        m.reply "facial detection for race, gender, age, smiling, and glasses"
+        m.reply "facial detection for ethnicity, gender, age, and emotion using Face++ v3"
       end
 
     end
