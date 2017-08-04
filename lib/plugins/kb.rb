@@ -40,7 +40,7 @@ module Cinch
                   next if person.text == " ("
                   next if person.text == "),"
                   next if person.text == ")"
-                  guests << person.text
+                  guests << person.text.strip
                 end
                 # if the guest is a group
                 if person.children.size > 2
@@ -51,15 +51,15 @@ module Cinch
                     next if child.text.include? "\n"
                     group_name = child.text
                     group_name[-1] = ""
-                    groups << group_name
+                    groups << group_name.strip
                   end
                 end
               end
-              lineup << "[#{date} => #{guests.join}#{groups.join}]"
+              lineup << "[#{date} => #{guests.join}#{groups.join}] "
             end
           end
         end
-        m.reply lineup.join
+        m.reply "Knowing Bros: #{lineup.join.chomp(' ')}"
       end
 
       def help(m)
