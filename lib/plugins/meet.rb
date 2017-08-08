@@ -56,12 +56,12 @@ module Cinch
         meets = meets.sort_by { |title, date| date.first }
         unconfirmed = unconfirmed.sort_by { |title, date| date.first }
         if meets.size > 0
-          m.reply "Confirmed => #{meets.first.first} #{((Time.strptime(meets.first[1].first.to_s, '%Q').utc - (07 * 3600)) + (16 * 3600)).strftime("%m/%d %H:%MKST")} http://mwave.interest.me/meetgreet/view/#{meets.first[1][1]}"
+          m.reply "Confirmed => #{meets.first.first.strip} #{((Time.strptime(meets.first[1].first.to_s, '%Q').utc - (07 * 3600)) + (16 * 3600)).strftime("%m/%d %H:%MKST")} http://mwave.interest.me/meetgreet/view/#{meets.first[1][1]}"
         else
           m.reply "No confirmed meet & greets"
         end
         if unconfirmed.size > 0
-          m.reply "Unconfirmed => #{unconfirmed.first.first} #{((Time.strptime(unconfirmed.first[1].first.to_s, '%Q').utc - (07 * 3600)) + (16 * 3600)).strftime("%m/%d %H:%MKST")} http://mwave.interest.me/meetgreet/view/#{unconfirmed.first[1][1]}"
+          m.reply "Unconfirmed => #{unconfirmed.first.first.strip} #{((Time.strptime(unconfirmed.first[1].first.to_s, '%Q').utc - (07 * 3600)) + (16 * 3600)).strftime("%m/%d %H:%MKST")} http://mwave.interest.me/meetgreet/view/#{unconfirmed.first[1][1]}"
         end
       end
 
@@ -94,13 +94,13 @@ module Cinch
         i = 0
         u = 0
         while i < meets.size
-          list += "[#{meets[i].first}, #{((Time.strptime(meets[i][1].to_s, '%Q').utc - (07 * 3600)) + (16 * 3600)).strftime("%m/%d %H:%MKST")}]"
+          list += "[#{meets[i].first.strip}, #{((Time.strptime(meets[i][1].to_s, '%Q').utc - (07 * 3600)) + (16 * 3600)).strftime("%m/%d %H:%MKST")}]"
           i += 1
           break if i == 5
           list += ", "
         end
         while u < unconfirmed.size
-          un_list += "[#{unconfirmed[u].first}, #{((Time.strptime(unconfirmed[u][1].to_s, '%Q').utc - (07 * 3600)) + (16 * 3600)).strftime("%m/%d %H:%MKST")}]"
+          un_list += "[#{unconfirmed[u].first.strip}, #{((Time.strptime(unconfirmed[u][1].to_s, '%Q').utc - (07 * 3600)) + (16 * 3600)).strftime("%m/%d %H:%MKST")}]"
           u += 1
           break if u == 5
           un_list += ", "
