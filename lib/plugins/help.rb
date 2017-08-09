@@ -30,6 +30,7 @@ module Cinch
           ".eat [food_name]",
           ".dispatch",
           ".face [img_url]",
+          ".celeb [img_url]",
           ".faceplus [img_url]",
           ".ign [title]",
           ".steam [user]",
