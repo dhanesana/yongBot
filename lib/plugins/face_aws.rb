@@ -13,6 +13,11 @@ module Cinch
 
       def initialize(*args)
         super
+        Aws.config.update({
+          region: 'us-west-2',
+          credentials: Aws::Credentials.new(ENV['AWS_ACCESS_KEY_ID'], ENV['AWS_SECRET_ACCESS_KEY'])
+        })
+        @client = Aws::Rekognition::Client.new
         @users = Hash.new
       end
 
@@ -65,12 +70,7 @@ module Cinch
 
       def post_api(m, url)
         image_url = URI.encode(url)
-        Aws.config.update({
-          region: 'us-west-2',
-          credentials: Aws::Credentials.new(ENV['AWS_ACCESS_KEY_ID'], ENV['AWS_SECRET_ACCESS_KEY'])
-        })
-        client = Aws::Rekognition::Client.new
-        resp = client.detect_faces(
+        resp = @client.detect_faces(
           image: { bytes: open(image_url).read },
           attributes: ['ALL']
         )
