@@ -1,5 +1,5 @@
 require 'open-uri'
-require 'unirest'
+require 'aws-sdk'
 
 module Cinch
   module Plugins
@@ -9,20 +9,33 @@ module Cinch
       match /(wutdis) (.+)/
       match /(help wutdis)$/, method: :help
 
+      def initialize(*args)
+        super
+        Aws.config.update({
+          region: 'us-west-2',
+          credentials: Aws::Credentials.new(ENV['AWS_ACCESS_KEY_ID'], ENV['AWS_SECRET_ACCESS_KEY'])
+        })
+        @client = Aws::Rekognition::Client.new
+      end
+
       def execute(m, prefix, wutdis, link)
-        url = URI.encode(link)
-        response = Unirest.post "http://rekognition.com/func/api/?api_key=#{ENV['REKOGNITION_KEY']}&api_secret=#{ENV['REKOGNITION_SECRET']}&jobs=scene_understanding_3&urls=#{url}"
-        match_one = response.body['scene_understanding']['matches'].first['tag']
-        score_one = (response.body['scene_understanding']['matches'].first['score'].to_f * 100).round(2)
-        if score_one.to_i >= 70
-          m.reply "looks like a #{match_one.downcase}.. i'm #{score_one}% sure!"
-        else
-          m.reply "looks like a #{match_one.downcase}.. maybe. i'm #{score_one.to_i}% sure"
+        img_url = URI.encode(link)
+        begin
+          resp = @client.detect_labels(
+            image: { bytes: open(img_url).read }
+          )
+        rescue Exception => e
+          return m.reply "Error: #{e}"
         end
+        return m.reply 'looks like a buncha nothing' if resp.labels.size < 1
+        first_label = resp.labels.first.name
+        # a or an
+        resp_label = %w(a e i o u).include?(first_label[0].downcase) ? "an #{first_label}" : "a #{first_label}"
+        m.reply "i see #{resp_label}. #{resp.labels.first.confidence.round(2)}% sure tho"
       end
 
       def help(m)
-        m.reply 'returns a description of a specified image'
+        m.reply 'identifies objects within a given image and responds with a label'
       end
 
     end
