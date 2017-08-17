@@ -20,9 +20,13 @@ module Cinch
 
       def execute(m, prefix, celeb, link)
         img_url = URI.encode(link)
-        resp = @client.recognize_celebrities(
-          image: { bytes: open(img_url).read }
-        )
+        begin
+          resp = @client.detect_labels(
+            image: { bytes: open(img_url).read }
+          )
+        rescue Exception => e
+          return m.reply "Error: #{e}"
+        end
         return m.reply "that don't look like any celeb i kno" if resp.celebrity_faces.size < 1
         celeb_name = resp.celebrity_faces[0].name
         celeb_conf = resp.celebrity_faces[0].match_confidence.round(2)

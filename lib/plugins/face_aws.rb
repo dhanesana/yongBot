@@ -70,10 +70,14 @@ module Cinch
 
       def post_api(m, url)
         image_url = URI.encode(url)
-        resp = @client.detect_faces(
-          image: { bytes: open(image_url).read },
-          attributes: ['ALL']
-        )
+        begin
+          resp = @client.detect_faces(
+            image: { bytes: open(image_url).read },
+            attributes: ['ALL']
+          )
+        rescue Exception => e
+          return m.reply "Error: #{e}"
+        end
         return m.reply 'i see no face here bru' if resp.face_details.size < 1
         gender = resp.face_details[0].gender.value
         gender_conf = resp.face_details[0].gender.confidence
