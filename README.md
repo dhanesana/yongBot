@@ -25,47 +25,49 @@ Create a .env file within the yongBot directory, and populate with the following
 
 **_Note: Review the terms and conditions of each API before registering._**
 
-| ENV Variable       | Value
-| -------------      |:-----:
-| APP_NAME           | *Heroku App Name*
-| BEAM_USERS         | [Beam](https://beam.pro/) Users (comma-seperated, no spaces)
-| SERVER             | *IRC Server (ex. irc.snoonet.org)*
-| CHANNELS           | *IRC #Channels (with hash, comma-seperated, no spaces)*
-| DICT_KEY           | [Merriam-Webster Dictionary API Key](https://www.dictionaryapi.com/)
-| NICKS              | *Bot IRC Nickname*
-| PW                 | *Password for registered bot nickname*
-| USER_MODES         | IRC User Modes (comma-seperated) (ex. B,I)
-| MASTER             | [Your IP Host & Domain](http://www.ircbeginner.com/opvinfo/masks.html)
-| HEROKU_API         | [Heroku API Key](https://dashboard.heroku.com/account)
-| HEROKU_BOT_HIGH    | 1
-| HEROKU_BOT_LOW     | 0
-| DAUM_KEY           | [Daum API Key](https://developers.daum.net/services)
-| EBAY_ID            | [eBay AppID](https://go.developer.ebay.com/)
-| FACEPLUS_KEY       | [Face++ API Key](http://www.faceplusplus.com/create-a-new-app/)
-| FACEPLUS_SECRET    | [Face++ API Secret](http://www.faceplusplus.com/create-a-new-app/)
-| FLICKR_KEY         | [Flickr API Key](https://www.flickr.com/services/api/misc.api_keys.html)
-| GITHUB_ID          | [GitHub Client ID](https://github.com/settings/applications/new)
-| GITHUB_SECRET      | [GitHub Client Secret](https://github.com/settings/applications/new)
-| GOOGLE             | [Google API Key](https://cloud.google.com/translate/v2/getting_started)
-| IG_ID              | [Instagram Client ID](https://instagram.com/developer/)
-| KMF_LOGIN          | [Korea Times ID](https://ticket.koreatimes.com/member/login.html)
-| KMF_PW             | [Korea Times Password](https://ticket.koreatimes.com/member/login.html)
-| MASHAPE_KEY        | [Mashape API Key](http://docs.mashape.com/api-keys)
-| NUTRITIONX_ID      | [Nutritionix AppID](https://www.nutritionix.com/api)
-| NUTRITION_KEY      | [Nutritionix API Key](https://www.nutritionix.com/api)
-| PASTEBIN_KEY       | [Pastebin API Key](https://pastebin.com/api)
-| RAPGENIUS          | [Genius Access Token](http://genius.com/api-clients)
-| REKOGNITION_KEY    | [ReKognition API Key](https://rekognition.com/developer/start)
-| REKOGNITION_SECRET | [ReKognition API Secret](https://rekognition.com/developer/start)
-| SC_ID              | [SoundCloud Client ID](https://developers.soundcloud.com/docs/api/guide)
-| STEAM_KEY          | [Steam API Key](http://steamcommunity.com/dev)
-| TIMEZONE           | [TimeZoneDB API Key](http://timezonedb.com/)
-| TUMBLR_KEY         | [Tumblr API Key](https://www.tumblr.com/docs/en/api/v2)
-| TWITCH_ID          | [Twitch Client-ID](https://www.twitch.tv/settings/connections)
-| TWITCH_CHANNELS    | *IRC #Channels for Twitch and Beam plugin announcements (with hash, comma-seperated, no spaces)*
-| VIKI               | [Viki AppID](http://dev.viki.com/)
-| WA_ID              | [Wolfram Alpha AppID](http://products.wolframalpha.com/api/)
-| WEATHER_KEY        | [OpenWeatherMap API Key](http://openweathermap.org/appid#get)
+| ENV Variable           | Value
+| -------------          |:-----:
+| APP_NAME               | *Heroku App Name*
+| AWS_ACCESS_KEY_ID      | [AWS Key ID](https://aws.amazon.com/)
+| AWS_SECRET_ACCESS_KEY  | [AWS Secret Key](https://aws.amazon.com/)
+| BEAM_USERS             | [Beam](https://beam.pro/) Users (comma-seperated, no spaces)
+| SERVER                 | *IRC Server (ex. irc.snoonet.org)*
+| CHANNELS               | *IRC #Channels (with hash, comma-seperated, no spaces)*
+| DAUM_KEY               | [Daum API Key](https://developers.daum.net/)
+| DICT_KEY               | [Merriam-Webster Dictionary API Key](https://www.dictionaryapi.com/)
+| NICKS                  | *Bot IRC Nickname*
+| PW                     | *Password for registered bot nickname*
+| USER_MODES             | IRC User Modes (comma-seperated) (ex. B,I)
+| MASTER                 | [Your IP Host & Domain](http://www.ircbeginner.com/opvinfo/masks.html)
+| HEROKU_API             | [Heroku API Key](https://dashboard.heroku.com/account)
+| HEROKU_BOT_HIGH        | 1
+| HEROKU_BOT_LOW         | 0
+| DAUM_KEY               | [Daum API Key](https://developers.daum.net/services)
+| EBAY_ID                | [eBay AppID](https://go.developer.ebay.com/)
+| FACEPLUS_KEY           | [Face++ API Key](https://www.faceplusplus.com/)
+| FACEPLUS_SECRET        | [Face++ API Secret](https://www.faceplusplus.com/)
+| FLICKR_KEY             | [Flickr API Key](https://www.flickr.com/services/api/misc.api_keys.html)
+| GITHUB_ID              | [GitHub Client ID](https://github.com/settings/applications/new)
+| GITHUB_SECRET          | [GitHub Client Secret](https://github.com/settings/applications/new)
+| GOOGLE                 | [Google API Key](https://cloud.google.com/translate/v2/getting_started)
+| IG_ID                  | [Instagram Client ID](https://instagram.com/developer/)
+| KMF_LOGIN              | [Korea Times ID](https://ticket.koreatimes.com/member/login.html)
+| KMF_PW                 | [Korea Times Password](https://ticket.koreatimes.com/member/login.html)
+| MASHAPE_KEY            | [Mashape API Key](http://docs.mashape.com/api-keys)
+| NUTRITIONX_ID          | [Nutritionix AppID](https://www.nutritionix.com/api)
+| NUTRITION_KEY          | [Nutritionix API Key](https://www.nutritionix.com/api)
+| PASTEBIN_KEY           | [Pastebin API Key](https://pastebin.com/api)
+| RAPGENIUS              | [Genius Access Token](http://genius.com/api-clients)
+| SC_ID                  | [SoundCloud Client ID](https://developers.soundcloud.com/docs/api/guide)
+| STEAM_KEY              | [Steam API Key](http://steamcommunity.com/dev)
+| TIMEZONE               | [TimeZoneDB API Key](http://timezonedb.com/)
+| TUMBLR_KEY             | [Tumblr API Key](https://www.tumblr.com/docs/en/api/v2)
+| TWITCH_ID              | [Twitch Client-ID](https://www.twitch.tv/settings/connections)
+| TWITCH_CHANNELS        | *IRC #Channels for Twitch and Beam plugin announcements (with hash, comma-seperated, no spaces)*
+| USER_MODES             | *Refer to your IRC server docs for applicable user modes* [ie](https://www.unrealircd.org/docs/User_modes)
+| VIKI                   | [Viki AppID](http://dev.viki.com/)
+| WA_ID                  | [Wolfram Alpha AppID](http://products.wolframalpha.com/api/)
+| WEATHER_KEY            | [OpenWeatherMap API Key](http://openweathermap.org/appid#get)
 
 Usage
 -----
