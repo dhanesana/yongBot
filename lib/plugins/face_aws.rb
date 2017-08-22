@@ -63,6 +63,7 @@ module Cinch
         posts.delete_if { |post| post.include? '/a/' }
         posts.delete_if { |post| post.include? 'webm' }
         posts.delete_if { |post| post.include? 'gif' }
+        posts.delete_if { |post| post[-1] == '/' }
         link = posts.sample
         m.reply "r/kpics: #{link}"
         post_api(m, link)
