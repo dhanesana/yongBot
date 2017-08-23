@@ -19,6 +19,7 @@ module Cinch
       end
 
       def execute(m, prefix, twins, links)
+        return if $banned.include? m.user.host
         urls = links.split(/[[:space:]]/)
         source_url = URI.encode(urls[0])
         target_url = URI.encode(urls[1])

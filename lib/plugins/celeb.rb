@@ -19,6 +19,7 @@ module Cinch
       end
 
       def execute(m, prefix, celeb, link)
+        return if $banned.include? m.user.host
         img_url = URI.encode(link)
         begin
           resp = @client.detect_labels(
