@@ -49,8 +49,8 @@ module Cinch
         return if user_prefix == 'list'
         # can't ban $master
         return m.is_unauthorized if user_prefix == $master
-        return ban_toggle(m, user_prefix) if m.is_admin?
-        return ban_toggle(m, user_prefix) if m.is_op?
+        return ban_toggle(m, user_prefix.downcase) if m.is_admin?
+        return ban_toggle(m, user_prefix.downcase) if m.is_op?
         m.is_unauthorized
       end
 
