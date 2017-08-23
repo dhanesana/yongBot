@@ -82,7 +82,7 @@ module Cinch
             string += "\n"
           end
         else
-          m.is_unauthorized
+          return m.is_unauthorized
         end
         # Unlisted paste titled '.banned list' expires in 10 minutes
         m.user.msg(pastebin.newpaste(string, api_paste_name: '.ban list', api_paste_private: 1, api_paste_expire_date: '10M'))
@@ -170,7 +170,7 @@ module Cinch
           return Channel(channel).send sentence if channels.include? channel
           m.reply 'no external msgs bru'
         else
-          m.is_unauthorized
+          return m.is_unauthorized
         end
       end
 
@@ -186,7 +186,7 @@ module Cinch
           msg = 'I NOTICE U' if nick_msg.split(' ').size == 1
           User(nick).notice(msg)
         else
-          m.is_unauthorized
+          return m.is_unauthorized
         end
       end
 
