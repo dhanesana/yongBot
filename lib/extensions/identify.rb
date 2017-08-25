@@ -17,6 +17,14 @@ module YongIdentify
   def is_unauthorized
     reply "https://youtu.be/OBWpzvJGTz4"
   end
+
+  # Ignore banned users (monkey-patch of Message#match)
+  def match(regexp, type, strip_colors)
+    unless self.user.nil?
+      return if $banned.include? self.user.host.downcase
+    end
+    super
+  end
 end
 
 module Cinch
