@@ -59,10 +59,10 @@ module Cinch
         search = conn.exec("SELECT * FROM banned WHERE prefix='#{conn.escape_string(user_prefix)}';")
         if search.ntuples > 0
           conn.exec("DELETE FROM banned WHERE prefix='#{conn.escape_string(user_prefix)}';")
-          return User(m.user.nick).notice("#{conn.escape_string(user_prefix)} is UNbanned")
+          User(m.user.nick).notice("#{conn.escape_string(user_prefix)} is UNbanned")
         else
           conn.exec("INSERT INTO banned (prefix) VALUES ('#{conn.escape_string(user_prefix)}');")
-          return User(m.user.nick).notice("#{conn.escape_string(user_prefix)} is banned!")
+          User(m.user.nick).notice("#{conn.escape_string(user_prefix)} is banned!")
         end
         banned_users = conn.exec("SELECT * FROM banned;")
         $banned = []
