@@ -139,4 +139,4 @@ The following commands may only be used by the *MASTER* user:
 | .echo [#channel] [msg] | Outputs a message to specified #channel
 | .notice                | Replies via notice
 | .notice [nick] [msg]   | Sends a notice to specified user
-| .ban [user host/mask]  | Toggles ban of specified user (Twitch & Beam)
+| .ban [user host/mask]  | Toggles ban of specified user
