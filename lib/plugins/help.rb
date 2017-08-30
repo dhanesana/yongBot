@@ -89,7 +89,8 @@ module Cinch
           ".world [num]",
           ".itunes [num]",
           ".dp [news/reviews]",
-          ".kb"
+          ".kb",
+          ".arirang"
         ]
       end
 
