@@ -22,6 +22,10 @@ module YongIdentify
   def match(regexp, type, strip_colors)
     unless self.user.nil?
       return if $banned.include? self.user.host.downcase
+      # Ignore private messages, except those from services or $master
+      unless self.user.host == $master || self.user.host.downcase.include?('services')
+        return if self.channel? == false
+      end
     end
     super
   end
