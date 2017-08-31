@@ -11,7 +11,7 @@ module Cinch
 
       def execute(m, prefix, faceplus, link)
         url = URI.encode(link)
-        response = Unirest.post("https://api-us.faceplusplus.com/facepp/v3/detect?image_url=#{url}&api_key=#{ENV['FACEPLUS_KEY']}&api_secret=#{ENV['FACEPLUS_SECRET']}&return_attributes=gender,age,ethnicity,emotion")
+        response = Unirest.post("https://api-us.faceplusplus.com/facepp/v3/detect?image_url=#{url}&api_key=#{ENV['FACEPLUS_KEY']}&api_secret=#{ENV['FACEPLUS_SECRET']}&return_attributes=gender,age,ethnicity,emotion,beauty")
         return m.reply "Status Code: #{response.code}" if response.code != 200
         emotion = 'Emotion: '
         response.body['faces'].first['attributes']['emotion'].each do |emo|
@@ -20,7 +20,8 @@ module Cinch
         gender = response.body['faces'].first['attributes']['gender']['value']
         age = response.body['faces'].first['attributes']['age']['value']
         race = response.body['faces'].first['attributes']['ethnicity']['value']
-        m.reply "#{m.user.nick}: [#{race} #{gender}, Age: #{age}, #{emotion.chomp(', ')}]"
+        beauty = response.body['faces'].first['attributes']['beauty']["#{gender.downcase}_score"].round(3)
+        m.reply "#{m.user.nick}: [#{race} #{gender}, Age: #{age}, #{emotion.chomp(', ')}, Beauty: #{beauty}]"
       end
 
       def random(m)
