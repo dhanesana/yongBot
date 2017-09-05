@@ -94,16 +94,6 @@ $ heroku scale web=0
 $ heroku scale bot=1
 ```
 
-Keep in mind that bots depoloyed to Heroku will run 24/7. Scale your bot to 0 to shut it down.
-To auto-scale your bot according to time of day, install [Heroku Scheduler](https://addons.heroku.com/scheduler) and schedule the following rake tasks:
-
-```
-$ rake scale_down
-```
-```
-$ rake scale_up
-```
-
 ### IRC Identification
 
 yongBot uses the [Identify Plugin](https://github.com/cinchrb/cinch-identify) to identify registered bot nicknames. yongBot is currently configured to identify with NickServ. To change service, locate the **yong_bot.rb** file and modify the following line to specify type of authentication:
