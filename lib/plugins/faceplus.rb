@@ -62,7 +62,7 @@ module Cinch
       end
 
       def execute(m, prefix, faceplus, url)
-        return if url == 'top' || url == 'high' || url == 'bottom' || url == 'low'
+        return if %w(top high bottom low).include? url.downcase
         get_scores(m, URI.encode(url)) if rate_limit(m) == 'ok'
       end
 
