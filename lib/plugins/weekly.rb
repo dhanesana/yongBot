@@ -32,7 +32,8 @@ module Cinch
             end
           end
         end
-        m.reply lineup.join(", ") + " 18:00KST"
+        return m.reply "Weekly Idol: [No guests or a continuation of previous episode]" if lineup == []
+        m.reply "Weekly Idol: #{lineup.join(', ')}"
       end
 
       def help(m)
