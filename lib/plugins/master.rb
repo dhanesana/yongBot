@@ -91,9 +91,13 @@ module Cinch
 
       def drop(m, prefix, drop, table_name)
         if m.is_admin?
-          conn = PG::Connection.new(ENV['DATABASE_URL'])
-          conn.exec("DROP TABLE #{table_name};")
-          m.reply 'donezo'
+          begin
+            conn = PG::Connection.new(ENV['DATABASE_URL'])
+            conn.exec("DROP TABLE #{table_name};")
+            m.reply 'donezo'
+          rescue => e
+            m.user.msg(e.message.strip)
+          end
         else
           return m.is_unauthorized
         end
