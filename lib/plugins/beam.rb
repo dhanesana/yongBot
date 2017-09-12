@@ -43,7 +43,6 @@ module Cinch
 
       def add_streamer(m, prefix, addbeam, streamer)
         return m.reply 'registered users only bru' if m.user.host.include? 'Snoonet'
-        return m.is_unauthorized if $banned.include? m.user.host
         return m.reply "#{streamer} already in db" if @streamers.include? streamer
         conn = PG::Connection.new(ENV['DATABASE_URL'])
         conn.exec("INSERT INTO beam (prefix, streamer) VALUES ('#{m.user.host}', '#{conn.escape(streamer)}');")
@@ -78,7 +77,6 @@ module Cinch
 
       def list(m)
         return m.reply 'registered users only bru' if m.user.host.include? 'Snoonet'
-        return m.is_unauthorized if $banned.include? m.user.host
         conn = PG::Connection.new(ENV['DATABASE_URL'])
         pastebin = Pastebin::Client.new(ENV['PASTEBIN_KEY'])
         string = ""
@@ -138,7 +136,6 @@ module Cinch
       def check_user(m, prefix, check_user, user)
         return if user == 'list'
         return m.reply 'registered users only bru' if m.user.host.include? 'Snoonet'
-        return m.is_unauthorized if $banned.include? m.user.host
         query = user.split(/[[:space:]]/).join(' ')
         user_get = Unirest.get "https://beam.pro/api/v1/channels/#{URI.encode(query)}"
         return m.reply "#{user} is not live bru" if user_get.body['online'] == false

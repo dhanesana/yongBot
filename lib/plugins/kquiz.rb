@@ -25,7 +25,6 @@ module Cinch
       end
 
       def with_num(m, prefix, with_num, num)
-        return m.is_unauthorized if $banned.include? m.user.host
         return m.reply 'invalid num bru' if num.to_i < 1
         return m.reply 'less than 120 sec bru' if num.to_i > 120
         return m.reply 'at least 30 sec bru' if num.to_i < 30
@@ -71,7 +70,6 @@ module Cinch
       end
 
       def guess(m)
-        return if $banned.include? m.user.host
         return unless @all_games.keys.include? m.channel.name
         channel = m.channel.name
         words_only = m.message.gsub(/[^0-9a-z ]/i, '')

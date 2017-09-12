@@ -45,7 +45,6 @@ module Cinch
       end
 
       def execute(m)
-        return m.is_unauthorized if $banned.include? m.user.host
         return m.reply "u get wat u deserve: #{@gn_pairs[m.user.host]}" if @gn_pairs.keys.include? m.user.host
         @gn_pairs[m.user.host] = @gn_db.keys.sample
         m.reply @gn_pairs[m.user.host]
@@ -56,7 +55,6 @@ module Cinch
 
       def add(m, prefix, addgn, url)
         return m.reply 'registered users only bru' if m.user.host.include? 'Snoonet'
-        return m.is_unauthorized if $banned.include? m.user.host
         entry_array = url.split(' ')
         return m.reply "no spaces in name or url. only space between name and url bru" if entry_array.size > 2
         return m.reply "missing name or url" if entry_array.size < 2
@@ -77,7 +75,6 @@ module Cinch
       end
 
       def del(m, prefix, delgn, url)
-        return m.is_unauthorized if $banned.include? m.user.host
         return "url doesn't exist in database bru" if @gn_db[conn.escape(url)].nil?
         return del_url(m, url) if m.is_admin?
         return del_url(m, url) if m.is_op?
@@ -93,13 +90,11 @@ module Cinch
       end
 
       def who(m, prefix, who, url)
-        return m.is_unauthorized if $banned.include? m.user.host
         return m.reply "link not found bru" if @gn_db[conn.escape_string(url)].nil?
         m.reply "#{@gn_db[conn.escape_string(url)].first}"
       end
 
       def list(m)
-        return m.is_unauthorized if $banned.include? m.user.host
         pastebin = Pastebin::Client.new(ENV['PASTEBIN_KEY'])
         string = ""
         if m.is_admin?

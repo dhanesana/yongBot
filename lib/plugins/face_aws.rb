@@ -23,13 +23,11 @@ module Cinch
 
       def execute(m, prefix, face, url)
         return post_api(m, url) if m.is_admin?
-        return if $banned.include? m.user.host
         rate_check(m, 0, url)
       end
 
       def random(m)
         return get_kpic(m) if m.is_admin?
-        return if $banned.include? m.user.host
         rate_check(m, 1, 'http://google.com')
       end
 
