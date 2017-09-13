@@ -132,7 +132,7 @@ module Cinch
         )
         scores_hash(conn)
         m.reply "ding ding ding new high score" if table == 'plus_top'
-        m.reply "dun dun dun new high score" if table == 'plus_bottom'
+        m.reply "dun dun dun new low score" if table == 'plus_bottom'
       end
 
       def help(m)
