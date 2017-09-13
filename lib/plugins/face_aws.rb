@@ -22,6 +22,7 @@ module Cinch
       end
 
       def execute(m, prefix, face, url)
+        return m.reply "no score db. check faceplus" if %w(top high bottom low).include? url.downcase
         return post_api(m, url) if m.is_admin?
         rate_check(m, 0, url)
       end
