@@ -128,24 +128,23 @@ module Cinch
       end
 
       def ping(m)
-        return m.reply "too many ppls bru" if Channel(m.channel.name).users.size > 30
         users = []
         if m.is_admin?
-          Channel(m.channel.name).users.each do |user|
-            users << user.first.nick
-          end
-          users.delete(@bot.nick)
-          return m.reply users.join(' ')
-        end
-        if m.is_op?
-          Channel(m.channel.name).users.each do |user|
-            users << user.first.nick
-          end
-          users.delete(@bot.nick)
-          m.reply users.join(' ')
+          return ping_channel(m)
+        elsif m.is_op?
+          return m.reply "too many ppls bru (30+)" if Channel(m.channel.name).users.size > 30
+          ping_channel(m)
         else
           m.reply 'master or ops only bru'
         end
+      end
+
+      def ping_channel(m)
+        Channel(m.channel.name).users.each do |user|
+          users << user.first.nick
+        end
+        users.delete(@bot.nick)
+        m.reply users.join(' ')
       end
 
       def echo(m, prefix, echo, words)
