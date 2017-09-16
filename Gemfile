@@ -16,6 +16,4 @@ gem 'fuzzy_match'
 gem 'pastebin-api'
 gem 'ruby-instagram-scraper'
 gem 'aws-sdk'
-
 gem 'pg'
-gem 'heroku-api'
