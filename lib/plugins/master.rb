@@ -128,7 +128,6 @@ module Cinch
       end
 
       def ping(m)
-        users = []
         if m.is_admin?
           return ping_channel(m)
         elsif m.is_op?
@@ -140,6 +139,7 @@ module Cinch
       end
 
       def ping_channel(m)
+        users = []
         Channel(m.channel.name).users.each do |user|
           users << user.first.nick
         end
