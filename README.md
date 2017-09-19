@@ -125,7 +125,7 @@ The following commands may only be used by the *MASTER* user:
 | .join [#channel]       | Bot joins specified #channel
 | .part [#channel]       | Bot leaves specified #channel
 | .setnick [nickname]    | Updates bot nickname
-| .ping                  | Replies with the nick of every user in #channel
+| .ping                  | Replies with the nick of every user in #channel (up to 30 nicks)
 | .echo [#channel] [msg] | Outputs a message to specified #channel
 | .notice                | Replies via notice
 | .notice [nick] [msg]   | Sends a notice to specified user
