@@ -21,7 +21,7 @@ module Cinch
       def execute(m, prefix, celeb, link)
         img_url = URI.encode(link)
         begin
-          resp = @client.detect_labels(
+          resp = @client.recognize_celebrities(
             image: { bytes: open(img_url).read }
           )
         rescue Exception => e
