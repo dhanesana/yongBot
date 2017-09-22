@@ -6,6 +6,7 @@ module Cinch
     class Popsinseoul
       include Cinch::Plugin
 
+      match /(pops)$/
       match /(popsinseoul)$/
       match /(help popsinseoul)$/, method: :help
 

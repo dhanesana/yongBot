@@ -7,6 +7,7 @@ module Cinch
       include Cinch::Plugin
 
       match /(weekly)$/
+      match /(weeklyidol)$/
       match /(help weekly)$/, method: :help
 
       def execute(m)

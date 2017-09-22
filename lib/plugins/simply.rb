@@ -7,6 +7,7 @@ module Cinch
       include Cinch::Plugin
 
       match /(simply)$/
+      match /(simplykpop)$/
       match /(help simply)$/, method: :help
 
       def execute(m)
