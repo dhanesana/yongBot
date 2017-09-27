@@ -18,6 +18,7 @@ module Cinch
       match /(ban) (.+)/, method: :ban_unban
       match /(ban) (list)$/, method: :ban_list
       match /(drop) (.+)/, method: :drop
+      match /(ruby)$/, method: :ruby
 
       def initialize(*args)
         super
@@ -191,6 +192,10 @@ module Cinch
         else
           return m.is_unauthorized
         end
+      end
+
+      def ruby(m)
+        m.reply "ruby #{RUBY_VERSION}p#{RUBY_PATCHLEVEL}"
       end
 
     end
