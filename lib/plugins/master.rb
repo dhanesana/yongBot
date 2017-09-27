@@ -195,7 +195,7 @@ module Cinch
       end
 
       def ruby(m)
-        m.reply "ruby #{RUBY_VERSION}p#{RUBY_PATCHLEVEL}"
+        m.reply "ruby #{RUBY_VERSION}p#{RUBY_PATCHLEVEL} (#{RUBY_RELEASE_DATE} revision #{RUBY_REVISION}) [#{RUBY_PLATFORM}]"
       end
 
     end
