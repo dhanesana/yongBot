@@ -90,7 +90,8 @@ module Cinch
           ".itunes [num]",
           ".dp [news/reviews]",
           ".kb",
-          ".arirang"
+          ".arirang",
+          ".ruby"
         ]
       end
 
