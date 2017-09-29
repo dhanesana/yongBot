@@ -18,8 +18,6 @@ module Cinch
       match /(ban) (.+)/, method: :ban_unban
       match /(ban) (list)$/, method: :ban_list
       match /(drop) (.+)/, method: :drop
-      match /(ruby)$/, method: :ruby
-      match /(help ruby)$/, method: :help_ruby
 
       def initialize(*args)
         super
@@ -193,14 +191,6 @@ module Cinch
         else
           return m.is_unauthorized
         end
-      end
-
-      def ruby(m)
-        m.reply "ruby #{RUBY_VERSION}p#{RUBY_PATCHLEVEL} (#{RUBY_RELEASE_DATE} revision #{RUBY_REVISION}) [#{RUBY_PLATFORM}]"
-      end
-
-      def help_ruby(m)
-        m.reply "returns ruby version, patch level, release date, revision, and platform"
       end
 
     end

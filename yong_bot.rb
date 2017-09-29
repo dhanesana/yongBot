@@ -99,7 +99,8 @@ yong_bot = Cinch::Bot.new do
       Cinch::Plugins::Dp,
       Cinch::Plugins::Kb,
       Cinch::Plugins::Celeb,
-      Cinch::Plugins::Arirang
+      Cinch::Plugins::Arirang,
+      Cinch::Plugins::RubyVersion
     ]
     c.delay_joins = :identified
     c.plugins.options[Cinch::Plugins::Identify] = {
