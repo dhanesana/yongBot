@@ -83,18 +83,18 @@ module Cinch
         if m.is_admin?
           get_all = conn.exec("SELECT * FROM beam ORDER BY prefix DESC;")
           get_all.each do |x|
-            string += "'#{x['prefix']}' => 'https://beam.pro/#{x['streamer']}',"
+            string += "'#{x['prefix']}' => 'https://beam.pro/#{x['streamer']}', "
             string += "\n"
           end
         else
           get_all = conn.exec("SELECT * FROM beam;")
           get_all.each do |x|
-            string += "https://beam.pro/#{x['streamer']},"
+            string += "https://beam.pro/#{x['streamer']}, "
             string += "\n"
           end
         end
         # Unlisted paste titled '.gn list' expires in 10 minutes
-        m.user.msg(pastebin.newpaste(string, api_paste_name: '.beam list', api_paste_private: 1, api_paste_expire_date: '10M'))
+        m.user.msg(pastebin.newpaste(string.chomp.chomp(', '), api_paste_name: '.beam list', api_paste_private: 1, api_paste_expire_date: '10M'))
         m.reply "check ur pms for list of saved beam users"
       end
 
