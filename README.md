@@ -17,7 +17,7 @@ yongBot was created to run on [Heroku](https://www.heroku.com/) and uses Postgre
 
 #### Ruby Gems
 
-yongBot has numerous gem and API dependencies. API keys must be obtained externally, but gems are installed with [Bundler](http://bundler.io/).
+yongBot has numerous gem and API dependencies. You must obtain your own API keys and credentials, but gems are installed with [Bundler](http://bundler.io/).
 
 #### Configuration
 
