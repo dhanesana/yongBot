@@ -108,18 +108,26 @@ module Cinch
       end
 
       def join(m, prefix, join, channel)
-        return @bot.join(channel) if m.is_admin?
-        m.is_unauthorized
+        if m.is_admin?
+          User(m.user.nick).notice("Joining #{channel}"
+          return @bot.join(channel)
+        else
+          m.is_unauthorized
+        end
       end
 
       def part(m)
-        return @bot.part(m.channel.name) if m.is_admin?
+        return part_specified(m, '.', 'part', m.channel.name) if m.is_admin?
         m.is_unauthorized
       end
 
       def part_specified(m, prefix, part, channel)
-        return @bot.part(channel) if m.is_admin?
-        m.is_unauthorized
+        if m.is_admin?
+          User(m.user.nick).notice("Leaving #{channel}"
+          return @bot.part(m.channel.name)
+        else
+          m.is_unauthorized
+        end
       end
 
       def set_nick(m, prefix, setnick, new_nick)
