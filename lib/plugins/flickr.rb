@@ -12,8 +12,8 @@ module Cinch
 
       def execute(m, prefix, flickr, user)
         username = URI.encode(user.split(/[[:space:]]/).join(' ').downcase)
-        buffet = open("https://api.flickr.com/services/rest/?method=flickr.people.findByUsername&api_key=#{ENV['FLICKR_KEY']}&username=#{username}&format=json&nojsoncallback=1").read
-        result = JSON.parse(buffet)
+        nsid_req = open("https://api.flickr.com/services/rest/?method=flickr.people.findByUsername&api_key=#{ENV['FLICKR_KEY']}&username=#{username}&format=json&nojsoncallback=1").read
+        result = JSON.parse(nsid_req)
         nsid = result['user']['nsid']
         photos_req = open("https://api.flickr.com/services/rest/?method=flickr.people.getPublicPhotos&api_key=#{ENV['FLICKR_KEY']}&user_id=#{nsid}&format=json&nojsoncallback=1").read
         response = JSON.parse(photos_req)
