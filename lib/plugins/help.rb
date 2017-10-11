@@ -91,7 +91,8 @@ module Cinch
           ".dp [news/reviews]",
           ".kb",
           ".arirang",
-          ".ruby"
+          ".ruby",
+          ".maniadb [artist]"
         ]
       end
 
