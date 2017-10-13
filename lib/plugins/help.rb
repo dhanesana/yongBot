@@ -92,8 +92,8 @@ module Cinch
           ".kb",
           ".arirang",
           ".ruby",
-          ".maniadb [artist]",
-          ".mania album [album_title]"
+          ".artist [artist_name]",
+          ".album [album_title]"
         ]
       end
 
