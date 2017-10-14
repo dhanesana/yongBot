@@ -109,7 +109,7 @@ module Cinch
 
       def join(m, prefix, join, channel)
         if m.is_admin?
-          User(m.user.nick).notice("Joining #{channel}"
+          User(m.user.nick).notice("Joining #{channel}")
           return @bot.join(channel)
         else
           m.is_unauthorized
@@ -123,7 +123,7 @@ module Cinch
 
       def part_specified(m, prefix, part, channel)
         if m.is_admin?
-          User(m.user.nick).notice("Leaving #{channel}"
+          User(m.user.nick).notice("Leaving #{channel}")
           return @bot.part(m.channel.name)
         else
           m.is_unauthorized
