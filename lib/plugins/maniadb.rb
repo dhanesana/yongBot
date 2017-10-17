@@ -17,7 +17,7 @@ module Cinch
         open(url) do |rss|
           feed = RSS::Parser.parse(rss, false)
           return m.reply '0 results' if feed.items == []
-          m.reply "#{feed.items.first.title}: #{feed.items.first.link}"
+          m.reply "#{feed.items.first.title.strip}: #{feed.items.first.link.strip}"
         end
       end
 
