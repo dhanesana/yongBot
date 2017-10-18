@@ -34,7 +34,7 @@ module Cinch
       end
 
       def help(m)
-        m.reply 'returns a celebrity that resembles/matches a face in specified image'
+        m.reply 'returns a celebrity that resembles/matches a face in specified image (using AWS Rekognition)'
       end
 
     end
