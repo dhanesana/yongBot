@@ -18,6 +18,7 @@ module Cinch
       match /(ban) (.+)/, method: :ban_unban
       match /(ban) (list)$/, method: :ban_list
       match /(drop) (.+)/, method: :drop
+      match /(switch)$/, method: :switch
 
       def initialize(*args)
         super
@@ -198,6 +199,15 @@ module Cinch
           User(nick).notice(msg)
         else
           return m.is_unauthorized
+        end
+      end
+
+      def switch(m)
+        if m.is_admin?
+          $switch += 1 if $switch == 0
+          $switch -= 1 if $switch == 1
+        else
+          m.is_unauthorized
         end
       end
 

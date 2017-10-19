@@ -25,6 +25,7 @@ module YongIdentify
       # Ignore private messages, except those from services or $master
       unless self.user.host == $master || self.user.host.downcase.include?('services')
         return if self.channel? == false
+        return if $switch == 0
       end
     end
     super
