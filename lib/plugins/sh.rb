@@ -17,7 +17,7 @@ module Cinch
         num = rand(0..articles_num - 1)
         title = page.css('h2 a')[num].text
         link = page.css('h2 a')[num]['href']
-        m.reply "#{title} | #{link}"
+        m.reply "#{title.strip} | #{link.strip}"
       end
 
       def help(m)
