@@ -14,9 +14,9 @@ module Cinch
         lineup = []
         page.css('table.annlistTbl').first.css('td').each do |td|
           next unless td.text.include? '('
-          lineup << td.text
+          lineup << td.text.strip
         end
-        air_time = page.css('div.airtime p').first.text + 'KST'
+        air_time = page.css('div.airtime p').first.text.strip + 'KST'
         m.reply "[#{lineup.join('], [')}] #{air_time}"
       end
 

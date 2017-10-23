@@ -12,9 +12,9 @@ module Cinch
       def execute(m)
         feed = "http://www.arirang.com/player/onair_tv.asp"
         page = Nokogiri::HTML(open(feed))
-        time = page.css('li.on strong').text + "KST"
+        time = page.css('li.on strong').text.strip + "KST"
         title = page.css('li.on a').children[1].text.strip
-        next_time = page.css('div.aOA_schedule_wrap strong')[1].text + "KST"
+        next_time = page.css('div.aOA_schedule_wrap strong')[1].text.strip + "KST"
         next_title = page.css('div.aOA_schedule_wrap a')[1].children[1].text.strip
         m.reply "Live (#{time}): #{title} || Next (#{next_time}): #{next_title} #{feed}"
       end
