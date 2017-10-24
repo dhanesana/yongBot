@@ -206,6 +206,7 @@ module Cinch
         if m.is_admin?
           $switch += 1 if $switch == 0
           $switch -= 1 if $switch == 1
+          m.user.msg("Switch = #{$switch} => #{$switch == 1 ? "Bot On" : "Bot Off"}")
         else
           m.is_unauthorized
         end
