@@ -204,8 +204,14 @@ module Cinch
 
       def switch(m)
         if m.is_admin?
-          $switch += 1 if $switch == 0
-          $switch -= 1 if $switch == 1
+          case $switch
+          when 0
+            $switch += 1
+          when 1
+            $switch -= 1
+          else
+            return m.user.msg("ERROR! $switch = #{$switch}")
+          end
           m.user.msg("Switch = #{$switch} => #{$switch == 1 ? "Bot On" : "Bot Off"}")
         else
           m.is_unauthorized
