@@ -206,11 +206,11 @@ module Cinch
         if m.is_admin?
           case $switch
           when 0
-            $switch += 1
+            $switch += 1 # bot on
           when 1
-            $switch -= 1
+            $switch -= 1 # bot off
           else
-            return m.user.msg("ERROR! $switch = #{$switch}")
+            return m.user.msg("ERROR! $switch = #{$switch}") # send $master privmsg
           end
           m.user.msg("Switch = #{$switch} => #{$switch == 1 ? "Bot On" : "Bot Off"}")
         else
