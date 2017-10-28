@@ -95,10 +95,21 @@ module Cinch
           ".artist [artist_name]",
           ".album [album_title]"
         ]
+        @master_plugins = [
+          ".join [#channel]",
+          ".part [#channel]",
+          ".setnick [nickname]",
+          ".ping",
+          ".echo [#channel] [msg]",
+          ".notice [nick] [msg]",
+          ".ban [user host/mask]",
+          ".switch"
+        ]
       end
 
       def execute(m)
         m.user.msg(@plugins.join(', '))
+        m.user.msg(@master_plugins.join(', ')) if m.is_admin?
         m.reply "check ur pms for list of commands bru"
       end
 

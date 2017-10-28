@@ -20,6 +20,15 @@ module Cinch
       match /(drop) (.+)/, method: :drop
       match /(switch)$/, method: :switch
 
+      match /(help join)$/, method: :help_join_part
+      match /(help part)$/, method: :help_join_part
+      match /(help setnick)$/, method: :help_setnick
+      match /(help ping)$/, method: :help_ping
+      match /(help echo)$/, method: :help_echo
+      match /(help notice)$/, method: :help_notice
+      match /(help ban)$/, method: :help_ban
+      match /(help switch)$/, method: :help_switch
+
       def initialize(*args)
         super
         # Set nick to first choice if available after 3 minutes
@@ -216,6 +225,36 @@ module Cinch
         else
           m.is_unauthorized
         end
+      end
+
+      # Help methods
+
+      def help_join_part(m)
+        m.user.msg(".join [#channel] or .part [#channel] => Bot joins/parts specified #channel") if m.is_admin?
+      end
+
+      def help_setnick(m)
+        m.user.msg(".setnick [nick] => Updates bot nickname") if m.is_admin?
+      end
+
+      def help_ping(m)
+        m.user.msg(".ping => Replies with the nick of every user in #channel within the channel (up to 30 nicks for non-admin operators)") if m.is_admin?
+      end
+
+      def help_echo(m)
+        m.user.msg(".echo [#channel] [msg] => Outputs a message to specified #channel") if m.is_admin?
+      end
+
+      def help_notice(m)
+        m.user.msg(".notice [nick] [msg] => Sends a notice to specified user") if m.is_admin?
+      end
+
+      def help_ban(m)
+        m.user.msg(".ban [nick] => Toggles ban of specified user") if m.is_admin?
+      end
+
+      def help_switch(m)
+        m.user.msg(".switch => Toggles use of the bot by non-master users on/off") if m.is_admin?
       end
 
     end
