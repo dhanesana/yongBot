@@ -108,8 +108,10 @@ module Cinch
       end
 
       def execute(m)
-        m.user.msg(@plugins.join(', '))
-        m.user.msg(@master_plugins.join(', ')) if m.is_admin?
+        m.user.send(@plugins.join(', '))
+        if m.is_admin?
+          m.user.send(@master_plugins.join(', '))
+        end
         m.reply "check ur pms for list of commands bru"
       end
 
