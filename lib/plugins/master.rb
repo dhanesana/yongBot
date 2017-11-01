@@ -95,7 +95,7 @@ module Cinch
           return m.is_unauthorized
         end
         # Unlisted paste titled '.banned list' expires in 10 minutes
-        m.user.msg(pastebin.newpaste(string, api_paste_name: '.ban list', api_paste_private: 1, api_paste_expire_date: '10M'))
+        m.user.send(pastebin.newpaste(string, api_paste_name: '.ban list', api_paste_private: 1, api_paste_expire_date: '10M'))
         m.reply "check ur pms for list of banned prefixes"
       end
 
@@ -106,7 +106,7 @@ module Cinch
             conn.exec("DROP TABLE #{table_name};")
             m.reply 'donezo'
           rescue => e
-            m.user.msg(e.message.strip)
+            m.user.send(e.message.strip)
           end
         else
           return m.is_unauthorized
@@ -219,9 +219,9 @@ module Cinch
           when 1
             $switch -= 1 # bot off
           else
-            return m.user.msg("ERROR! $switch = #{$switch}") # send $master privmsg
+            return m.user.send("ERROR! $switch = #{$switch}") # send $master privmsg
           end
-          m.user.msg("Switch = #{$switch} => #{$switch == 1 ? "Bot On" : "Bot Off"}")
+          m.user.send("Switch = #{$switch} => #{$switch == 1 ? "Bot On" : "Bot Off"}")
         else
           m.is_unauthorized
         end
@@ -230,31 +230,31 @@ module Cinch
       # Help methods
 
       def help_join_part(m)
-        m.user.msg(".join [#channel] or .part [#channel] => Bot joins/parts specified #channel") if m.is_admin?
+        m.user.send(".join [#channel] or .part [#channel] => Bot joins/parts specified #channel") if m.is_admin?
       end
 
       def help_setnick(m)
-        m.user.msg(".setnick [nick] => Updates bot nickname") if m.is_admin?
+        m.user.send(".setnick [nick] => Updates bot nickname") if m.is_admin?
       end
 
       def help_ping(m)
-        m.user.msg(".ping => Replies with the nick of every user in #channel within the channel (up to 30 nicks for non-admin operators)") if m.is_admin?
+        m.user.send(".ping => Replies with the nick of every user in #channel within the channel (up to 30 nicks for non-admin operators)") if m.is_admin?
       end
 
       def help_echo(m)
-        m.user.msg(".echo [#channel] [msg] => Outputs a message to specified #channel") if m.is_admin?
+        m.user.send(".echo [#channel] [msg] => Outputs a message to specified #channel") if m.is_admin?
       end
 
       def help_notice(m)
-        m.user.msg(".notice [nick] [msg] => Sends a notice to specified user") if m.is_admin?
+        m.user.send(".notice [nick] [msg] => Sends a notice to specified user") if m.is_admin?
       end
 
       def help_ban(m)
-        m.user.msg(".ban [nick] => Toggles ban of specified user") if m.is_admin?
+        m.user.send(".ban [nick] => Toggles ban of specified user") if m.is_admin?
       end
 
       def help_switch(m)
-        m.user.msg(".switch => Toggles use of the bot by non-master users on/off") if m.is_admin?
+        m.user.send(".switch => Toggles use of the bot by non-master users on/off") if m.is_admin?
       end
 
     end

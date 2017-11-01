@@ -94,7 +94,7 @@ module Cinch
           end
         end
         # Unlisted paste titled '.gn list' expires in 10 minutes
-        m.user.msg(pastebin.newpaste(string.chomp.chomp(', '), api_paste_name: '.twitch list', api_paste_private: 1, api_paste_expire_date: '10M'))
+        m.user.send(pastebin.newpaste(string.chomp.chomp(', '), api_paste_name: '.twitch list', api_paste_private: 1, api_paste_expire_date: '10M'))
         m.reply "check ur pms for list of saved twitch users"
       end
 
