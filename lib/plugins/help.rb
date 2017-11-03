@@ -1,3 +1,5 @@
+require 'pastebin-api'
+
 module Cinch
   module Plugins
     class Help
@@ -105,13 +107,24 @@ module Cinch
           ".ban [user host/mask]",
           ".switch"
         ]
+        @pastebin = Pastebin::Client.new(ENV['PASTEBIN_KEY'])
       end
 
       def execute(m)
-        m.user.send(@plugins.join(', '))
-        if m.is_admin?
-          m.user.send(@master_plugins.join(', '))
+        string = ""
+        @plugins.each do |x|
+          string += x
+          string += "\n"
         end
+        if m.is_admin?
+          string += "## MASTER PLUGINS ##"
+          string += "\n"
+          @master_plugins.each do |x|
+            string += x
+            string += "\n"
+          end
+        end
+        m.user.send(@pastebin.newpaste(string.chomp.chomp(', '), api_paste_name: "#{ENV['NICKS'].split(',').first} Commands", api_paste_private: 1, api_paste_expire_date: '10M'))
         m.reply "check ur pms for list of commands bru"
       end
 
