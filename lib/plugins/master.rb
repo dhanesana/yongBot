@@ -238,7 +238,9 @@ module Cinch
       end
 
       def help_ping(m)
-        m.user.send(".ping => Replies with the nick of every user in #channel within the channel (up to 30 nicks for non-admin operators)") if m.is_admin?
+        if m.is_admin? || m.is_op?
+          m.user.send(".ping => Replies with the nick of every user in #channel within the channel (up to 30 nicks for non-admin operators)")
+        end
       end
 
       def help_echo(m)
