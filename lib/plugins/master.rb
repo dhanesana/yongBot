@@ -231,32 +231,39 @@ module Cinch
 
       def help_join_part(m)
         m.user.send(".join [#channel] or .part [#channel] => Bot joins/parts specified #channel") if m.is_admin?
+        m.is_unauthorized
       end
 
       def help_setnick(m)
         m.user.send(".setnick [nick] => Updates bot nickname") if m.is_admin?
+        m.is_unauthorized
       end
 
       def help_ping(m)
         if m.is_admin? || m.is_op?
           m.user.send(".ping => Replies with the nick of every user in #channel within the channel (up to 30 nicks for non-admin operators)")
         end
+        m.is_unauthorized
       end
 
       def help_echo(m)
         m.user.send(".echo [#channel] [msg] => Outputs a message to specified #channel") if m.is_admin?
+        m.is_unauthorized
       end
 
       def help_notice(m)
         m.user.send(".notice [nick] [msg] => Sends a notice to specified user") if m.is_admin?
+        m.is_unauthorized
       end
 
       def help_ban(m)
         m.user.send(".ban [nick] => Toggles ban of specified user") if m.is_admin?
+        m.is_unauthorized
       end
 
       def help_switch(m)
         m.user.send(".switch => Toggles use of the bot by non-master users on/off") if m.is_admin?
+        m.is_unauthorized
       end
 
     end
