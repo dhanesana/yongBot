@@ -124,7 +124,7 @@ module Cinch
             string += "\n"
           end
         end
-        m.user.send(@pastebin.newpaste(string.chomp.chomp(', '), api_paste_name: "#{ENV['NICKS'].split(',').first} Commands", api_paste_private: 1, api_paste_expire_date: '10M'))
+        m.user.send("List of commands => #{@pastebin.newpaste(string.chomp.chomp(', '), api_paste_name: "#{ENV['NICKS'].split(',').first} Commands", api_paste_private: 1, api_paste_expire_date: '10M')}")
         m.reply "check ur pms for list of commands bru"
       end
 
