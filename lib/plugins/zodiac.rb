@@ -11,7 +11,7 @@ module Cinch
       match /(help zodiac)$/, method: :help
 
       def execute(m)
-        m.reply "specify ur sign bru (ex. .zodiac sheep)"
+        m.reply "specify ur Chinese zodiac sign bru (ex. .zodiac sheep)"
       end
 
       def with_sign(m, prefix, zodiac, sign)
