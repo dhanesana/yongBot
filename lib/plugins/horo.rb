@@ -11,7 +11,7 @@ module Cinch
       match /(help horo)$/, method: :help
 
       def execute(m)
-        m.reply "specify ur sign bru (ex. .horo pisces)"
+        m.reply "specify ur astrological sign bru (ex. .horo pisces)"
       end
 
       def with_sign(m, prefix, horo, sign)
