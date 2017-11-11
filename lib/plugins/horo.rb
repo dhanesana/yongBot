@@ -15,10 +15,18 @@ module Cinch
       end
 
       def with_sign(m, prefix, horo, sign)
-        page = Nokogiri::HTML(open("http://new.theastrologer.com/#{sign}/"))
-        text = page.css('div#today p').first.text
-        date = page.css('div#today div.daily-horoscope-date').first.text
-        m.reply "[#{date}] #{text}"
+        begin
+          page = Nokogiri::HTML(open("http://new.theastrologer.com/#{sign}/"))
+          text = page.css('div#today p').first.text
+          date = page.css('div#today div.daily-horoscope-date').first.text
+          m.reply "[#{date}] #{text}"
+        rescue OpenURI::HTTPError => e
+          m.reply "404 Error: Check spelling"
+          p '*' * 50
+          p '.horo error'
+          p e.message
+          p '*' * 50
+        end
       end
 
       def help(m)
