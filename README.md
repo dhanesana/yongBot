@@ -106,7 +106,7 @@ yongBot uses the [Identify Plugin](https://github.com/cinchrb/cinch-identify) to
 
 ### Bot Commands
 
-yongBot has a large assortment of fun and useful commands. All commands have a dot prefix. To view a list of available commands, enter the following IRC message:
+yongBot has a large assortment of fun and useful commands. All commands have a dot prefix (can be reconfigured within yong_bot.rb). To view a list of available commands, enter the following IRC message:
 
 ```
 > .help
