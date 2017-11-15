@@ -17,13 +17,30 @@ module Cinch
         nsid = result['user']['nsid']
         photos_req = open("https://api.flickr.com/services/rest/?method=flickr.people.getPublicPhotos&api_key=#{ENV['FLICKR_KEY']}&user_id=#{nsid}&format=json&nojsoncallback=1").read
         response = JSON.parse(photos_req)
-
-        return m.reply 'nada' if response['photos']['photo'].size == 0
-
+        return m.reply 'no photos found bru' if response['photos']['photo'].size == 0
         photo_title = response['photos']['photo'].first['title']
         photo_id = response['photos']['photo'].first['id']
-
-        m.reply "https://www.flickr.com/photos/#{nsid}/#{photo_id}/"
+        url = "https://www.flickr.com/photos/#{nsid}/#{photo_id}/"
+        exif_req = JSON.parse(open("https://api.flickr.com/services/rest/?method=flickr.photos.getExif&api_key=#{ENV['FLICKR_KEY']}&photo_id=#{photo_id}&format=json&nojsoncallback=1").read)
+        camera = ''
+        exposure = ''
+        aperture = ''
+        focal = ''
+        exif_req['photo']['exif'].each do |tag|
+          if tag['label'] == "Model"
+            camera += tag['raw']['_content']
+          end
+          if tag['label'] == "Focal Length"
+            focal += tag['clean']['_content']
+          end
+          if tag['label'] == "Aperture"
+            aperture += tag['clean']['_content']
+          end
+          if tag['label'] == "Exposure"
+            exposure += tag['clean']['_content']
+          end
+        end
+        m.reply "#{url} => #{camera} #{focal}, #{aperture}, #{exposure}"
       end
 
       def help(m)
