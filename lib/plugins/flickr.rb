@@ -45,7 +45,7 @@ module Cinch
       end
 
       def help(m)
-        m.reply 'returns most recent flickr pic of specified user'
+        m.reply 'returns most recent flickr pic of specified user with exif data (when available)'
       end
 
     end
