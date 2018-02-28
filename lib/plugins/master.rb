@@ -149,7 +149,7 @@ module Cinch
         if m.is_admin?
           return ping_channel(m)
         elsif m.is_op?
-          return m.reply "too many ppls bru (30+)" if Channel(m.channel.name).users.size > 30
+          return m.reply "too many ppls bru (10+)" if Channel(m.channel.name).users.size > 10
           ping_channel(m)
         else
           m.reply 'master or ops only bru'
