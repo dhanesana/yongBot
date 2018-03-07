@@ -42,6 +42,7 @@ module Cinch
       end
 
       def add_streamer(m, prefix, addbeam, streamer)
+        return m.reply 'username only bru' if streamer.include? 'beam.pro'
         return m.reply 'registered users only bru' if m.user.host.include? 'Snoonet'
         return m.reply "#{streamer} already in db" if @streamers.include? streamer
         conn = PG::Connection.new(ENV['DATABASE_URL'])
@@ -55,6 +56,7 @@ module Cinch
       end
 
       def del_streamer(m, prefix, delbeam, streamer)
+        return m.reply 'username only bru' if streamer.include? 'beam.pro'
         return m.reply 'registered users only bru' if m.user.host.include? 'Snoonet'
         conn = PG::Connection.new(ENV['DATABASE_URL'])
         search = conn.exec("SELECT * FROM beam WHERE streamer='#{conn.escape(streamer)}';")
