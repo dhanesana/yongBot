@@ -9,7 +9,9 @@ module Cinch
 
       match /(gn)$/
       match /(addgn) (.+)/, method: :add
+      match /(gnadd) (.+)/, method: :add
       match /(delgn) (.+)/, method: :del
+      match /(gndel) (.+)/, method: :del
       match /(who) (.+)/, method: :who
       match /(gn) (list)$/, method: :list
       match /(help gn)$/, method: :help
