@@ -12,7 +12,7 @@ module Cinch
       match /(help vlive)$/, method: :help
 
       def execute(m)
-        page = Nokogiri::HTML(open("http://www.vlive.tv/upcoming"))
+        page = Nokogiri::HTML(open("http://www.vlive.tv/upcoming", "User-Agent" => "Ruby/#{RUBY_VERSION}"))
         return m.reply 'no live vapp streams bru' if page.css('li.on').size < 2
         live = {}
         page.css('li.on').each do |artist|
