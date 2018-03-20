@@ -29,7 +29,7 @@ module Cinch
 
       def random(m)
         return get_kpic(m) if m.is_admin?
-        rate_check(m, 1, 'http://google.com')
+        rate_check(m, 1, 'http://google.com') # Param-filler URL
       end
 
       def rate_check(m, type, url)
