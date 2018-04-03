@@ -35,7 +35,7 @@ Create a .env file within the yongBot directory, and populate with the following
 | CHANNELS               | *IRC #Channels (with hash, comma-seperated, no spaces)*
 | DAUM_KEY               | [Daum API Key](https://developers.daum.net/)
 | DICT_KEY               | [Merriam-Webster Dictionary API Key](https://www.dictionaryapi.com/)
-| NICKS                  | *Bot IRC Nickname*
+| NICKS                  | *Bot IRC Nicknames (comma-seperated)*
 | PW                     | *Password for registered bot nickname*
 | USER_MODES             | IRC User Modes (comma-seperated) (ex. B,I)
 | MASTER                 | [Your IP Host & Domain](http://www.ircbeginner.com/opvinfo/masks.html)
