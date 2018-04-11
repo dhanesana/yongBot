@@ -1,5 +1,5 @@
-require 'nokogiri'
 require 'open-uri'
+require 'json'
 
 module Cinch
   module Plugins
@@ -12,20 +12,18 @@ module Cinch
       match /(help powerball)$/, method: :help
 
       def execute(m)
-        page = Nokogiri::HTML(open('http://www.powerball.com/pb_home.asp'))
-        draw_date = page.css('font').first.text
-        m.reply "#{draw_date} => #{draw(page, 1)}, #{draw(page, 2)}, #{draw(page, 3)}, #{draw(page, 4)}, #{draw(page, 5)}, [#{draw(page, 6)}]"
-      end
-
-      def draw(page, num)
-        page.css('strong')[num - 1].text
+       feed = open('https://www.powerball.com/api/v1/numbers/powerball/recent10?_format=json').read
+       result = JSON.parse(feed)
+       draw_date = result.first['field_draw_date']
+       win_nums = result.first['field_winning_numbers']
+       power_play = result.first['field_multiplier']
+       m.reply "Winning Numbers #{draw_date} => #{win_nums} [Power Play #{power_play}X]"
       end
 
       def jackpot(m)
-        page = Nokogiri::HTML(open('http://www.powerball.com/pb_home.asp'))
-        jackpot = page.css('strong')[6].text
-        cash_val = page.css('font')[10].text
-        m.reply "Current Estimated Powerball Jackpot: #{jackpot} (#{cash_val})"
+        feed = open('https://www.powerball.com/api/v1/estimates/powerball?_format=json').read
+        result = JSON.parse(feed)
+        m.reply "#{result.first['title']}: #{result.first['field_prize_amount']} (#{result.first['field_prize_amount_cash']} Cash)"
       end
 
       def quickpick(m)
