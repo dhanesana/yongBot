@@ -13,11 +13,15 @@ module Cinch
 
       def execute(m, prefix, maniadb, entry)
         query = entry.split(/[[:space:]]/).join(' ').downcase
-        url = "http://dev.maniadb.com/index.php/api/search/#{URI.encode(query)}/?sr=#{URI.encode(maniadb.to_s)}&display=1&key=example&v=0.5"
-        open(url) do |rss|
-          feed = RSS::Parser.parse(rss, false)
-          return m.reply '0 results' if feed.items == []
-          m.reply "#{feed.items.first.title.strip}: #{feed.items.first.link.strip}"
+        begin
+          url = "http://dev.maniadb.com/index.php/api/search/#{URI.encode(query)}/?sr=#{URI.encode(maniadb.to_s)}&display=1&key=example&v=0.5"
+          open(url) do |rss|
+            feed = RSS::Parser.parse(rss, false)
+            return m.reply '0 results' if feed.items == []
+            m.reply "#{feed.items.first.title.strip}: #{feed.items.first.link.strip}"
+          end
+        rescue Exception => e
+          m.reply "Error: #{e}"
         end
       end
 
