@@ -105,7 +105,7 @@ module Cinch
         @streamers.each do |user|
           user_get = Unirest.get "https://beam.pro/api/v1/channels/#{URI.encode(user)}"
           counter += 1 if user_get.body['online'] == false
-          return m.reply "no1 streaming" if counter == @users.size
+          return m.reply "no1 streaming" if counter == @streamers.size
           next if user_get.body['online'] == false
           name = user_get.body['user']['username']
           game = user_get.body['type']['name']
