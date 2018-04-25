@@ -26,7 +26,6 @@ module Cinch
           ".cpme",
           ".yomama",
           ".pokemon [name]",
-          ".cafe [query]",
           ".naver [num]",
           ".daum [num]",
           ".eat [food_name]",

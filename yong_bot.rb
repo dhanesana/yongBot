@@ -36,7 +36,6 @@ yong_bot = Cinch::Bot.new do
       Cinch::Plugins::Cpme,
       Cinch::Plugins::Yomama,
       Cinch::Plugins::Pokemon,
-      Cinch::Plugins::Cafe,
       Cinch::Plugins::Naver,
       Cinch::Plugins::Daum,
       Cinch::Plugins::Eat,
