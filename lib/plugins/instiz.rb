@@ -14,7 +14,7 @@ module Cinch
       match /(help ichart)$/, method: :help
 
       def execute(m)
-        with_num(m, '.', 'instiz', 1)
+        with_num(m, '.', 'instiz', '1')
       end
 
       def with_num(m, prefix, instiz, entry)
@@ -35,7 +35,7 @@ module Cinch
           rank = entry.to_i - 2
           title = page.parser.css('div.ichart_score2_song1')[rank].text
           artist = page.parser.css('div.ichart_score2_artist1')[rank].text
-          m.reply "iChart Rank #{entry.to_i}: #{title} by #{artist}"
+          m.reply "iChart Rank #{entry.to_i}: #{title.strip} by #{artist.strip}"
         end
       end
 
@@ -56,7 +56,7 @@ module Cinch
         match_rank = all_songs.key(match).to_i
         title = page.parser.css('div.ichart_score2_song1')[match_rank - 2].text
         artist = page.parser.css('div.ichart_score2_artist1')[match_rank - 2].text
-        m.reply "iChart Rank #{match_rank}: #{title} by #{artist}"
+        m.reply "iChart Rank #{match_rank.strip}: #{title.strip} by #{artist.strip}"
       end
 
       def help(m)
