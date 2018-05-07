@@ -30,7 +30,7 @@ module Cinch
           rank = result['songList'][entry.to_i - 1]['curRank']
           artist = result['songList'][entry.to_i - 1]['artistNameBasket']
           title = result['songList'][entry.to_i - 1]['songName']
-          return m.reply "Melon Rank #{rank.strip}: #{artist.strip} - #{title.strip}"
+          return m.reply "Melon Rank #{rank.to_s.strip}: #{artist.strip} - #{title.strip}"
         end
       end
 
@@ -46,7 +46,7 @@ module Cinch
         rank = result['songList'][match_rank - 1]['curRank']
         artist = result['songList'][match_rank - 1]['artistNameBasket']
         title = result['songList'][match_rank - 1]['songName']
-        m.reply "Melon Rank #{rank.strip}: #{artist.strip} - #{title.strip}"
+        m.reply "Melon Rank #{rank.to_s.strip}: #{artist.strip} - #{title.strip}"
       end
 
       def trend(m)
@@ -60,7 +60,7 @@ module Cinch
         result = JSON.parse(link)
         rank = result['keywordRealList'][num.to_i - 1]['ranking']
         keyword = result['keywordRealList'][num.to_i - 1]['keyword']
-        m.reply "Melon Trending #{rank.strip}: #{keyword.strip}"
+        m.reply "Melon Trending #{rank.to_s.strip}: #{keyword.strip}"
       end
 
       def help(m)
