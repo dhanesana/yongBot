@@ -5,7 +5,9 @@ module Cinch
     class Lineup
       include Cinch::Plugin
 
-      match /(lineup)/
+      match /(lineup)$/
+      match /(show)$/, method: :show
+      match /(help show)$/, method: :help_show
       match /(help lineup)$/, method: :help
       match /(newlineup) (.+)/, method: :update_lineup
       match /(approved)$/, method: :list_approved
@@ -121,6 +123,32 @@ module Cinch
         else
           m.is_unauthorized
         end
+      end
+
+      def show(m)
+        utc = Time.now.utc
+        kst = utc + (9 * 3600)
+        time = kst.strftime("%F %H:%M KST")
+        case kst.strftime("%A")
+        when "Sunday"
+          m.reply "Sunday => SBS 'Inkigayo' @ 12:10PM KST"
+        when "Monday"
+          m.reply "Monday => Ask me again tomorrow"
+        when "Tuesday"
+          m.reply "Tuesday => SBS MTV 'The SHow'"
+        when "Wednesday"
+          m.reply "Wednesday => MBC Music 'Show Champion'"
+        when "Thursday"
+          m.reply "Thursday => Mnet 'M Countdown'"
+        when "Friday"
+          m.reply "Friday => KBS 'Music Bank'"
+        when "Saturday"
+          m.reply "Saturday => MBC 'Show! Music Core'"
+        end
+      end
+
+      def help_show(m)
+        m.reply "returns name of Korean music entertainment show of the day"
       end
 
       def help(m)
