@@ -11,6 +11,7 @@ module Cinch
         super
         @plugins = [
           ".lineup",
+          ".show",
           ".iono",
           ".roll",
           ".rollu",
