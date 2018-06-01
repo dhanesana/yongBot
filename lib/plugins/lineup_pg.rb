@@ -131,19 +131,19 @@ module Cinch
         time = kst.strftime("%F %H:%M KST")
         case kst.strftime("%A")
         when "Sunday"
-          m.reply "Sunday => SBS 'Inkigayo' @ 12:10PM KST"
+          m.reply "Sunday => SBS 'Inkigayo' @ 12:10 KST"
         when "Monday"
           m.reply "Monday => Ask me again tomorrow"
         when "Tuesday"
-          m.reply "Tuesday => SBS MTV 'The SHow'"
+          m.reply "Tuesday => SBS MTV 'The Show' @ 18:30 KST"
         when "Wednesday"
-          m.reply "Wednesday => MBC Music 'Show Champion'"
+          m.reply "Wednesday => MBC Music 'Show Champion' @ 19:00 KST"
         when "Thursday"
-          m.reply "Thursday => Mnet 'M Countdown'"
+          m.reply "Thursday => Mnet 'M Countdown' @ 18:00 KST"
         when "Friday"
-          m.reply "Friday => KBS 'Music Bank'"
+          m.reply "Friday => KBS 'Music Bank' @ 17:00 KST"
         when "Saturday"
-          m.reply "Saturday => MBC 'Show! Music Core'"
+          m.reply "Saturday => MBC 'Show! Music Core' @ 15:30 KST"
         end
       end
 
