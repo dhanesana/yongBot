@@ -102,6 +102,7 @@ yong_bot = Cinch::Bot.new do
       Cinch::Plugins::Arirang,
       Cinch::Plugins::RubyVersion,
       Cinch::Plugins::Maniadb,
+      Cinch::Plugins::Iroom
     ]
     c.delay_joins = :identified
     c.plugins.options[Cinch::Plugins::Identify] = {

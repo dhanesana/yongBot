@@ -95,7 +95,8 @@ module Cinch
           ".arirang",
           ".ruby",
           ".artist [artist_name]",
-          ".album [album_title]"
+          ".album [album_title]",
+          ".iroom"
         ]
         @master_plugins = [
           ".join [#channel]",
