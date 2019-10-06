@@ -103,7 +103,7 @@ module Cinch
       def execute(m)
         counter = 0
         @streamers.each do |user|
-          user_get = Unirest.get "https://api.twitch.tv/kraken/streams/#{URI.encode(user)}",
+          user_get = Unirest.get "https://id.twitch.tv/streams/#{URI.encode(user)}",
             headers: { "Accept" => "application/json" },
             parameters: { :client_id => ENV['TWITCH_ID'] }
           counter += 1 if user_get.body['stream'].nil?
@@ -122,7 +122,7 @@ module Cinch
       def check_live
         response = "LIVE:"
         @streamers.each do |user|
-          user_get = Unirest.get "https://api.twitch.tv/kraken/streams/#{URI.encode(user)}",
+          user_get = Unirest.get "https://id.twitch.tv/streams/#{URI.encode(user)}",
             headers: { "Accept" => "application/json" },
             parameters: { :client_id => ENV['TWITCH_ID'] }
           @online.delete(user) if user_get.body['stream'].nil?
@@ -145,7 +145,7 @@ module Cinch
         return if user == 'list'
         return m.reply 'registered users only bru' if m.user.host.include? 'Snoonet'
         query = user.split(/[[:space:]]/).join(' ')
-        user_get = Unirest.get "https://api.twitch.tv/kraken/streams/#{URI.encode(query)}",
+        user_get = Unirest.get "https://id.twitch.tv/streams/#{URI.encode(query)}",
           headers: { "Accept" => "application/json" },
           parameters: { :client_id => ENV['TWITCH_ID'] }
         return m.reply "#{user} is not live bru" if user_get.body['stream'].nil?
